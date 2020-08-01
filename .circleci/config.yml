@@ -24,7 +24,7 @@ jobs:
             - ~/.cache/yarn
       - run:
           name: "Run Tests"
-          command: yarn test
+          command: yarn test --passWithNoTests
 
   build:
     <<: *defaults
