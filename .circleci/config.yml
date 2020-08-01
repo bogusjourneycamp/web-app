@@ -1,21 +1,107 @@
-version: 2.1
-orbs:
-  node: circleci/node@3.0.0
-workflows:
-  node-tests:
-    jobs:
-      - node/test
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/python:3.8.5-node
+
+version: 2
 jobs:
-  build-and-test:
-    executor:
-      name: node/default
+  lint:
+    <<: *defaults
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
+      - restore_cache:
+          name: Restore Yarn package cache
+          keys:
+            - yarn-packages-{{checksum "yarn.lock"}}
+      - run:
+          name: Install dependencies
+          command: |
+            yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn package cache
+          key: yarn-packages-{{checksum "yarn.lock"}}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Check formatting
+          command: |
+            yarn test:other
+            yarn test:code
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn package cache
+          keys:
+            - yarn-packages-{{checksum "yarn.lock"}}
+      - run:
+          name: Install dependencies
+          command: |
+            yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn package cache
+          key: yarn-packages-{{checksum "yarn.lock"}}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: "Run Tests"
+          command: yarn test:src
+
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn package cache
+          keys:
+            - yarn-packages-{{checksum "yarn.lock"}}
+      - run:
+          name: "Build app"
+          command: |
+            yarn install --frozen-lockfile
+            PUBLIC_URL=/public yarn build;
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - build
+            - package.json
+
+  # deploy:
+  #   <<: *defaults
+  #   environment:
+  #     - UAT_BUCKET: migi-dev
+  #     - PRODUCTION_BUCKET: migi-prod
+  #     - UAT_DISTRIBUTION_ID: E8NOM9M3LELXK
+  #     - PRODUCTION_DISTRIBUTION_ID: E23T6ZHP5UREBJ
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/repo
+  #     - run:
+  #         name: "Install awscli"
+  #         command: pip install awscli --upgrade --user
+  #     - run:
+  #         name: "Deploy to S3"
+  #         command: |
+  #           if [ "${CIRCLE_BRANCH}" == "master" ]; then
+  #             aws s3 sync build/ s3://${PRODUCTION_BUCKET} --delete
+  #             aws cloudfront create-invalidation --distribution-id "${PRODUCTION_DISTRIBUTION_ID}" --paths /index.html
+  #           elif [ "${CIRCLE_BRANCH}" == "develop" ]; then
+  #             aws s3 sync build/ s3://${UAT_BUCKET} --delete
+  #             aws cloudfront create-invalidation --distribution-id "${UAT_DISTRIBUTION_ID}" --paths /index.html
+  #           fi
+  #           # important to note that deploy 'succeeds' on any other branch (as desired)
+
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  version: 2
+  lint:
+    jobs:
+      - lint
+  test_and_build_and_deploy:
+    jobs:
+      - test
+      - build
+      # - deploy:
+      #     requires:
+      #       - test
+      #       - build
