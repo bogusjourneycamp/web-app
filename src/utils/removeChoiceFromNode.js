@@ -7,7 +7,7 @@
  * @param {int} siblingIndex
  * @returns The updated node, otherwise null
  */
-export const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
+const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
     if (rootNode.id === nodeId) {
         return {
             ...rootNode,
@@ -37,3 +37,5 @@ export const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
 
     return null;
 };
+
+export default removeChoiceFromNode;

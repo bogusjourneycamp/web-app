@@ -7,13 +7,15 @@ import { v4 } from 'uuid';
  * @param {int} level
  * @returns The updated node, otherwise null
  */
-export const addChoiceToNode = (rootNode, nodeId, level = 0) => {
+const addChoiceToNode = (rootNode, nodeId, level = 0) => {
     if (rootNode.id === nodeId) {
         return {
             ...rootNode,
             choices: [
                 ...rootNode.choices,
-                { id: v4(), name: '', text: '', choices: [] },
+                {
+                    id: v4(), name: '', text: '', choices: [],
+                },
             ],
         };
     }
@@ -39,3 +41,5 @@ export const addChoiceToNode = (rootNode, nodeId, level = 0) => {
 
     return null;
 };
+
+export default addChoiceToNode;
