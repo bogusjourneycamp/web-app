@@ -1,22 +1,14 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 // import { Layout } from '../components/Layout';
 
-const rootNodeTestData = {
-    title: 'The Man',
-    location: '0_0',
-    text: 'welcccccome',
+const loadingNode = {
+    title: 'LOADING....',
+    location: '0_6:00',
+    text: 'Welcome!',
     name: 'root',
-    choices: [
-        {
-            name: 'also',
-            choices: [{ name: 'boop', choices: [], text: 'undaddy' }],
-            text: 'cat cow',
-        },
-        { name: 'alps', choices: [], text: 'snarky dog' },
-        { name: 'army', choices: [], text: 'sneep snop' },
-    ],
+    choices: [],
 };
 
 const StyledContainer = styled.div`
@@ -192,63 +184,63 @@ function Actions(props) {
     );
 }
 
-const alphabet = ["0", "Esplanade", "A", "B", "C", "D", "E", "F", "G"]
-const anglePerFiften = 7.5;
-const tenOClockAngle = -210
-const twoOClockAngle = 30
+const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G"]
+
+// 30/4 = 7.5
+const fifteenMinAngle = 7.5;
+
+function timeToAngle(hour, minutes){
+  return 30*(hour%12) + fifteenMinAngle * (minutes/15);
+}
+function angleToTime(angle){
+  // 360/12 = 30
+  let hour = Math.floor(angle/30)
+  let minutes = (angle%30)*(15/fifteenMinAngle)
+  if(hour === 0){
+    hour = 12;
+  }
+  return hour + ":" + minutes.toString().padStart(2, "0")
+}
 
 
 function nextLocation(location, dir){
-  // TODO regex or somthing to validate location
 
-  var split = location.split("_");
-
-  let radius = parseInt(split[0]);
-  let angle = parseFloat(split[1]);
-
-  if(dir === "towards" && radius >0){
-    return (radius-1)+"_"+angle
-  } else if (dir === "away" && radius < alphabet.length - 1){
-    return (radius+1)+"_"+angle
+  if(location == "Man"){
+    return "Esplanade_6:00"
   }
 
-  if(dir === "fastforward" && angle < twoOClockAngle){
-    return radius+"_"+(angle+anglePerFiften)
-  } else if (dir === "rewind" && angle > tenOClockAngle){
-    return radius+"_"+(angle-anglePerFiften)
+  var split = location.replace("_", ":").split(":")
+  var letter = split[0]
+  var hour = parseInt(split[1])
+  var minutes = parseInt(split[2])
+
+  // TODO special case for the man
+
+  var letterInd = alphabet.indexOf(letter)
+
+  if(dir === "towards" && letterInd>0){
+    if(letterInd - 1 === 0){
+      return alphabet[0]
+    }
+    return alphabet[letterInd-1] + "_" + hour + ":" + minutes.toString().padStart(2, "0")
+  } else if (dir === "away" && letterInd<alphabet.length - 1){
+    return alphabet[letterInd+1] + "_" + hour + ":" + minutes.toString().padStart(2, "0")
+  } 
+  if(dir === "fastforward"){
+    return letter + "_" + angleToTime(timeToAngle(hour, minutes)+fifteenMinAngle)
+  } else if (dir === "rewind"){
+    return letter + "_" + angleToTime(timeToAngle(hour, minutes)-fifteenMinAngle)
   }
 
-  return location
-}
-
-function formatLocation(location){
-
-  var split = location.split("_");
-
-  let radius = parseInt(split[0]);
-  let angle = parseFloat(split[1]);
-
-  if(radius === 0){
-    return "The Man"
-  }
-
-  let percentOfHour = (((angle%30)+30)%30)/30
-  let minutes = (60*percentOfHour).toString().padStart(2, "0")
-
-  let hour = (-1*(Math.floor(30/30)-3)).toString()
-
-  let letter = alphabet[radius]
-
-  return letter + " " +  hour + ":" + minutes
+  return location;
 }
 
 function Navigation(props) {
     return (
         <div id="navigation">
             <div id="navcenter">
-            {formatLocation(props.location)}
+            {props.location}
             </div>
-
             <button id = "navaway" onClick={() => props.onNewLocation(nextLocation(props.location, 'away'))}>
                 &#x025CB;
             </button>
@@ -320,7 +312,7 @@ function unclaimedNode(location){
   return {
     title: 'Open Playa',
     location: location,
-    text: `Congradulations Explorer! You've discovered an unclaimed spot in this dusty land.
+    text: `Congratulations Explorer! You've discovered an unclaimed spot in this dusty land.
     Now it's time to write your own story and tell your own tale. Are you ready?`,
     name: '',
     choices: [],
@@ -340,45 +332,65 @@ const getNode = async (location) => {
     return res.json();
 };
 
-export const ExplorePage = (props) => {
-    const [exploreNode, setExploreNode] = useState(rootNodeTestData);
+export class ExplorePage extends React.Component{
+  constructor(props) {
+    super(props);
+    const query = new URLSearchParams(this.props.location.search)
+    var location = query.get('location')
 
-    const onNewLocation = (location) => {
-        getNode(location).then((node) => {
-            setExploreNode({
-                ...exploreNode,
-                title: node['title'] || 'Untitled',
-                location: node['location'],
-                text: node['text'],
-                choices: node['choices'],
-            });
-        });
-    };
+    if (location == null) {
+      location = "Man"
+    }
 
-    const onTakeAction = (action_name) => {
-        let node = findNode(exploreNode, action_name);
-        setExploreNode({
-            ...exploreNode,
-            text: node['text'],
-            choices: node['choices'],
-        });
-    };
+    this.state = loadingNode;
+    this.onNewLocation = this.onNewLocation.bind(this)
+    this.onTakeAction = this.onTakeAction.bind(this)
+    this.onNewLocation(location);
+  }
 
+  onTakeAction(action_name) {
+    let node = findNode(this.state, action_name);
+    this.setState({
+      text: node["text"],
+      choices: node["choices"],
+    })
+  }
+
+  onNewLocation(location) {
+    getNode(location).then((node) => {
+      if(Object.keys(node).length === 0){
+        node = unclaimedNode(location)
+      }
+      this.setState({
+        name: node["name"]|| 'Untitled',
+        location: node["location"],
+        title: node["title"],
+        text: node["text"],
+        choices: node["choices"],
+      })
+    });
+    this.props.history.push({
+      search: "?" + new URLSearchParams({location: location}).toString()
+    });
+  }
+
+  render() {
     return (
         <StyledContainer>
             <div id="explore">
                 <div id="explore-story">
                     <Story
-                        title={exploreNode.title}
-                        text={exploreNode.text}
-                        actions={exploreNode.choices}
-                        onTakeAction={onTakeAction}
+                        title={this.state.title}
+                        text={this.state.text}
+                        actions={this.state.choices}
+                        onTakeAction={this.onTakeAction}
                     />
                 </div>
                 <div id="explore-navigation">
-                    <Navigation location={exploreNode.location} onNewLocation={onNewLocation} />
+                    <Navigation location={this.state.location} onNewLocation={this.onNewLocation}/>
                 </div>
             </div>
         </StyledContainer>
     );
-};
+  }
+}

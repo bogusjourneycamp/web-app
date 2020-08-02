@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Layout } from '../components/Layout';
 import { CreateStoryView } from '../components/CreateStoryView';
 import { StoryOutlineView } from '../components/StoryOutlineView';
-import { getNodeById } from '../utils/getNodeById';
-import { updateNodeValue } from '../utils/updateNodeValue';
-import { addChoiceToNode } from '../utils/addChoiceToNode';
-import { removeChoiceFromNode } from '../utils/removeChoiceFromNode';
-import { publishStory } from '../utils/publishStory'
+import getNodeById from '../utils/getNodeById';
+import updateNodeValue from '../utils/updateNodeValue';
+import addChoiceToNode from '../utils/addChoiceToNode';
+import removeChoiceFromNode from '../utils/removeChoiceFromNode';
+import publishStory from '../utils/publishStory';
 
 const rootNodeTestData = {
     id: 'A',

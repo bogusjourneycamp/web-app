@@ -7,7 +7,7 @@
  * @param {int} siblingIndex
  * @returns The updated node, otherwise null
  */
-export const updateNodeValue = (rootNode, nodeId, valueMap) => {
+const updateNodeValue = (rootNode, nodeId, valueMap) => {
     if (rootNode.id === nodeId) {
         return {
             ...rootNode,
@@ -35,3 +35,5 @@ export const updateNodeValue = (rootNode, nodeId, valueMap) => {
 
     return null;
 };
+
+export default updateNodeValue;

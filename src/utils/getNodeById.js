@@ -1,4 +1,4 @@
-export const getNodeById = (rootNode, nodeId) => {
+const getNodeById = (rootNode, nodeId) => {
     if (rootNode.id === nodeId || !rootNode) {
         return rootNode;
     }
@@ -15,3 +15,5 @@ export const getNodeById = (rootNode, nodeId) => {
 
     return null;
 };
+
+export default getNodeById;

@@ -1,0 +1,21 @@
+{
+    "root": true,
+    "parser": "babel-eslint",
+    "plugins": ["react"],
+    "extends": ["airbnb", "airbnb/hooks", "prettier"],
+    "rules": {
+        "react/jsx-one-expression-per-line": "off",
+        "react/jsx-indent": [2, 4],
+        "indent": ["error", 4],
+        "object-curly-newline": "off",
+        "import/prefer-default-export": "off",
+        "react/prop-types": "off",
+        "react/jsx-indent-props": "off",
+        "react/no-array-index-key": "off"
+    },
+    "env": {
+        "browser": true,
+        "amd": true,
+        "node": true
+    }
+}
