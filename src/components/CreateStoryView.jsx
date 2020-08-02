@@ -80,6 +80,7 @@ export const CreateStoryView = ({
     onChangeChoiceText,
     onChangeChoiceTitle,
     storyNode,
+    onClickPublish
 }) => {
     useEffect(() => {
         const textInput = document.getElementById('txt-text');
@@ -136,6 +137,13 @@ export const CreateStoryView = ({
                 onClick={onClickAddChoice}
             >
                 + Add a choice
+            </StyledButton>
+            <StyledButton
+                id="btn-add-choice"
+                type="button"
+                onClick={onClickPublish}
+            >
+                PUBLISH
             </StyledButton>
         </StyledContainer>
     );

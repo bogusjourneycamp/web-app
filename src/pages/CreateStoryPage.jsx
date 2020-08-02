@@ -7,6 +7,7 @@ import { getNodeById } from '../utils/getNodeById';
 import { updateNodeValue } from '../utils/updateNodeValue';
 import { addChoiceToNode } from '../utils/addChoiceToNode';
 import { removeChoiceFromNode } from '../utils/removeChoiceFromNode';
+import { publishStory } from '../utils/publishStory'
 
 const rootNodeTestData = {
     id: 'A',
@@ -127,6 +128,10 @@ export const CreateStoryPage = () => {
         setCurrentNodeId(nodeId);
     };
 
+    const onClickPublish = async () => {
+        publishStory(storyNode)
+    };
+
     return (
         <Layout>
             <StyledContainer>
@@ -143,6 +148,7 @@ export const CreateStoryPage = () => {
                     onClickRemoveChoice={onClickRemoveChoice}
                     onChangeChoiceText={onChangeChoiceText}
                     onChangeChoiceTitle={onChangeChoiceTitle}
+                    onClickPublish={onClickPublish}
                 />
             </StyledContainer>
         </Layout>
