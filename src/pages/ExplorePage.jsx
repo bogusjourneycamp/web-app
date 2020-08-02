@@ -1,22 +1,14 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 // import { Layout } from '../components/Layout';
 
-const rootNodeTestData = {
-    title: 'The Man',
+const loadingNode = {
+    title: 'LOADING....',
     location: '0_6:00',
-    text: 'welcccccome',
+    text: 'Welcome!',
     name: 'root',
-    choices: [
-        {
-            name: 'also',
-            choices: [{ name: 'boop', choices: [], text: 'undaddy' }],
-            text: 'cat cow',
-        },
-        { name: 'alps', choices: [], text: 'snarky dog' },
-        { name: 'army', choices: [], text: 'sneep snop' },
-    ],
+    choices: [],
 };
 
 const StyledContainer = styled.div`
@@ -311,7 +303,7 @@ function unclaimedNode(location){
   return {
     title: 'Open Playa',
     location: location,
-    text: `Congradulations Explorer! You've discovered an unclaimed spot in this dusty land.
+    text: `Congratulations Explorer! You've discovered an unclaimed spot in this dusty land.
     Now it's time to write your own story and tell your own tale. Are you ready?`,
     name: '',
     choices: [],
@@ -334,9 +326,12 @@ const getNode = async (location) => {
 export class ExplorePage extends React.Component{
   constructor(props) {
     super(props);
-    this.state = rootNodeTestData;
+    const query = new URLSearchParams(this.props.location.search)
+    var location = query.get('location')
+    this.state = loadingNode;
     this.onNewLocation = this.onNewLocation.bind(this)
     this.onTakeAction = this.onTakeAction.bind(this)
+    this.onNewLocation(location);
   }
 
   onTakeAction(action_name) {
@@ -348,7 +343,6 @@ export class ExplorePage extends React.Component{
   }
 
   onNewLocation(location) {
-    console.log(location)
     getNode(location).then((node) => {
       if(Object.keys(node).length === 0){
         node = unclaimedNode(location)
@@ -360,6 +354,9 @@ export class ExplorePage extends React.Component{
         text: node["text"],
         choices: node["choices"],
       })
+    });
+    this.props.history.push({
+      search: "?" + new URLSearchParams({location: location}).toString()
     });
   }
 
