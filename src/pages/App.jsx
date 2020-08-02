@@ -8,9 +8,7 @@ export const App = () => {
         <div className="App">
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/">
-                        <ExplorePage />
-                    </Route>
+                    <Route exact path="/" component = {ExplorePage}/>
                     <Route path="/create-story">
                         <CreateStoryPage />
                     </Route>
