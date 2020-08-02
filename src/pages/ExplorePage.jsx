@@ -184,7 +184,7 @@ function Actions(props) {
     );
 }
 
-const alphabet = ["0", "Esplanade", "A", "B", "C", "D", "E", "F", "G"]
+const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G"]
 
 // 30/4 = 7.5
 const fifteenMinAngle = 7.5;
@@ -204,6 +204,11 @@ function angleToTime(angle){
 
 
 function nextLocation(location, dir){
+
+  if(location == "Man"){
+    return "Esplanade_6:00"
+  }
+
   var split = location.replace("_", ":").split(":")
   var letter = split[0]
   var hour = parseInt(split[1])
@@ -212,11 +217,15 @@ function nextLocation(location, dir){
   // TODO special case for the man
 
   var letterInd = alphabet.indexOf(letter)
+
   if(dir === "towards" && letterInd>0){
+    if(letterInd - 1 === 0){
+      return alphabet[0]
+    }
     return alphabet[letterInd-1] + "_" + hour + ":" + minutes.toString().padStart(2, "0")
   } else if (dir === "away" && letterInd<alphabet.length - 1){
     return alphabet[letterInd+1] + "_" + hour + ":" + minutes.toString().padStart(2, "0")
-  }
+  } 
   if(dir === "fastforward"){
     return letter + "_" + angleToTime(timeToAngle(hour, minutes)+fifteenMinAngle)
   } else if (dir === "rewind"){
@@ -328,6 +337,11 @@ export class ExplorePage extends React.Component{
     super(props);
     const query = new URLSearchParams(this.props.location.search)
     var location = query.get('location')
+
+    if (location == null) {
+      location = "Man"
+    }
+
     this.state = loadingNode;
     this.onNewLocation = this.onNewLocation.bind(this)
     this.onTakeAction = this.onTakeAction.bind(this)
