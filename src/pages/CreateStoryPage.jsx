@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Layout } from '../components/Layout';
 import { CreateStoryView } from '../components/CreateStoryView';
 import { StoryOutlineView } from '../components/StoryOutlineView';
-import { getNodeById } from '../utils/getNodeById';
-import { updateNodeValue } from '../utils/updateNodeValue';
-import { addChoiceToNode } from '../utils/addChoiceToNode';
-import { removeChoiceFromNode } from '../utils/removeChoiceFromNode';
+import getNodeById from '../utils/getNodeById';
+import updateNodeValue from '../utils/updateNodeValue';
+import addChoiceToNode from '../utils/addChoiceToNode';
+import removeChoiceFromNode from '../utils/removeChoiceFromNode';
 
 const rootNodeTestData = {
     id: 'A',
