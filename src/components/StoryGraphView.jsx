@@ -7,15 +7,23 @@ const StyledContainer = styled.div`
     height: 500px;
 `;
 
+const getLinkColor = () => "#C4C4C4";
+
 const StoryGraphView = ({ data, onClickNode }) => (
     <StyledContainer id="view-story-outline">
         <ForceGraph
             width={500}
             height={500}
             graphData={data}
+            linkDirectionalArrowLength={4}
+            linkDirectionalArrowRelPos={1}
+            linkDirectionalArrowColor={getLinkColor}
+            linkColor={getLinkColor}
+            linkOpacity={1}
             onNodeClick={(node) => {
                 onClickNode(node.id);
             }}
+            nodeVal={6.2}
             nodeCanvasObject={(node, ctx, globalScale) => {
                 const label = node.name;
                 const fontSize = 12 / globalScale;
