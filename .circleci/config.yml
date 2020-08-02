@@ -16,7 +16,7 @@ jobs:
       - run:
           name: "Build app"
           command: |
-            yarn install --frozen-lockfile
+            yarn install
             PUBLIC_URL=/public yarn build;
       - persist_to_workspace:
           root: ~/repo
