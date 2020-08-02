@@ -1,4 +1,4 @@
-export const publishStory = async (storyNode) => {
+const publishStory = async (storyNode) => {
     const url = `https://891y83rxbd.execute-api.us-east-1.amazonaws.com/prod/story?location=${storyNode.location}`;
     const requestOptions = {
         method: 'POST',
@@ -8,3 +8,5 @@ export const publishStory = async (storyNode) => {
     const res = await fetch(url, requestOptions)
     return res.json();
 };
+
+export default publishStory;
