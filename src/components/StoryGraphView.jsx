@@ -1,8 +1,14 @@
 import React from "react";
 import ForceGraph from "react-force-graph-2d";
+import styled from "styled-components";
+
+const StyledContainer = styled.div`
+    width: 500px;
+    height: 500px;
+`;
 
 const StoryGraphView = ({ data, onClickNode }) => (
-    <div id="view-story-outline" style={{ width: 500, height: 700 }}>
+    <StyledContainer id="view-story-outline">
         <ForceGraph
             width={500}
             height={500}
@@ -26,7 +32,7 @@ const StoryGraphView = ({ data, onClickNode }) => (
                 ctx.fillText(label, node.x, node.y);
             }}
         />
-    </div>
+    </StyledContainer>
 );
 
 export default StoryGraphView;
