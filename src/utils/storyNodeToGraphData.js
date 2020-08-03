@@ -1,3 +1,5 @@
+import getGraphDataNodeFromStoryNode from "./getGraphDataNodeFromStoryNode";
+
 const storyNodeToGraphData = (
     storyNode,
     selectedNodeId,
@@ -6,12 +8,7 @@ const storyNodeToGraphData = (
     links = [],
     level = 1
 ) => {
-    nodes.push({
-        id: storyNode.id,
-        name: storyNode.name,
-        group: level,
-        parentNodeId,
-    });
+    nodes.push(getGraphDataNodeFromStoryNode(storyNode, parentNodeId));
 
     if (storyNode.choices && storyNode.choices.length > 0) {
         storyNode.choices.forEach((choice) => {

@@ -20,7 +20,6 @@ const StoryGraphView = ({ data, onClickNode, selectedNode, graphRef }) => (
             width={500}
             height={500}
             graphData={data}
-            warmupTicks={1000}
             linkDirectionalArrowLength={4}
             linkDirectionalArrowRelPos={1}
             linkDirectionalArrowColor={getLinkColor}

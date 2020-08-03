@@ -9,7 +9,8 @@ import removeChoiceFromNode from "../utils/removeChoiceFromNode";
 import StoryGraphView from "../components/StoryGraphView";
 import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 import { LINK_LENGTH } from "../utils/nodeConfig";
-import publishStory from '../utils/publishStory';
+import publishStory from "../utils/publishStory";
+import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 
 const rootNodeTestData = {
     id: "A",
@@ -99,10 +100,24 @@ export const CreateStoryPage = () => {
     };
 
     const onClickAddChoice = () => {
-        const newNode = addChoiceToNode(storyNode, currentNode.id);
+        const result = addChoiceToNode(storyNode, currentNode.id);
 
-        if (newNode) {
-            setStoryNode(newNode);
+        if (result && result.choiceNodeAdded) {
+            setStoryNode(result.storyNode);
+
+            // Add new graph node and link to graphData
+            const newGraphNode = getGraphDataNodeFromStoryNode(
+                result.choiceNodeAdded,
+                currentNode.id
+            );
+            const newLink = {
+                source: currentNode.id,
+                target: result.choiceNodeAdded.id,
+            };
+            setGraphData({
+                nodes: [...graphData.nodes, newGraphNode],
+                links: [...graphData.links, newLink],
+            });
         }
     };
 
@@ -144,14 +159,15 @@ export const CreateStoryPage = () => {
     };
 
     const onClickPublish = async () => {
-        publishStory(storyNode)
+        publishStory(storyNode);
     };
-    
-    useEffect(() => {
-        updateGraphData();
-    }, [storyNode]);
 
     useEffect(() => {
+        // Initialize graph data
+        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
+        setGraphData(nextGraphData);
+
+        // Set link distance between nodes
         graphRef.current.d3Force("link").distance(LINK_LENGTH);
     }, []);
 
