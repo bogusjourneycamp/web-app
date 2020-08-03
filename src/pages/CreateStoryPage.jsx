@@ -121,15 +121,39 @@ export const CreateStoryPage = () => {
         }
     };
 
-    const onClickRemoveChoice = (indexToRemove) => {
-        const newNode = removeChoiceFromNode(
+    const onClickRemoveChoice = (choice) => {
+        const newStoryNode = removeChoiceFromNode(
             storyNode,
             currentNodeId,
-            indexToRemove
+            choice.id
         );
 
-        if (newNode) {
-            setStoryNode(newNode);
+        if (newStoryNode) {
+            // This is a graph data representation of the new story node
+            const newGraphData = storyNodeToGraphData(newStoryNode);
+
+            // With the new story node graph representation, we're going to retrieve the existing
+            // node/links to preserve its instance, so that the ForceGraph won't render the node
+            // entering animations for all the nodes at once.
+            const newNodes = newGraphData.nodes
+                .map((newNode) =>
+                    graphData.nodes.find((node) => node.id === newNode.id)
+                )
+                .filter((value) => value);
+
+            const newLinks = newGraphData.links.map((newLink) =>
+                graphData.links.find(
+                    (link) =>
+                        link.source.id === newLink.source &&
+                        link.target.id === newLink.target
+                )
+            );
+
+            setGraphData({
+                nodes: newNodes,
+                links: newLinks,
+            });
+            setStoryNode(newStoryNode);
         }
     };
 

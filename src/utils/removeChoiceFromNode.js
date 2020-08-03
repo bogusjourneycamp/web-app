@@ -5,12 +5,12 @@
  * @param {int} indexToRemove
  * @returns The updated node, otherwise null
  */
-const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
+const removeChoiceFromNode = (rootNode, nodeId, choiceId) => {
     if (rootNode.id === nodeId) {
         return {
             ...rootNode,
             choices: rootNode.choices.filter(
-                (_, index) => index !== indexToRemove
+                (choice) => choice.id !== choiceId
             ),
         };
     }
@@ -20,7 +20,7 @@ const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
             const childNode = removeChoiceFromNode(
                 rootNode.choices[i],
                 nodeId,
-                indexToRemove
+                choiceId
             );
 
             if (childNode) {
