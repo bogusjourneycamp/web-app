@@ -1,6 +1,10 @@
 import React from "react";
 import ForceGraph from "react-force-graph-2d";
 import styled from "styled-components";
+import drawNodeBorder from "../utils/drawNodeBorder";
+import drawNodeBody from "../utils/drawNodeBody";
+import drawText from "../utils/drawText";
+import { NODE_FONT_SIZE, NODE_SIZE } from "../utils/nodeConfig";
 
 const StyledContainer = styled.div`
     width: 500px;
@@ -9,7 +13,7 @@ const StyledContainer = styled.div`
 
 const getLinkColor = () => "#C4C4C4";
 
-const StoryGraphView = ({ data, onClickNode }) => (
+const StoryGraphView = ({ data, onClickNode, selectedNode }) => (
     <StyledContainer id="view-story-outline">
         <ForceGraph
             width={500}
@@ -23,21 +27,18 @@ const StoryGraphView = ({ data, onClickNode }) => (
             onNodeClick={(node) => {
                 onClickNode(node.id);
             }}
-            nodeVal={6.2}
+            nodeVal={NODE_SIZE}
             nodeCanvasObject={(node, ctx, globalScale) => {
-                const label = node.name;
-                const fontSize = 12 / globalScale;
-                ctx.font = `${fontSize}px Sans-Serif`;
+                const fontSize = NODE_FONT_SIZE / globalScale;
+                const isSelectedNode = node.id === selectedNode.id;
+                const isChildNode = node.parentNodeId === selectedNode.id;
 
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, 10, 0, 2 * Math.PI, false);
-                ctx.fillStyle = node.isSelected ? "#5CB85C" : "#C4C4C4";
-                ctx.fill();
+                if (isSelectedNode || isChildNode) {
+                    drawNodeBorder(node, ctx);
+                }
 
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillStyle = "black";
-                ctx.fillText(label, node.x, node.y);
+                drawNodeBody(node, ctx, selectedNode.id);
+                drawText(node, ctx, node.name, fontSize);
             }}
         />
     </StyledContainer>
