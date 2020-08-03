@@ -62,17 +62,20 @@ const StyledContainer = styled.div`
     }
 `;
 
+const updateNodeName = (graphData, nodeId, text) => {
+    const node = graphData.nodes.find((n) => n.id === nodeId);
+
+    if (node) {
+        node.name = text;
+    }
+};
+
 export const CreateStoryPage = () => {
     const [storyNode, setStoryNode] = useState(rootNodeTestData);
     const [currentNodeId, setCurrentNodeId] = useState(rootNodeTestData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
-
-    const updateGraphData = () => {
-        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
-        setGraphData(nextGraphData);
-    };
 
     const onChangeStoryText = (newText) => {
         const updatedNode = updateNodeValue(storyNode, currentNodeId, {
@@ -91,7 +94,7 @@ export const CreateStoryPage = () => {
 
         if (updatedNode) {
             setStoryNode(updatedNode);
-            updateGraphData();
+            updateNodeName(graphData, currentNodeId, newTitle);
         }
     };
 
@@ -131,6 +134,7 @@ export const CreateStoryPage = () => {
         });
 
         if (updatedNode) {
+            updateNodeName(graphData, nodeId, newTitle);
             setStoryNode(updatedNode);
         }
     };
