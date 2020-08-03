@@ -1,6 +1,7 @@
 const storyNodeToGraphData = (
     storyNode,
     selectedNodeId,
+    parentNodeId,
     nodes = [],
     links = [],
     level = 1
@@ -10,6 +11,7 @@ const storyNodeToGraphData = (
         name: storyNode.name,
         group: level,
         isSelected: selectedNodeId === storyNode.id,
+        parentNodeId,
     });
 
     if (storyNode.choices && storyNode.choices.length > 0) {
@@ -21,6 +23,7 @@ const storyNodeToGraphData = (
             storyNodeToGraphData(
                 choice,
                 selectedNodeId,
+                storyNode.id,
                 nodes,
                 links,
                 level + 1
