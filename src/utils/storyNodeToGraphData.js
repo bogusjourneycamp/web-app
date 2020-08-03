@@ -10,7 +10,6 @@ const storyNodeToGraphData = (
         id: storyNode.id,
         name: storyNode.name,
         group: level,
-        isSelected: selectedNodeId === storyNode.id,
         parentNodeId,
     });
 
