@@ -13,9 +13,10 @@ const StyledContainer = styled.div`
 
 const getLinkColor = () => "#C4C4C4";
 
-const StoryGraphView = ({ data, onClickNode, selectedNode }) => (
+const StoryGraphView = ({ data, onClickNode, selectedNode, graphRef }) => (
     <StyledContainer id="view-story-outline">
         <ForceGraph
+            ref={graphRef}
             width={500}
             height={500}
             graphData={data}

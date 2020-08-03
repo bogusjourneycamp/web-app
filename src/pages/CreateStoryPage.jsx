@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Layout } from "../components/Layout";
 import { CreateStoryView } from "../components/CreateStoryView";
@@ -8,6 +8,7 @@ import addChoiceToNode from "../utils/addChoiceToNode";
 import removeChoiceFromNode from "../utils/removeChoiceFromNode";
 import StoryGraphView from "../components/StoryGraphView";
 import storyNodeToGraphData from "../utils/storyNodeToGraphData";
+import { LINK_LENGTH } from "../utils/nodeConfig";
 
 const rootNodeTestData = {
     id: "A",
@@ -64,6 +65,7 @@ export const CreateStoryPage = () => {
     const [storyNode, setStoryNode] = useState(rootNodeTestData);
     const [currentNodeId, setCurrentNodeId] = useState(rootNodeTestData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+    const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
 
     const updateGraphData = () => {
@@ -140,6 +142,10 @@ export const CreateStoryPage = () => {
         updateGraphData();
     }, [storyNode]);
 
+    useEffect(() => {
+        graphRef.current.d3Force("link").distance(LINK_LENGTH);
+    }, []);
+
     return (
         <Layout>
             <StyledContainer>
@@ -147,6 +153,7 @@ export const CreateStoryPage = () => {
                     data={graphData}
                     onClickNode={onClickNode}
                     selectedNode={currentNode}
+                    graphRef={graphRef}
                 />
                 <CreateStoryView
                     storyNode={currentNode}
