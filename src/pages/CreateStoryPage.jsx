@@ -138,12 +138,16 @@ export const CreateStoryPage = () => {
 
     useEffect(() => {
         updateGraphData();
-    }, [currentNodeId, storyNode]);
+    }, [storyNode]);
 
     return (
         <Layout>
             <StyledContainer>
-                <StoryGraphView data={graphData} onClickNode={onClickNode} />
+                <StoryGraphView
+                    data={graphData}
+                    onClickNode={onClickNode}
+                    selectedNode={currentNode}
+                />
                 <CreateStoryView
                     storyNode={currentNode}
                     onChangeStoryText={onChangeStoryText}

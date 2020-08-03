@@ -3,8 +3,6 @@
  * @param {StoryNode} rootNode
  * @param {string} nodeId
  * @param {Map} valueMap
- * @param {int} level
- * @param {int} siblingIndex
  * @returns The updated node, otherwise null
  */
 const updateNodeValue = (rootNode, nodeId, valueMap) => {
@@ -20,7 +18,7 @@ const updateNodeValue = (rootNode, nodeId, valueMap) => {
             const childNode = updateNodeValue(
                 rootNode.choices[i],
                 nodeId,
-                valueMap,
+                valueMap
             );
 
             if (childNode) {
