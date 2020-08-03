@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { StoryChoice } from './StoryChoice';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { StoryChoice } from "./StoryChoice";
+import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
 
 const StyledContainer = styled.div`
     padding: 32px 24px;
@@ -82,19 +83,20 @@ export const CreateStoryView = ({
     storyNode,
 }) => {
     useEffect(() => {
-        const textInput = document.getElementById('txt-text');
+        const textInput = document.getElementById("txt-text");
 
-        textInput.setAttribute('style', `height: ${textInput.scrollHeight}px;`);
+        textInput.setAttribute("style", `height: ${textInput.scrollHeight}px;`);
     }, []);
 
     return (
         <StyledContainer id="view-create-story">
             <input
                 id="txt-title"
+                maxLength={NODE_TEXT_LENGTH}
                 name="title"
+                onChange={(e) => onChangeStoryTitle(e.target.value)}
                 placeholder="Title"
                 value={storyNode.name}
-                onChange={(e) => onChangeStoryTitle(e.target.value)}
             />
             <textarea
                 id="txt-text"
@@ -104,10 +106,10 @@ export const CreateStoryView = ({
                     onChangeStoryText(e.target.value);
 
                     // Resize height of text
-                    e.target.setAttribute('style', 'height: auto;');
+                    e.target.setAttribute("style", "height: auto;");
                     e.target.setAttribute(
-                        'style',
-                        `height: ${e.target.scrollHeight}px;`,
+                        "style",
+                        `height: ${e.target.scrollHeight}px;`
                     );
                 }}
                 name="text"

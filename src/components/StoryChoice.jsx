@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
 
 const StyledChoiceText = styled.p`
     border: 1px solid #e5e5e5;
@@ -51,9 +52,10 @@ export const StoryChoice = ({
     return (
         <div className="story-choice">
             <StyledChoiceName>
-                Choice{' '}
+                Choice{" "}
                 <input
                     value={choice.name}
+                    maxLength={NODE_TEXT_LENGTH}
                     onChange={(e) => {
                         onChangeChoiceTitle(e.target.value);
                     }}
