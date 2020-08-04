@@ -9,6 +9,7 @@ import removeChoiceFromNode from "../utils/removeChoiceFromNode";
 import StoryGraphView from "../components/StoryGraphView";
 import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 import { LINK_LENGTH } from "../utils/nodeConfig";
+import publishStory from '../utils/publishStory';
 
 const rootNodeTestData = {
     id: "A",
@@ -138,6 +139,10 @@ export const CreateStoryPage = () => {
         setCurrentNodeId(nodeId);
     };
 
+    const onClickPublish = async () => {
+        publishStory(storyNode)
+    };
+    
     useEffect(() => {
         updateGraphData();
     }, [storyNode]);
@@ -163,6 +168,7 @@ export const CreateStoryPage = () => {
                     onClickRemoveChoice={onClickRemoveChoice}
                     onChangeChoiceText={onChangeChoiceText}
                     onChangeChoiceTitle={onChangeChoiceTitle}
+                    onClickPublish={onClickPublish}
                 />
             </StyledContainer>
         </Layout>
