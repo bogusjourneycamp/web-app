@@ -1,48 +1,50 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Layout } from '../components/Layout';
-import { CreateStoryView } from '../components/CreateStoryView';
-import { StoryOutlineView } from '../components/StoryOutlineView';
-import getNodeById from '../utils/getNodeById';
-import updateNodeValue from '../utils/updateNodeValue';
-import addChoiceToNode from '../utils/addChoiceToNode';
-import removeChoiceFromNode from '../utils/removeChoiceFromNode';
+import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import { Layout } from "../components/Layout";
+import { CreateStoryView } from "../components/CreateStoryView";
+import getNodeById from "../utils/getNodeById";
+import updateNodeValue from "../utils/updateNodeValue";
+import addChoiceToNode from "../utils/addChoiceToNode";
+import removeChoiceFromNode from "../utils/removeChoiceFromNode";
+import StoryGraphView from "../components/StoryGraphView";
+import storyNodeToGraphData from "../utils/storyNodeToGraphData";
+import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from '../utils/publishStory';
 
 const rootNodeTestData = {
-    id: 'A',
-    location: 'B_4:15',
-    text: 'lorem ipsum',
-    name: 'root',
+    id: "A",
+    location: "B_4:15",
+    text: "lorem ipsum",
+    name: "root",
     choices: [
         {
-            id: 'B',
-            name: 'also',
+            id: "B",
+            name: "also",
             choices: [
                 {
-                    id: 'C',
-                    name: 'boop',
+                    id: "C",
+                    name: "boop",
                     choices: [
                         {
-                            id: 'D',
-                            name: 'king',
+                            id: "D",
+                            name: "king",
                             choices: [],
-                            text: 'yes, please',
+                            text: "yes, please",
                         },
                         {
-                            id: 'E',
-                            name: 'queen',
+                            id: "E",
+                            name: "queen",
                             choices: [],
-                            text: 'no, thank you',
+                            text: "no, thank you",
                         },
                     ],
-                    text: 'undaddy',
+                    text: "undaddy",
                 },
             ],
-            text: 'cat cow',
+            text: "cat cow",
         },
-        { id: 'F', name: 'alps', choices: [], text: 'snarky dog' },
-        { id: 'G', name: 'army', choices: [], text: 'sneep snop' },
+        { id: "F", name: "alps", choices: [], text: "snarky dog" },
+        { id: "G", name: "army", choices: [], text: "sneep snop" },
     ],
 };
 
@@ -55,14 +57,22 @@ const StyledContainer = styled.div`
     }
 
     #view-story-outline {
-        width: 30%;
+        width: 80%;
+        min-height: 200px;
     }
 `;
 
 export const CreateStoryPage = () => {
     const [storyNode, setStoryNode] = useState(rootNodeTestData);
     const [currentNodeId, setCurrentNodeId] = useState(rootNodeTestData.id);
+    const [graphData, setGraphData] = useState({ nodes: [], links: [] });
+    const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
+
+    const updateGraphData = () => {
+        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
+        setGraphData(nextGraphData);
+    };
 
     const onChangeStoryText = (newText) => {
         const updatedNode = updateNodeValue(storyNode, currentNodeId, {
@@ -81,6 +91,7 @@ export const CreateStoryPage = () => {
 
         if (updatedNode) {
             setStoryNode(updatedNode);
+            updateGraphData();
         }
     };
 
@@ -96,7 +107,7 @@ export const CreateStoryPage = () => {
         const newNode = removeChoiceFromNode(
             storyNode,
             currentNodeId,
-            indexToRemove,
+            indexToRemove
         );
 
         if (newNode) {
@@ -131,14 +142,23 @@ export const CreateStoryPage = () => {
     const onClickPublish = async () => {
         publishStory(storyNode)
     };
+    
+    useEffect(() => {
+        updateGraphData();
+    }, [storyNode]);
+
+    useEffect(() => {
+        graphRef.current.d3Force("link").distance(LINK_LENGTH);
+    }, []);
 
     return (
         <Layout>
             <StyledContainer>
-                <StoryOutlineView
-                    currentNodeId={currentNodeId}
-                    storyNode={storyNode}
+                <StoryGraphView
+                    data={graphData}
                     onClickNode={onClickNode}
+                    selectedNode={currentNode}
+                    graphRef={graphRef}
                 />
                 <CreateStoryView
                     storyNode={currentNode}

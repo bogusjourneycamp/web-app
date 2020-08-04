@@ -2,9 +2,7 @@
  * Removes a choice from a specified node
  * @param {StoryNode} rootNode
  * @param {string} nodeId
- * @param {Map} valueMap
- * @param {int} level
- * @param {int} siblingIndex
+ * @param {int} indexToRemove
  * @returns The updated node, otherwise null
  */
 const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
@@ -12,7 +10,7 @@ const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
         return {
             ...rootNode,
             choices: rootNode.choices.filter(
-                (_, index) => index !== indexToRemove,
+                (_, index) => index !== indexToRemove
             ),
         };
     }
@@ -22,7 +20,7 @@ const removeChoiceFromNode = (rootNode, nodeId, indexToRemove) => {
             const childNode = removeChoiceFromNode(
                 rootNode.choices[i],
                 nodeId,
-                indexToRemove,
+                indexToRemove
             );
 
             if (childNode) {
