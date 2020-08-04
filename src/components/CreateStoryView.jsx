@@ -122,7 +122,7 @@ export const CreateStoryView = ({
                     <StoryChoice
                         key={`choice-${index}`}
                         choice={choice}
-                        onClickRemove={() => onClickRemoveChoice(index)}
+                        onClickRemove={() => onClickRemoveChoice(choice)}
                         onChangeChoiceText={(text) => {
                             onChangeChoiceText(choice.id, text);
                         }}

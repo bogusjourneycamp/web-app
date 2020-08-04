@@ -9,7 +9,8 @@ import removeChoiceFromNode from "../utils/removeChoiceFromNode";
 import StoryGraphView from "../components/StoryGraphView";
 import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 import { LINK_LENGTH } from "../utils/nodeConfig";
-import publishStory from '../utils/publishStory';
+import publishStory from "../utils/publishStory";
+import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 
 const rootNodeTestData = {
     id: "A",
@@ -62,17 +63,20 @@ const StyledContainer = styled.div`
     }
 `;
 
+const updateNodeName = (graphData, nodeId, text) => {
+    const node = graphData.nodes.find((n) => n.id === nodeId);
+
+    if (node) {
+        node.name = text;
+    }
+};
+
 export const CreateStoryPage = () => {
     const [storyNode, setStoryNode] = useState(rootNodeTestData);
     const [currentNodeId, setCurrentNodeId] = useState(rootNodeTestData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
-
-    const updateGraphData = () => {
-        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
-        setGraphData(nextGraphData);
-    };
 
     const onChangeStoryText = (newText) => {
         const updatedNode = updateNodeValue(storyNode, currentNodeId, {
@@ -91,27 +95,65 @@ export const CreateStoryPage = () => {
 
         if (updatedNode) {
             setStoryNode(updatedNode);
-            updateGraphData();
+            updateNodeName(graphData, currentNodeId, newTitle);
         }
     };
 
     const onClickAddChoice = () => {
-        const newNode = addChoiceToNode(storyNode, currentNode.id);
+        const result = addChoiceToNode(storyNode, currentNode.id);
 
-        if (newNode) {
-            setStoryNode(newNode);
+        if (result && result.choiceNodeAdded) {
+            setStoryNode(result.storyNode);
+
+            // Add new graph node and link to graphData
+            const newGraphNode = getGraphDataNodeFromStoryNode(
+                result.choiceNodeAdded,
+                currentNode.id
+            );
+            const newLink = {
+                source: currentNode.id,
+                target: result.choiceNodeAdded.id,
+            };
+            setGraphData({
+                nodes: [...graphData.nodes, newGraphNode],
+                links: [...graphData.links, newLink],
+            });
         }
     };
 
-    const onClickRemoveChoice = (indexToRemove) => {
-        const newNode = removeChoiceFromNode(
+    const onClickRemoveChoice = (choice) => {
+        const newStoryNode = removeChoiceFromNode(
             storyNode,
             currentNodeId,
-            indexToRemove
+            choice.id
         );
 
-        if (newNode) {
-            setStoryNode(newNode);
+        if (newStoryNode) {
+            // This is a graph data representation of the new story node
+            const newGraphData = storyNodeToGraphData(newStoryNode);
+
+            // With the new story node graph representation, we're going to retrieve the existing
+            // node/links to preserve its instance, so that the ForceGraph won't render the node
+            // entering animations for all the nodes at once.
+            const newNodes = newGraphData.nodes
+                .map((newNode) =>
+                    graphData.nodes.find((node) => node.id === newNode.id)
+                )
+                .filter((value) => value);
+
+            const newLinks = newGraphData.links.map((newLink) =>
+                graphData.links.find(
+                    (link) =>
+                        link.source.id === newLink.source &&
+                        link.target.id === newLink.target
+                )
+            );
+
+            setGraphData({
+                nodes: newNodes,
+                links: newLinks,
+            });
+            setStoryNode(newStoryNode);
         }
     };
 
@@ -131,6 +173,7 @@ export const CreateStoryPage = () => {
         });
 
         if (updatedNode) {
+            updateNodeName(graphData, nodeId, newTitle);
             setStoryNode(updatedNode);
         }
     };
@@ -140,14 +183,15 @@ export const CreateStoryPage = () => {
     };
 
     const onClickPublish = async () => {
-        publishStory(storyNode)
+        publishStory(storyNode);
     };
-    
-    useEffect(() => {
-        updateGraphData();
-    }, [storyNode]);
 
     useEffect(() => {
+        // Initialize graph data
+        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
+        setGraphData(nextGraphData);
+
+        // Set link distance between nodes
         graphRef.current.d3Force("link").distance(LINK_LENGTH);
     }, []);
 

@@ -1,4 +1,4 @@
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
 
 /**
  * Adds a choice to a specified node
@@ -9,32 +9,37 @@ import { v4 } from 'uuid';
  */
 const addChoiceToNode = (rootNode, nodeId, level = 0) => {
     if (rootNode.id === nodeId) {
+        const choiceNodeAdded = {
+            id: v4(),
+            name: "",
+            text: "",
+            choices: [],
+        };
+
         return {
-            ...rootNode,
-            choices: [
-                ...rootNode.choices,
-                {
-                    id: v4(), name: '', text: '', choices: [],
-                },
-            ],
+            storyNode: {
+                ...rootNode,
+                choices: [...rootNode.choices, choiceNodeAdded],
+            },
+            choiceNodeAdded,
         };
     }
 
     if (rootNode.choices && rootNode.choices.length > 0) {
         for (let i = 0; i < rootNode.choices.length; i += 1) {
-            const childNode = addChoiceToNode(
+            const result = addChoiceToNode(
                 rootNode.choices[i],
                 nodeId,
                 level + 1,
-                i,
+                i
             );
 
-            if (childNode) {
+            if (result) {
                 // Not sure how else to update a choice efficiently
                 // eslint-disable-next-line no-param-reassign
-                rootNode.choices[i] = { ...childNode };
+                rootNode.choices[i] = { ...result.storyNode };
 
-                return { ...rootNode };
+                return { ...result, storyNode: { ...rootNode } };
             }
         }
     }
