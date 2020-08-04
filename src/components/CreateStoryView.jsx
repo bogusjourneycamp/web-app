@@ -139,7 +139,7 @@ export const CreateStoryView = ({
                 + Add a choice
             </StyledButton>
             <StyledButton
-                id="btn-add-choice"
+                id="btn-publish"
                 type="button"
                 onClick={onClickPublish}
             >
