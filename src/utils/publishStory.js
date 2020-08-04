@@ -6,7 +6,7 @@ const publishStory = async (storyNode) => {
         body: JSON.stringify(storyNode)
     };
     const res = await fetch(url, requestOptions)
-    return res.json();
+    return res;
 };
 
 export default publishStory;
