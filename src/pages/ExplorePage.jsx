@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const loadingNode = {
     title: 'LOADING....',
-    location: '0_6:00',
+    location: 'A_12:30',
     text: 'Welcome!',
     name: 'root',
     choices: [],
@@ -173,66 +173,51 @@ const StyledContainer = styled.div`
 `;
 
 function Actions(props) {
+  let value = props.value
     return (
         <div id="actions">
-            {props.value.map((item, index) => (
+            {value.map((item, index) => (
                 <button onClick={() => props.onTakeAction(item.name)}>
                     {item.name}
                 </button>
             ))}
         </div>
     );
-}
-
-const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G"]
-
-// 30/4 = 7.5
-const fifteenMinAngle = 7.5;
-
-function timeToAngle(hour, minutes){
-  return 30*(hour%12) + fifteenMinAngle * (minutes/15);
-}
-function angleToTime(angle){
-  // 360/12 = 30
-  let hour = Math.floor(angle/30)
-  let minutes = (angle%30)*(15/fifteenMinAngle)
-  if(hour === 0){
-    hour = 12;
   }
-  return hour + ":" + minutes.toString().padStart(2, "0")
-}
-
 
 function nextLocation(location, dir){
-
-  if(location == "Man"){
-    return "Esplanade_6:00"
-  }
-
-  var split = location.replace("_", ":").split(":")
-  var letter = split[0]
-  var hour = parseInt(split[1])
-  var minutes = parseInt(split[2])
-
-  // TODO special case for the man
-
-  var letterInd = alphabet.indexOf(letter)
-
-  if(dir === "towards" && letterInd>0){
-    if(letterInd - 1 === 0){
-      return alphabet[0]
+  const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G"]
+  const clock = ['1:00', '1:15', '1:30', '1:45', '2:00', '2:15', '2:30', '2:45', '3:00', '3:15', '3:30', '3:45', '4:00', '4:15', '4:30', '4:45', '5:00', '5:15', '5:30', '5:45', '6:00', '6:15', '6:30', '6:45', '7:00', '7:15', '7:30', '7:45', '8:00', '8:15', '8:30', '8:45', '9:00', '9:15', '9:30', '9:45', '10:00', '10:15', '10:30', '10:45', '11:00', '11:15', '11:30', '11:45', '12:00', '12:15', '12:30', '12:45']
+  let split = location.split("_")
+  let letter = split[0]
+  let time = split[1]
+  let letterInd = alphabet.indexOf(letter)
+  let clockInd = clock.indexOf(time)
+  
+  if (dir === 'towards') {
+    if (letterInd === 0) {
+      return location
     }
-    return alphabet[letterInd-1] + "_" + hour + ":" + minutes.toString().padStart(2, "0")
-  } else if (dir === "away" && letterInd<alphabet.length - 1){
-    return alphabet[letterInd+1] + "_" + hour + ":" + minutes.toString().padStart(2, "0")
-  } 
-  if(dir === "fastforward"){
-    return letter + "_" + angleToTime(timeToAngle(hour, minutes)+fifteenMinAngle)
-  } else if (dir === "rewind"){
-    return letter + "_" + angleToTime(timeToAngle(hour, minutes)-fifteenMinAngle)
+    return alphabet[letterInd - 1] + "_" + time
   }
-
-  return location;
+  else if (dir === 'away') {
+    if (letterInd === alphabet.length - 1) {
+      return location
+    }
+    return alphabet[letterInd + 1] + "_" + time
+  }
+  else if (dir === 'clockwise') {
+    if (clockInd === clock.length - 1) {
+      return letter + "_" + clock[0]
+    }
+    return letter + "_" + clock[clockInd + 1]
+  }
+  else if (dir === 'counter_clockwise') {
+    if (clockInd === 0) {
+      return letter + "_" + clock[clock.length - 1]
+    }
+    return letter + "_" + clock[clockInd - 1]
+  }
 }
 
 function Navigation(props) {
@@ -244,13 +229,13 @@ function Navigation(props) {
             <button id = "navaway" onClick={() => props.onNewLocation(nextLocation(props.location, 'away'))}>
                 &#x025CB;
             </button>
-            <button id = "navfastforward" onClick={() => props.onNewLocation(nextLocation(props.location, 'fastforward'))}>
+            <button id = "navfastforward" onClick={() => props.onNewLocation(nextLocation(props.location, 'clockwise'))}>
                 +:15
             </button>
             <button id = "navtowards" onClick={() => props.onNewLocation(nextLocation(props.location, 'towards'))}>
                 &#x025EF;
             </button>
-            <button id = "navrewind" onClick={() => props.onNewLocation(nextLocation(props.location, 'rewind'))}>
+            <button id = "navrewind" onClick={() => props.onNewLocation(nextLocation(props.location, 'counter_clockwise'))}>
                 -:15
             </button>
         </div>
@@ -263,7 +248,7 @@ class Edit extends React.Component {
             // For local!
             //             <div id="fancy-button"><a id="edit-button" href="http://localhost:3000/create-story">Edit</a></div>
             <div id="fancy-button">
-                <Link id="edit-button" to="/create-story">
+                <Link id="edit-button" to={{pathname: "/create-story", test: this.state}}>
                     Edit
                 </Link>
             </div>
@@ -319,33 +304,35 @@ function unclaimedNode(location){
   };
 };
 
-const getNode = async (location) => {
-    /*
-  If you run into CORS issues like I did.
-  https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
-  */
-    let url = `https://891y83rxbd.execute-api.us-east-1.amazonaws.com/prod/story?location=${location}`;
-    const res = await fetch(url);
-    if (!res.ok){
-      return unclaimedNode(location)
-    };
-    return res.json();
-};
-
 export class ExplorePage extends React.Component{
   constructor(props) {
     super(props);
+    this.state = loadingNode
     const query = new URLSearchParams(this.props.location.search)
-    var location = query.get('location')
-
-    if (location == null) {
-      location = "Man"
-    }
-
-    this.state = loadingNode;
     this.onNewLocation = this.onNewLocation.bind(this)
     this.onTakeAction = this.onTakeAction.bind(this)
-    this.onNewLocation(location);
+  }
+
+  componentDidMount() {
+    let url = `https://891y83rxbd.execute-api.us-east-1.amazonaws.com/prod/story?location=${this.state.location}`;
+    let node = {}
+    fetch(url)
+      .then(res => res.json())
+      .then((res) => {
+        if (JSON.stringify(res) === '{}') {
+          node = unclaimedNode(this.state.location)
+        }
+        else {
+          node = res
+        }
+        this.setState({
+          name: node["location"] || 'Untitled',
+          location: node["location"],
+          title: node["title"] || 'Untitled',
+          text: node["text"],
+          choices: node["choices"],
+        })
+      });
   }
 
   onTakeAction(action_name) {
@@ -357,18 +344,26 @@ export class ExplorePage extends React.Component{
   }
 
   onNewLocation(location) {
-    getNode(location).then((node) => {
-      if(Object.keys(node).length === 0){
-        node = unclaimedNode(location)
-      }
-      this.setState({
-        name: node["name"]|| 'Untitled',
-        location: node["location"],
-        title: node["title"],
-        text: node["text"],
-        choices: node["choices"],
-      })
-    });
+    this.setState({location: location})
+    let url = `https://891y83rxbd.execute-api.us-east-1.amazonaws.com/prod/story?location=${this.state.location}`;
+    let node = {}
+    fetch(url)
+      .then(res => res.json())
+      .then((res) => {
+        if (JSON.stringify(res) === '{}') {
+          node = unclaimedNode(location)
+        }
+        else {
+          node = res
+        }
+        this.setState({
+          name: node["location"] || 'Untitled',
+          location: node["location"],
+          title: node["title"] || 'Untitled',
+          text: node["text"],
+          choices: node["choices"],
+        })
+      });
     this.props.history.push({
       search: "?" + new URLSearchParams({location: location}).toString()
     });
@@ -380,14 +375,18 @@ export class ExplorePage extends React.Component{
             <div id="explore">
                 <div id="explore-story">
                     <Story
-                        title={this.state.title}
+                        title={this.state.location}
                         text={this.state.text}
                         actions={this.state.choices}
                         onTakeAction={this.onTakeAction}
                     />
                 </div>
                 <div id="explore-navigation">
-                    <Navigation location={this.state.location} onNewLocation={this.onNewLocation}/>
+                    <Navigation
+                      location={this.state.location}
+                      getNode={this.getNode}
+                      onNewLocation={this.onNewLocation}
+                    />
                 </div>
             </div>
         </StyledContainer>
