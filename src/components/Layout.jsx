@@ -1,7 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import { Nav } from "./Nav";
+import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { FONT_FAMILY_MONOSPACE } from "../utils/styleConfig";
 
@@ -35,7 +35,7 @@ export const Layout = ({ children }) => {
     return (
         <StyledContainer>
             <header>
-                <Nav />
+                <Header />
             </header>
             <main>{children}</main>
             <Footer />
