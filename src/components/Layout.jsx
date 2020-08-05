@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const StyledContainer = styled.div`
+    border: 1px solid black;
     font-family: Helvetica, Arial, sans-serif;
 
     .monospace {
