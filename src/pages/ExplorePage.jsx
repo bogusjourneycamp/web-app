@@ -295,8 +295,6 @@ function Navigation(props) {
 class Edit extends React.Component {
     render() {
         return (
-            // For local!
-            //             <div id="fancy-button"><a id="edit-button" href="http://localhost:3000/create-story">Edit</a></div>
             <div id="fancy-button">
                 <Link
                     id="edit-button"
@@ -372,7 +370,7 @@ export class ExplorePage extends React.Component {
     }
 
     componentDidMount() {
-        let url = `${API_URL}/story?location=${this.state.location}`;
+        let url = `${API_URL}/story/${this.state.location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
@@ -402,7 +400,7 @@ export class ExplorePage extends React.Component {
 
     onNewLocation(location) {
         this.setState({ location: location });
-        let url = `https://891y83rxbd.execute-api.us-east-1.amazonaws.com/prod/story?location=${this.state.location}`;
+        let url = `${API_URL}/story/${this.state.location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
