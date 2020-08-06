@@ -416,7 +416,7 @@ function unclaimedNode(location) {
 export class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = loadingNode;
+        this.state = rootNodeTestData;
         const query = new URLSearchParams(this.props.location.search);
         this.onNewLocation = this.onNewLocation.bind(this);
         this.onTakeAction = this.onTakeAction.bind(this);
