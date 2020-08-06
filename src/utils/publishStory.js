@@ -1,7 +1,7 @@
 import { API_URL } from "./urls";
 
 const publishStory = (storyNode) => {
-    const url = `${API_URL}/stories`;
+    const url = `${API_URL}/story`;
 
     const requestOptions = {
         method: "POST",

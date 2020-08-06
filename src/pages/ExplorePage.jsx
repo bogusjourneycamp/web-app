@@ -370,7 +370,7 @@ export class ExplorePage extends React.Component {
     }
 
     componentDidMount() {
-        let url = `${API_URL}/stories/${this.state.location}`;
+        let url = `${API_URL}/story/${this.state.location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
@@ -400,7 +400,7 @@ export class ExplorePage extends React.Component {
 
     onNewLocation(location) {
         this.setState({ location: location });
-        let url = `${API_URL}/stories/${this.state.location}`;
+        let url = `${API_URL}/story/${this.state.location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
