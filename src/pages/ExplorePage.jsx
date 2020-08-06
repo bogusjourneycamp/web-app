@@ -4,12 +4,49 @@ import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { API_URL } from "../utils/urls";
 
-const loadingNode = {
+const rootNodeTestData = {
+    id: "A",
     title: "test",
-    location: "A_12:30",
-    text: "Welcome!",
+    location: "B_4:15",
+    text: "lorem ipsum",
     name: "root",
-    choices: [],
+    choices: {
+        "Choice 1": {
+            id: "B",
+            name: "also",
+            choices: {
+                "Inner choice 1": {
+                    id: "C",
+                    name: "boop",
+                    choices: {
+                        "Inner inner choice 1": {
+                            id: "D",
+                            name: "king",
+                            choices: {},
+                            text: "yes, please",
+                        },
+                        "Inner inner choice 2": {
+                            id: "E",
+                            name: "queen",
+                            choices: {},
+                            text: "no, thank you",
+                        },
+                    },
+                    text: "undaddy",
+                },
+            },
+            text: "cat cow",
+        },
+        "Choice 2": { id: "F", name: "alps", choices: {}, text: "snarky dog" },
+        "Choice 3": { id: "G", name: "army", choices: {}, text: "sneep snop" },
+    },
+};
+const loadingNode = {
+    title: 'test',
+    location: 'A_12:30',
+    text: 'Welcome!',
+    name: 'root',
+    choices: {},
 };
 
 const StyledContainer = styled.div`
@@ -152,15 +189,29 @@ const StyledContainer = styled.div`
 
         color: #373a3c;
     }
+
+    #actions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #action-button {
+        border: 1px solid #E5E5E5;
+        background: #FFFFFF;
+        margin: 10px;
+        padding: 10px;
+        font-size: 20px;
+        line-height: 30px;
+    }
 `;
 
 function Actions(props) {
     let value = props.value;
     return (
         <div id="actions">
-            {value.map((item, index) => (
-                <button onClick={() => props.onTakeAction(item.name)}>
-                    {item.name}
+            {Object.keys(value).map((key, index) => (
+                <button id="action-button" onClick={() => props.onTakeAction(value[key].name)}>
+                    {key}
                 </button>
             ))}
         </div>
@@ -322,16 +373,14 @@ function Story(props) {
     return (
         <div id="story">
             <div id="story-top">
-                <div id="title-div">
-                    <div id="title">{props.title}</div>
-                </div>
+                <div id="title-div"><div id="title">{props.title}</div></div>
                 <Edit />
                 <Share />
             </div>
             <div id="story-bottom">
                 <div id="story-text">{props.text}</div>
+                <Actions value={props.actions} onTakeAction={props.onTakeAction} />
             </div>
-            <Actions value={props.actions} onTakeAction={props.onTakeAction} />
         </div>
     );
 }
@@ -343,7 +392,9 @@ function findNode(root, name) {
         if (node["name"] === name) {
             return node;
         } else {
-            toVisit = toVisit.concat(node["choices"]);
+            for (let key of Object.keys(node['choices'])) {
+                toVisit.push(node['choices'][key])
+            }
         }
     }
     return null;
@@ -363,7 +414,7 @@ function unclaimedNode(location) {
 export class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = loadingNode;
+        this.state = rootNodeTestData;
         const query = new URLSearchParams(this.props.location.search);
         this.onNewLocation = this.onNewLocation.bind(this);
         this.onTakeAction = this.onTakeAction.bind(this);
