@@ -6,6 +6,8 @@ const StyledNav = styled.nav`
     text-align: right;
     padding: 24px;
 
+    flex-grow: 3;
+
     a:not(:last-child) {
         margin: 0 16px;
     }

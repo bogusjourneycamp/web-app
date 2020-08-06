@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { Layout } from '../components/Layout';
+import { Layout } from '../components/Layout';
 
 const loadingNode = {
-    title: 'LOADING....',
+    title: 'test',
     location: 'A_12:30',
     text: 'Welcome!',
     name: 'root',
@@ -12,33 +12,7 @@ const loadingNode = {
 };
 
 const StyledContainer = styled.div`
-    background-color: #e5e5e5;
-
-    #title {
-        position: absolute;
-        width: 600px;
-        height: 79px;
-        left: 49px;
-        top: 58px;
-
-        font-family: HelveticaNeue;
-        font-size: 72px;
-        line-height: 79px;
-        /* identical to box height, or 110% */
-
-        display: flex;
-        align-items: flex-end;
-
-        color: #373a3c;
-    }
-
     #location {
-        position: absolute;
-        width: 600px;
-        height: 79px;
-        left: 49px;
-        top: 100px;
-
         font-family: HelveticaNeue;
         font-size: 25px;
         line-height: 30px;
@@ -50,32 +24,7 @@ const StyledContainer = styled.div`
         color: #373a3c;
     }
 
-    #story-text {
-        position: absolute;
-        width: 916px;
-        height: 632px;
-        left: 49px;
-        top: 182px;
-
-        font-family: HelveticaNeue;
-        font-size: 20px;
-        line-height: 30px;
-        /* or 150% */
-
-        display: flex;
-
-        color: #373a3c;
-    }
-
     #actions {
-        /* card */
-
-        position: absolute;
-        width: 916px;
-        height: 68px;
-        left: 49px;
-        top: 842px;
-
         background: #ffffff;
         border: 1px solid #e5e5e5;
         box-sizing: border-box;
@@ -83,13 +32,6 @@ const StyledContainer = styled.div`
     }
 
     #navigation {
-        /* card */
-        position: absolute;
-        width: 300px;
-        height: 68px;
-        left: 49px;
-        top: 910px;
-
         background: #ffffff;
         border: 1px solid #e5e5e5;
         box-sizing: border-box;
@@ -101,7 +43,6 @@ const StyledContainer = styled.div`
         grid-auto-rows: minmax(100px, auto);
     }
 
-  }
     #navfastforward {
       grid-column: 3;
       grid-row: 2;
@@ -126,41 +67,70 @@ const StyledContainer = styled.div`
       align-items: center;
     }
 
-    #share-button {
-        position: absolute;
-        height: 38px;
-        width: 112px;
-        top: 87px;
-        left: 777px;
+    #story {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-        border: 1px solid #0275d8;
-        box-sizing: border-box;
+    #story-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #title-div {
+        display: flex;
+        flex-grow: 8;
+    }
+
+    #title {
+        font-family: HelveticaNeue;
+        font-size: 72px;
+        line-height: 79px;
+        /* identical to box height, or 110% */
+
+        display: flex;
+
+        color: #373a3c;
+        margin: 40px;
+    }
+
+    #share-button {
+        font-family: HelveticaNeue;
+        font-size: 25px;
+        color: #0275d8;
+
         text-decoration: none;
+        text-align: center;
+        text-align: center;
+        vertical-align: middle;
+        height: 38px;
+        flex-grow: 1;
     }
 
     #edit-button {
-        position: absolute;
-        height: 38px;
-        width: 97px;
-        top: 87px;
-        left: 644px;
+        font-family: HelveticaNeue;
+        font-size: 25px;
+        color: #0275d8;
 
-        border: 1px solid #0275d8;
-        box-sizing: border-box;
         text-decoration: none;
+        text-align: center;
+        vertical-align: middle;
+        height: 38px;
+
+        flex-frow: 1;
     }
 
     #fancy-button {
-        font-family: HelveticaNeue;
-        font-size: 25px;
-        /* identical to box height, or 84% */
-
-        color: #0275d8;
-
+        border: 1px solid #0275d8;
+        box-sizing: border-box;
         text-align: center;
-
-        background: #ffffff;
-        border-radius: 4px;
+        vertical-align: middle;
+        width: 110px;
+        height: 38px;
+        margin: 20px;
     }
 
     #edit-button:visited {
@@ -169,6 +139,17 @@ const StyledContainer = styled.div`
 
     #share-button:visited {
         color: #0275d8;
+    }
+
+    #story-text {
+        font-family: HelveticaNeue;
+        font-size: 20px;
+        line-height: 30px;
+        margin: 20px;
+
+        display: flex;
+
+        color: #373a3c;
     }
 `;
 
@@ -268,16 +249,17 @@ class Share extends React.Component {
 }
 
 function Story(props) {
-    const element = (
-        <div>
-            <div id="title">{props.title}</div>
+    return <div id="story">
+        <div id="story-top">
+            <div id="title-div"><div id="title">{props.title}</div></div>
             <Edit />
             <Share />
-            <div id="story-text">{props.text}</div>
-            <Actions value={props.actions} onTakeAction={props.onTakeAction} />
         </div>
-    );
-    return <div id="story">{element}</div>;
+        <div id="story-bottom">
+            <div id="story-text">{props.text}</div>
+        </div>
+        <Actions value={props.actions} onTakeAction={props.onTakeAction} />
+    </div>;
 }
 
 function findNode(root, name) {
@@ -371,25 +353,21 @@ export class ExplorePage extends React.Component{
 
   render() {
     return (
-        <StyledContainer>
-            <div id="explore">
-                <div id="explore-story">
-                    <Story
-                        title={this.state.location}
-                        text={this.state.text}
-                        actions={this.state.choices}
-                        onTakeAction={this.onTakeAction}
-                    />
-                </div>
-                <div id="explore-navigation">
-                    <Navigation
-                      location={this.state.location}
-                      getNode={this.getNode}
-                      onNewLocation={this.onNewLocation}
-                    />
-                </div>
-            </div>
-        </StyledContainer>
+        <Layout>
+            <StyledContainer>
+                <Story
+                    title={this.state.title}
+                    text={this.state.text}
+                    actions={this.state.choices}
+                    onTakeAction={this.onTakeAction}
+                />
+                <Navigation
+                    location={this.state.location}
+                    getNode={this.getNode}
+                    onNewLocation={this.onNewLocation}
+                />
+            </StyledContainer>
+        </Layout>
     );
   }
 }
