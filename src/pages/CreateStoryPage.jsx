@@ -22,7 +22,6 @@ const StyledContainer = styled.div`
     }
 
     #view-story-outline {
-        width: 80%;
         min-height: 200px;
     }
 `;

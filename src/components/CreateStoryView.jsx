@@ -42,6 +42,10 @@ const StyledContainer = styled.div`
         width: 100%;
     }
 
+    #btn-add-choice {
+        margin-right: 10px;
+    }
+
     .story-choices {
         margin-top: 24px;
     }
@@ -136,7 +140,7 @@ export const CreateStoryView = ({
                 type="button"
                 onClick={onClickPublish}
             >
-                PUBLISH
+                Publish
             </StyledButton>
         </StyledContainer>
     );

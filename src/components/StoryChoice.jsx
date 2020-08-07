@@ -11,6 +11,7 @@ const StyledChoiceText = styled.p`
     padding: 12px;
 
     textarea {
+        font-family: Helvetica, sans-serif;
         resize: none;
         border: none;
         width: 100%;
@@ -23,7 +24,20 @@ const StyledChoiceText = styled.p`
 
 const StyledChoiceName = styled.div`
     font-size: 12px;
-    margin: 12px 0;
+    margin: 12px 0 6px;
+    display: flex;
+    align-items: baseline;
+
+    input {
+        font-size: 12px;
+        font-family: Helvetica, sans-serif;
+        margin-left: 2px;
+        border: none;
+        width: 80px;
+        :focus {
+            outline: none;
+        }
+    }
 `;
 
 const StyledRemoveButton = styled.button`
@@ -70,6 +84,7 @@ export const StoryChoice = ({
                     onChange={(e) => {
                         onChangeChoiceTitle(e.target.value);
                     }}
+                    placeholder="Walk"
                 />
                 <StyledRemoveButton type="button" onClick={onClickRemove}>
                     X
