@@ -1,8 +1,7 @@
 {
     "id": "A",
-    "title": "A burgin's first exploration",
+    "selectionText": "A burgin's first exploration",
     "location": "B_4:15",
-    "selectionText": "",
     "storyText": "It's noon on Monday, the second official day of Burning Man, and you’re a virgin burner. After spending all day yesterday setting up camp, you get ready to dress up and head out on your first exploration of Black Rock City. You head into your tent to pick out an outfit.\n\nAfter all, radical self-expression is one of Burning Man’s 10 principles. And the costumes and outfits people wear make the city come to life with wonder.\n\nWhich of these do you choose to wear?",
     "name": "root",
     "choices": [

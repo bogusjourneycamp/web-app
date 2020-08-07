@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { StoryChoice } from "./StoryChoice";
-import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
 
 const StyledContainer = styled.div`
     padding: 32px 24px;
@@ -77,7 +76,6 @@ export const CreateStoryView = ({
     onClickAddChoice,
     onClickRemoveChoice,
     onChangeStoryText,
-    onChangeStoryTitle,
     onChangeSelectionText,
     onChangeChoiceTitle,
     storyNode,
@@ -93,9 +91,10 @@ export const CreateStoryView = ({
         <StyledContainer id="view-create-story">
             <input
                 id="txt-selection-text"
-                maxLength={NODE_TEXT_LENGTH}
                 name="selectionText"
-                onChange={(e) => onChangeStoryTitle(e.target.value)}
+                onChange={(e) => {
+                    onChangeSelectionText(storyNode.id, e.target.value);
+                }}
                 placeholder="Title"
                 value={storyNode.selectionText}
             />

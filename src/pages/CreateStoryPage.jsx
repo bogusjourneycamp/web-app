@@ -44,22 +44,11 @@ export const CreateStoryPage = () => {
 
     const onChangeStoryText = (newText) => {
         const updatedNode = updateNodeValue(storyNode, currentNodeId, {
-            text: newText,
+            storyText: newText,
         });
 
         if (updatedNode) {
             setStoryNode(updatedNode);
-        }
-    };
-
-    const onChangeStoryTitle = (newTitle) => {
-        const updatedNode = updateNodeValue(storyNode, currentNodeId, {
-            name: newTitle,
-        });
-
-        if (updatedNode) {
-            setStoryNode(updatedNode);
-            updateNodeName(graphData, currentNodeId, newTitle);
         }
     };
 
@@ -171,7 +160,6 @@ export const CreateStoryPage = () => {
                 <CreateStoryView
                     storyNode={currentNode}
                     onChangeStoryText={onChangeStoryText}
-                    onChangeStoryTitle={onChangeStoryTitle}
                     onClickAddChoice={onClickAddChoice}
                     onClickRemoveChoice={onClickRemoveChoice}
                     onChangeSelectionText={onChangeSelectionText}
