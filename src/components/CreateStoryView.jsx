@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { StoryChoice } from "./StoryChoice";
+import AutoResizingTextArea from "./AutoResizingTextArea";
 
 const StyledContainer = styled.div`
     padding: 32px 24px;
@@ -27,6 +28,7 @@ const StyledContainer = styled.div`
         font-size: 54px;
         font-weight: 300;
         margin-bottom: 24px;
+        width: 100%;
     }
 
     #txt-story-text {
@@ -98,20 +100,10 @@ export const CreateStoryView = ({
                 placeholder="Title"
                 value={storyNode.selectionText}
             />
-            <textarea
+            <AutoResizingTextArea
                 id="txt-story-text"
                 value={storyNode.storyText}
-                rows={1}
-                onChange={(e) => {
-                    onChangeStoryText(e.target.value);
-
-                    // Resize height of text
-                    e.target.setAttribute("style", "height: auto;");
-                    e.target.setAttribute(
-                        "style",
-                        `height: ${e.target.scrollHeight}px;`
-                    );
-                }}
+                onChangeText={onChangeStoryText}
                 name="text"
                 placeholder="Once upon a time, I was looking for blue waffles..."
             />
