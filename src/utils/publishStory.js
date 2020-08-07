@@ -1,7 +1,7 @@
-import { API_URL } from "./urls";
+import { API_URL, CORS_PROXY_URL } from "./urls";
 
 const publishStory = (storyNode) => {
-    const url = `${API_URL}/story`;
+    const url = `${CORS_PROXY_URL}/${API_URL}/story`;
 
     const requestOptions = {
         method: "POST",
