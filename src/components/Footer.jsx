@@ -7,5 +7,5 @@ const StyledFooter = styled.footer`
 `;
 
 export const Footer = () => {
-    return <StyledFooter>BJ Playa Adventure &copy; 2020</StyledFooter>;
+    return <StyledFooter>The Lost Arts &copy; 2020</StyledFooter>;
 };
