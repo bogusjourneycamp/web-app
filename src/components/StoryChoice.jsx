@@ -47,7 +47,7 @@ export const StoryChoice = ({
     choice,
     onClickRemove,
     onChangeChoiceTitle,
-    onChangeChoiceText,
+    onChangeSelectionText,
 }) => {
     return (
         <div className="story-choice">
@@ -66,9 +66,9 @@ export const StoryChoice = ({
             </StyledChoiceName>
             <StyledChoiceText>
                 <textarea
-                    value={choice.text}
+                    value={choice.selectionText}
                     onChange={(e) => {
-                        onChangeChoiceText(e.target.value);
+                        onChangeSelectionText(e.target.value);
                     }}
                 />
             </StyledChoiceText>

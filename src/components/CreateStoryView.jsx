@@ -6,15 +6,15 @@ import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
 const StyledContainer = styled.div`
     padding: 32px 24px;
 
-    #txt-title,
-    #txt-text {
+    #txt-selection-text,
+    #txt-story-text {
         :focus {
             outline: none !important;
         }
     }
 
-    #txt-title,
-    #txt-text {
+    #txt-selection-text,
+    #txt-story-text {
         display: block;
         border: none;
 
@@ -23,14 +23,14 @@ const StyledContainer = styled.div`
         }
     }
 
-    #txt-title {
+    #txt-selection-text {
         font-family: Helvetica, sans-serif;
         font-size: 54px;
         font-weight: 300;
         margin-bottom: 24px;
     }
 
-    #txt-text {
+    #txt-story-text {
         box-sizing: border-box;
         font-family: Helvetica, sans-serif;
         font-size: 18px;
@@ -78,13 +78,13 @@ export const CreateStoryView = ({
     onClickRemoveChoice,
     onChangeStoryText,
     onChangeStoryTitle,
-    onChangeChoiceText,
+    onChangeSelectionText,
     onChangeChoiceTitle,
     storyNode,
-    onClickPublish
+    onClickPublish,
 }) => {
     useEffect(() => {
-        const textInput = document.getElementById("txt-text");
+        const textInput = document.getElementById("txt-story-text");
 
         textInput.setAttribute("style", `height: ${textInput.scrollHeight}px;`);
     }, []);
@@ -92,16 +92,16 @@ export const CreateStoryView = ({
     return (
         <StyledContainer id="view-create-story">
             <input
-                id="txt-title"
+                id="txt-selection-text"
                 maxLength={NODE_TEXT_LENGTH}
-                name="title"
+                name="selectionText"
                 onChange={(e) => onChangeStoryTitle(e.target.value)}
                 placeholder="Title"
-                value={storyNode.name}
+                value={storyNode.selectionText}
             />
             <textarea
-                id="txt-text"
-                value={storyNode.text}
+                id="txt-story-text"
+                value={storyNode.storyText}
                 rows={1}
                 onChange={(e) => {
                     onChangeStoryText(e.target.value);
@@ -123,8 +123,8 @@ export const CreateStoryView = ({
                         key={`choice-${index}`}
                         choice={choice}
                         onClickRemove={() => onClickRemoveChoice(choice)}
-                        onChangeChoiceText={(text) => {
-                            onChangeChoiceText(choice.id, text);
+                        onChangeSelectionText={(text) => {
+                            onChangeSelectionText(choice.id, text);
                         }}
                         onChangeChoiceTitle={(title) => {
                             onChangeChoiceTitle(choice.id, title);
