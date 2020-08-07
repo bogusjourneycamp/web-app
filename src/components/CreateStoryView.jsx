@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { StoryChoice } from "./StoryChoice";
-import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
+import AutoResizingTextArea from "./AutoResizingTextArea";
 
 const StyledContainer = styled.div`
     padding: 32px 24px;
@@ -28,6 +28,7 @@ const StyledContainer = styled.div`
         font-size: 54px;
         font-weight: 300;
         margin-bottom: 24px;
+        width: 100%;
     }
 
     #txt-story-text {
@@ -39,6 +40,10 @@ const StyledContainer = styled.div`
         margin-bottom: 12px;
         resize: none;
         width: 100%;
+    }
+
+    #btn-add-choice {
+        margin-right: 10px;
     }
 
     .story-choices {
@@ -77,7 +82,6 @@ export const CreateStoryView = ({
     onClickAddChoice,
     onClickRemoveChoice,
     onChangeStoryText,
-    onChangeStoryTitle,
     onChangeSelectionText,
     onChangeChoiceTitle,
     storyNode,
@@ -93,26 +97,17 @@ export const CreateStoryView = ({
         <StyledContainer id="view-create-story">
             <input
                 id="txt-selection-text"
-                maxLength={NODE_TEXT_LENGTH}
                 name="selectionText"
-                onChange={(e) => onChangeStoryTitle(e.target.value)}
+                onChange={(e) => {
+                    onChangeSelectionText(storyNode.id, e.target.value);
+                }}
                 placeholder="Title"
                 value={storyNode.selectionText}
             />
-            <textarea
+            <AutoResizingTextArea
                 id="txt-story-text"
                 value={storyNode.storyText}
-                rows={1}
-                onChange={(e) => {
-                    onChangeStoryText(e.target.value);
-
-                    // Resize height of text
-                    e.target.setAttribute("style", "height: auto;");
-                    e.target.setAttribute(
-                        "style",
-                        `height: ${e.target.scrollHeight}px;`
-                    );
-                }}
+                onChangeText={onChangeStoryText}
                 name="text"
                 placeholder="Once upon a time, I was looking for blue waffles..."
             />
@@ -145,7 +140,7 @@ export const CreateStoryView = ({
                 type="button"
                 onClick={onClickPublish}
             >
-                PUBLISH
+                Publish
             </StyledButton>
         </StyledContainer>
     );

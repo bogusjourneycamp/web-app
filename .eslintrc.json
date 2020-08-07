@@ -12,7 +12,8 @@
         "react/prop-types": "off",
         "react/jsx-indent-props": "off",
         "react/no-array-index-key": "off",
-        "react-hooks/exhaustive-deps": "off"
+        "react-hooks/exhaustive-deps": "off",
+        "react/jsx-props-no-spreading": "off"
     },
     "env": {
         "browser": true,

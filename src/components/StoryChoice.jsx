@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
+import AutoResizingTextArea from "./AutoResizingTextArea";
 
 const StyledChoiceText = styled.p`
     border: 1px solid #e5e5e5;
@@ -8,11 +9,35 @@ const StyledChoiceText = styled.p`
     font-weight: 300;
     margin: 0 0 20px 0;
     padding: 12px;
+
+    textarea {
+        font-family: Helvetica, sans-serif;
+        resize: none;
+        border: none;
+        width: 100%;
+
+        :focus {
+            outline: none;
+        }
+    }
 `;
 
 const StyledChoiceName = styled.div`
     font-size: 12px;
-    margin: 12px 0;
+    margin: 12px 0 6px;
+    display: flex;
+    align-items: baseline;
+
+    input {
+        font-size: 12px;
+        font-family: Helvetica, sans-serif;
+        margin-left: 2px;
+        border: none;
+        width: 80px;
+        :focus {
+            outline: none;
+        }
+    }
 `;
 
 const StyledRemoveButton = styled.button`
@@ -59,17 +84,19 @@ export const StoryChoice = ({
                     onChange={(e) => {
                         onChangeChoiceTitle(e.target.value);
                     }}
+                    placeholder="Walk"
                 />
                 <StyledRemoveButton type="button" onClick={onClickRemove}>
                     X
                 </StyledRemoveButton>
             </StyledChoiceName>
             <StyledChoiceText>
-                <textarea
+                <AutoResizingTextArea
+                    id={`txt-choice-text-${choice.id}`}
                     value={choice.selectionText}
-                    onChange={(e) => {
-                        onChangeSelectionText(e.target.value);
-                    }}
+                    onChangeText={onChangeSelectionText}
+                    name="text"
+                    placeholder="Go for a walk"
                 />
             </StyledChoiceText>
         </div>
