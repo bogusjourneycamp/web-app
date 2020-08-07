@@ -69,35 +69,55 @@ const StyledContainer = styled.div`
         border-radius: 4px;
     }
 
+    #outer-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #man-pic {
+        order: 2
+        flex-grow: 1;
+        width: 300px;
+        height: 200px;
+    }
+
     #navigation {
-        background: #ffffff;
-        border: 1px solid #e5e5e5;
-        box-sizing: border-box;
-        border-radius: 4px;
+        order: 1
+        flex-grow: 2;
 
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-gap: 10px;
-        grid-auto-rows: minmax(100px, auto);
+        grid-gap: 0px;
+        grid-auto-rows: 50px;
     }
 
     #navfastforward {
-        grid-column: 3;
-        grid-row: 2;
-    }
-    #navrewind {
+        font-size: 18px;
+        font-family: HelveticaNeue;
         grid-column: 1;
         grid-row: 2;
     }
+    #navrewind {
+        font-size: 18px;
+        font-family: HelveticaNeue;
+        grid-column: 3;
+        grid-row: 2;
+    }
     #navtowards {
+        font-size: 18px;
+        font-family: HelveticaNeue;
         grid-column: 2;
         grid-row: 1;
     }
     #navaway {
+        font-size: 18px;
+        font-family: HelveticaNeue;
         grid-column: 2;
         grid-row: 3;
     }
     #navcenter {
+        font-family: HelveticaNeue;
         grid-column: 2;
         grid-row: 2;
         display: flex;
@@ -301,44 +321,47 @@ function nextLocation(location, dir) {
 
 function Navigation(props) {
     return (
-        <div id="navigation">
-            <div id="navcenter">{props.location}</div>
-            <button
-                id="navaway"
-                onClick={() =>
-                    props.onNewLocation(nextLocation(props.location, "away"))
-                }
-            >
-                &#x025CB;
-            </button>
-            <button
-                id="navfastforward"
-                onClick={() =>
-                    props.onNewLocation(
-                        nextLocation(props.location, "clockwise")
-                    )
-                }
-            >
-                +:15
-            </button>
-            <button
-                id="navtowards"
-                onClick={() =>
-                    props.onNewLocation(nextLocation(props.location, "towards"))
-                }
-            >
-                &#x025EF;
-            </button>
-            <button
-                id="navrewind"
-                onClick={() =>
-                    props.onNewLocation(
-                        nextLocation(props.location, "counter_clockwise")
-                    )
-                }
-            >
-                -:15
-            </button>
+        <div id="outer-nav">
+            <img id="man-pic" src="https://o7fe62guj6g73vlj30xpogpm-wpengine.netdna-ssl.com/wp-content/uploads/2020/01/BMJ_2020ManBase-665x375.png" alt="The Man" />
+            <div id="navigation">
+                <div id="navcenter">{props.location}</div>
+                <button
+                    id="navaway"
+                    onClick={() =>
+                        props.onNewLocation(nextLocation(props.location, "away"))
+                    }
+                >
+                    Away From Man<br />&#8595;
+                </button>
+                <button
+                    id="navfastforward"
+                    onClick={() =>
+                        props.onNewLocation(
+                            nextLocation(props.location, "clockwise")
+                        )
+                    }
+                >
+                    &#8598; Clockwise
+                </button>
+                <button
+                    id="navtowards"
+                    onClick={() =>
+                        props.onNewLocation(nextLocation(props.location, "towards"))
+                    }
+                >
+                    &#8593;<br />Toward Man
+                </button>
+                <button
+                    id="navrewind"
+                    onClick={() =>
+                        props.onNewLocation(
+                            nextLocation(props.location, "counter_clockwise")
+                        )
+                    }
+                >
+                    Counter-clockwise &#8599;
+                </button>
+            </div>
         </div>
     );
 }
