@@ -11,43 +11,7 @@ import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
-
-const rootNodeTestData = {
-    id: "A",
-    location: "B_4:15",
-    text: "lorem ipsum",
-    name: "root",
-    choices: [
-        {
-            id: "B",
-            name: "also",
-            choices: [
-                {
-                    id: "C",
-                    name: "boop",
-                    choices: [
-                        {
-                            id: "D",
-                            name: "king",
-                            choices: [],
-                            text: "yes, please",
-                        },
-                        {
-                            id: "E",
-                            name: "queen",
-                            choices: [],
-                            text: "no, thank you",
-                        },
-                    ],
-                    text: "undaddy",
-                },
-            ],
-            text: "cat cow",
-        },
-        { id: "F", name: "alps", choices: [], text: "snarky dog" },
-        { id: "G", name: "army", choices: [], text: "sneep snop" },
-    ],
-};
+import storyTestData from "../utils/storyTestData.json";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -72,8 +36,8 @@ const updateNodeName = (graphData, nodeId, text) => {
 };
 
 export const CreateStoryPage = () => {
-    const [storyNode, setStoryNode] = useState(rootNodeTestData);
-    const [currentNodeId, setCurrentNodeId] = useState(rootNodeTestData.id);
+    const [storyNode, setStoryNode] = useState(storyTestData);
+    const [currentNodeId, setCurrentNodeId] = useState(storyTestData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
@@ -157,9 +121,9 @@ export const CreateStoryPage = () => {
         }
     };
 
-    const onChangeChoiceText = (nodeId, newText) => {
+    const onChangeSelectionText = (nodeId, newText) => {
         const updatedNode = updateNodeValue(storyNode, nodeId, {
-            text: newText,
+            selectionText: newText,
         });
 
         if (updatedNode) {
@@ -210,7 +174,7 @@ export const CreateStoryPage = () => {
                     onChangeStoryTitle={onChangeStoryTitle}
                     onClickAddChoice={onClickAddChoice}
                     onClickRemoveChoice={onClickRemoveChoice}
-                    onChangeChoiceText={onChangeChoiceText}
+                    onChangeSelectionText={onChangeSelectionText}
                     onChangeChoiceTitle={onChangeChoiceTitle}
                     onClickPublish={onClickPublish}
                 />
