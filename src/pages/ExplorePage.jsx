@@ -288,12 +288,17 @@ function nextLocation(location, dir) {
     }
 }
 
+function formatLocation(location) {
+    let split = location.split("_");
+    return `${split[0]} & ${split[1]}`;
+}
+
 function Navigation(props) {
     //<img id="man-pic" src="https://o7fe62guj6g73vlj30xpogpm-wpengine.netdna-ssl.com/wp-content/uploads/2020/01/BMJ_2020ManBase-665x375.png" alt="The Man" />
     return (
         <div id="outer-nav">
             <div id="navigation">
-                <div id="navcenter">{props.location}</div>
+                <div id="navcenter">{formatLocation(props.location)}</div>
                 <button
                     id="navaway"
                     onClick={() =>
@@ -372,7 +377,7 @@ function Story(props) {
         <div id="story">
             <div id="story-top">
                 <div id="title-div">
-                    <div id="title">{props.title}</div>
+                    <div id="title">{props.selectionText}</div>
                 </div>
                 <Edit
                     location={props.location}
@@ -380,7 +385,7 @@ function Story(props) {
                 <Share />
             </div>
             <div id="story-bottom">
-                <div id="story-text">{props.text}</div>
+                <div id="story-text">{props.storyText}</div>
                 <Actions
                     value={props.actions}
                     onTakeAction={props.onTakeAction}
@@ -439,8 +444,8 @@ export class ExplorePage extends React.Component {
                 this.setState({
                     name: node["selectionText"],
                     location: node["location"],
-                    title: node["selectionText"],
-                    text: node["storyText"],
+                    selectionText: node["selectionText"],
+                    storyText: node["storyText"],
                     choices: node["choices"],
                 });
             });
@@ -449,7 +454,7 @@ export class ExplorePage extends React.Component {
     onTakeAction(action_name) {
         let node = findNode(this.state, action_name);
         this.setState({
-            text: node["storyText"],
+            storyText: node["storyText"],
             choices: node["choices"],
         });
     }
@@ -470,8 +475,8 @@ export class ExplorePage extends React.Component {
                 this.setState({
                     name: node["selectionText"],
                     location: node["location"],
-                    title: node["selectionText"],
-                    text: node["storyText"],
+                    selectionText: node["selectionText"],
+                    storyText: node["storyText"],
                     choices: node["choices"],
                 });
             });
@@ -486,8 +491,8 @@ export class ExplorePage extends React.Component {
             <Layout>
                 <StyledContainer>
                     <Story
-                        title={this.state.title}
-                        text={this.state.text}
+                        selectionText={this.state.selectionText}
+                        storyText={this.state.storyText}
                         actions={this.state.choices}
                         onTakeAction={this.onTakeAction}
                     />
