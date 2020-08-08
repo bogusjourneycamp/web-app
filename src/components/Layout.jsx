@@ -1,21 +1,24 @@
 import React from "react";
-import { createGlobalStyle } from "styled-components";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { FONT_FAMILY_MONOSPACE } from "../utils/styleConfig";
+import { FONT_FAMILY_MONOSPACE, FONT_FAMILY_MAIN } from "../utils/styleConfig";
 
 const GlobalStyle = createGlobalStyle`
   body {
     background: #ECEEEF;
+    font-family: ${FONT_FAMILY_MAIN} !important;
     margin: 0;
     padding: 0;
+  }
+
+  a, button {
+    font-family: ${FONT_FAMILY_MAIN} !important;
   }
 `;
 
 const StyledContainer = styled.div`
     border: 1px solid black;
-    font-family: Helvetica, Arial, sans-serif;
 
     .monospace {
         font-family: ${FONT_FAMILY_MONOSPACE};
@@ -40,6 +43,6 @@ export const Layout = ({ children }) => {
             <main>{children}</main>
             <Footer />
             <GlobalStyle />
-      </StyledContainer>
+        </StyledContainer>
     );
 };
