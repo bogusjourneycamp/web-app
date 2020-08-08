@@ -12,6 +12,7 @@ import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 import storyTestData from "../utils/storyTestData.json";
+import emptyStoryData from "../utils/emptyStoryData.json";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -35,8 +36,8 @@ const updateNodeName = (graphData, nodeId, text) => {
 };
 
 export const CreateStoryPage = () => {
-    const [storyNode, setStoryNode] = useState(storyTestData);
-    const [currentNodeId, setCurrentNodeId] = useState(storyTestData.id);
+    const [storyNode, setStoryNode] = useState(emptyStoryData);
+    const [currentNodeId, setCurrentNodeId] = useState(emptyStoryData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
     const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
