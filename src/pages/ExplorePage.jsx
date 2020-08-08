@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "../components/Layout";
-import { API_URL, CORS_PROXY_URL } from "../utils/urls";
+import { API_URL } from "../utils/urls";
 import storyTestData from "../utils/storyTestData.json";
 
 const loadingNode = {
@@ -426,7 +426,7 @@ export class ExplorePage extends React.Component {
     }
 
     componentDidMount() {
-        let url = `${CORS_PROXY_URL}/${API_URL}/story/${this.state.location}`;
+        let url = `${API_URL}/story/${this.state.location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
@@ -456,7 +456,7 @@ export class ExplorePage extends React.Component {
 
     onNewLocation(location) {
         this.setState({ location: location });
-        let url = `${CORS_PROXY_URL}/${API_URL}/story/${this.state.location}`;
+        let url = `${API_URL}/story/${this.state.location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
