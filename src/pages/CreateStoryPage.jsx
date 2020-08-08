@@ -11,8 +11,8 @@ import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
-import storyTestData from "../utils/storyTestData.json";
 import emptyStoryData from "../utils/emptyStoryData.json";
+import { API_URL } from "../utils/urls";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -35,7 +35,7 @@ const updateNodeName = (graphData, nodeId, text) => {
     }
 };
 
-export const CreateStoryPage = () => {
+export const CreateStoryPage = ({ location }) => {
     const [storyNode, setStoryNode] = useState(emptyStoryData);
     const [currentNodeId, setCurrentNodeId] = useState(emptyStoryData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -140,12 +140,43 @@ export const CreateStoryPage = () => {
     };
 
     useEffect(() => {
-        // Initialize graph data
-        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
-        setGraphData(nextGraphData);
+        const fetchStory = async () => {
+            let fetchedStoryNode;
 
-        // Set link distance between nodes
-        graphRef.current.d3Force("link").distance(LINK_LENGTH);
+            if (location.search) {
+                try {
+                    const searchParams = new URLSearchParams(location.search);
+                    const storyLocation = searchParams.get("location");
+
+                    const response = await fetch(
+                        `${API_URL}/story/${storyLocation}`
+                    );
+                    const result = await response.json();
+
+                    // Result may come in as successful, but not as a storyNode
+                    if (typeof result === "object") {
+                        setStoryNode(result);
+                        setCurrentNodeId(result.id);
+                        fetchedStoryNode = result;
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.error(error);
+                }
+            }
+
+            // Initialize graph data
+            const nextGraphData = storyNodeToGraphData(
+                fetchedStoryNode || storyNode,
+                currentNodeId
+            );
+            setGraphData(nextGraphData);
+
+            // Set link distance between nodes
+            graphRef.current.d3Force("link").distance(LINK_LENGTH);
+        };
+
+        fetchStory();
     }, []);
 
     return (
