@@ -13,7 +13,6 @@ import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 import emptyStoryData from "../utils/emptyStoryData.json";
 import { API_URL } from "../utils/urls";
-import isStoryNode from "../utils/isStoryNode";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -168,13 +167,19 @@ export const CreateStoryPage = ({ location }) => {
 
                     // Result may come in as successful, but not as a storyNode
                     if (typeof result === "object") {
-                        if (isStoryNode(result)) {
-                            setStoryNode(result);
-                            setCurrentNodeId(result.id);
-                            fetchedStoryNode = result;
-                        } else {
-                            // TODO: Something
-                        }
+                        const resultWithDefaults = {
+                            id: "A",
+                            selectionText: "",
+                            location: storyLocation,
+                            storyText: "",
+                            name: "root",
+                            choices: [],
+                            ...result,
+                        };
+
+                        setStoryNode(resultWithDefaults);
+                        setCurrentNodeId(resultWithDefaults.id);
+                        fetchedStoryNode = resultWithDefaults;
                     } else {
                         // eslint-disable-next-line no-alert
                         alert(
