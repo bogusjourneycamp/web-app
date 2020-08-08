@@ -6,9 +6,9 @@ import { API_URL } from "../utils/urls";
 import storyTestData from "../utils/storyTestData.json";
 
 const loadingNode = {
-    title: "test",
     location: "A_12:30",
-    text: "Welcome!",
+    selectionText: "text",
+    storyText: "Welcome!",
     name: "root",
     choices: {},
 };
@@ -195,12 +195,12 @@ function Actions(props) {
     let value = props.value;
     return (
         <div id="actions">
-            {Object.keys(value).map((key, index) => (
+            {value.map((item, index) => (
                 <button
                     id="action-button"
-                    onClick={() => props.onTakeAction(value[key].name)}
+                    onClick={() => props.onTakeAction(item["name"])}
                 >
-                    {key}
+                    {item["selectionText"]}
                 </button>
             ))}
         </div>
@@ -407,9 +407,9 @@ function findNode(root, name) {
 
 function unclaimedNode(location) {
     return {
-        title: "Open Playa",
+        selectionText: "Open Playa",
         location: location,
-        text: `Congratulations Explorer! You've discovered an unclaimed spot in this dusty land.
+        storyText: `Congratulations Explorer! You've discovered an unclaimed spot in this dusty land.
     Now it's time to write your own story and tell your own tale. Are you ready?`,
         name: "",
         choices: [],
@@ -437,10 +437,10 @@ export class ExplorePage extends React.Component {
                     node = res;
                 }
                 this.setState({
-                    name: node["location"] || "Untitled",
+                    name: node["selectionText"],
                     location: node["location"],
-                    title: node["title"] || "Untitled",
-                    text: node["text"],
+                    title: node["selectionText"],
+                    text: node["storyText"],
                     choices: node["choices"],
                 });
             });
@@ -449,28 +449,29 @@ export class ExplorePage extends React.Component {
     onTakeAction(action_name) {
         let node = findNode(this.state, action_name);
         this.setState({
-            text: node["text"],
+            text: node["storyText"],
             choices: node["choices"],
         });
     }
 
     onNewLocation(location) {
         this.setState({ location: location });
-        let url = `${API_URL}/story/${this.state.location}`;
+        let url = `${API_URL}/story/${location}`;
         let node = {};
         fetch(url)
             .then((res) => res.json())
             .then((res) => {
+                console.log(res)
                 if (JSON.stringify(res) === "{}") {
                     node = unclaimedNode(location);
                 } else {
                     node = res;
                 }
                 this.setState({
-                    name: node["location"] || "Untitled",
+                    name: node["selectionText"],
                     location: node["location"],
-                    title: node["title"] || "Untitled",
-                    text: node["text"],
+                    title: node["selectionText"],
+                    text: node["storyText"],
                     choices: node["choices"],
                 });
             });
