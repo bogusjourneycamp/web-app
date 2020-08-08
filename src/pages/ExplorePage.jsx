@@ -343,19 +343,17 @@ function Navigation(props) {
     );
 }
 
-class Edit extends React.Component {
-    render() {
-        return (
-            <div id="fancy-button">
-                <Link
-                    id="edit-button"
-                    to={{ pathname: "/create-story", test: this.state }}
-                >
-                    Edit
-                </Link>
-            </div>
-        );
-    }
+function Edit(location) {
+    return (
+        <div id="fancy-button">
+            <Link
+                id="edit-button"
+                to={{ pathname: "/create-story", location: location }}
+            >
+                Edit
+            </Link>
+        </div>
+    );
 }
 
 class Share extends React.Component {
@@ -376,7 +374,9 @@ function Story(props) {
                 <div id="title-div">
                     <div id="title">{props.title}</div>
                 </div>
-                <Edit />
+                <Edit
+                    location={props.location}
+                />
                 <Share />
             </div>
             <div id="story-bottom">
