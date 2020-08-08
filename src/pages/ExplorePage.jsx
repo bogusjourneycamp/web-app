@@ -348,12 +348,19 @@ function Navigation(props) {
     );
 }
 
-function Edit(location) {
+function Edit({ location }) {
     return (
         <div id="fancy-button">
             <Link
                 id="edit-button"
-                to={{ pathname: "/create-story", location: location }}
+                to={{
+                    pathname: "/create-story",
+                    search: location
+                        ? new URLSearchParams({
+                              location,
+                          }).toString()
+                        : undefined,
+                }}
             >
                 Edit
             </Link>
@@ -379,9 +386,7 @@ function Story(props) {
                 <div id="title-div">
                     <div id="title">{props.selectionText}</div>
                 </div>
-                <Edit
-                    location={props.location}
-                />
+                <Edit location={props.location} />
                 <Share />
             </div>
             <div id="story-bottom">
@@ -466,7 +471,7 @@ export class ExplorePage extends React.Component {
         fetch(url)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
+                console.log(res);
                 if (JSON.stringify(res) === "{}") {
                     node = unclaimedNode(location);
                 } else {
@@ -495,6 +500,7 @@ export class ExplorePage extends React.Component {
                         storyText={this.state.storyText}
                         actions={this.state.choices}
                         onTakeAction={this.onTakeAction}
+                        location={this.state.location}
                     />
                     <Navigation
                         location={this.state.location}

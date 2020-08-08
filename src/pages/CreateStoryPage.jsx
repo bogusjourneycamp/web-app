@@ -11,11 +11,12 @@ import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
-import storyTestData from "../utils/storyTestData.json";
 import emptyStoryData from "../utils/emptyStoryData.json";
+import { API_URL } from "../utils/urls";
 
 const StyledContainer = styled.div`
     display: flex;
+    min-height: 500px;
 
     #view-create-story {
         flex: 1;
@@ -24,6 +25,14 @@ const StyledContainer = styled.div`
 
     #view-story-outline {
         min-height: 200px;
+    }
+
+    #view-loading {
+        display: flex;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
     }
 `;
 
@@ -35,7 +44,8 @@ const updateNodeName = (graphData, nodeId, text) => {
     }
 };
 
-export const CreateStoryPage = () => {
+export const CreateStoryPage = ({ location }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [storyNode, setStoryNode] = useState(emptyStoryData);
     const [currentNodeId, setCurrentNodeId] = useState(emptyStoryData.id);
     const [graphData, setGraphData] = useState({ nodes: [], links: [] });
@@ -140,32 +150,81 @@ export const CreateStoryPage = () => {
     };
 
     useEffect(() => {
-        // Initialize graph data
-        const nextGraphData = storyNodeToGraphData(storyNode, currentNodeId);
-        setGraphData(nextGraphData);
+        const fetchStory = async () => {
+            const searchParams = new URLSearchParams(location.search || "");
+            const storyLocation = searchParams.get("location");
 
-        // Set link distance between nodes
-        graphRef.current.d3Force("link").distance(LINK_LENGTH);
+            let fetchedStoryNode;
+
+            if (storyLocation) {
+                setIsLoading(true);
+
+                try {
+                    const response = await fetch(
+                        `${API_URL}/story/${storyLocation}`
+                    );
+                    const result = await response.json();
+
+                    // Result may come in as successful, but not as a storyNode
+                    if (typeof result === "object") {
+                        setStoryNode(result);
+                        setCurrentNodeId(result.id);
+                        fetchedStoryNode = result;
+                    } else {
+                        // eslint-disable-next-line no-alert
+                        alert(
+                            `There was an error fetching story from location: ${storyLocation}`
+                        );
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.error("Error", error);
+                    // eslint-disable-next-line no-alert
+                    alert(
+                        `There was an error fetching story from location: ${storyLocation}`
+                    );
+                }
+                setIsLoading(false);
+            }
+
+            // Initialize graph data
+            const nextGraphData = storyNodeToGraphData(
+                fetchedStoryNode || storyNode,
+                currentNodeId
+            );
+            setGraphData(nextGraphData);
+
+            // Set link distance between nodes
+            graphRef.current.d3Force("link").distance(LINK_LENGTH);
+        };
+
+        fetchStory();
     }, []);
 
     return (
         <Layout>
             <StyledContainer>
-                <StoryGraphView
-                    data={graphData}
-                    onClickNode={onClickNode}
-                    selectedNode={currentNode}
-                    graphRef={graphRef}
-                />
-                <CreateStoryView
-                    storyNode={currentNode}
-                    onChangeStoryText={onChangeStoryText}
-                    onClickAddChoice={onClickAddChoice}
-                    onClickRemoveChoice={onClickRemoveChoice}
-                    onChangeSelectionText={onChangeSelectionText}
-                    onChangeChoiceTitle={onChangeChoiceTitle}
-                    onClickPublish={onClickPublish}
-                />
+                {isLoading ? (
+                    <div id="view-loading">Loading...</div>
+                ) : (
+                    <>
+                        <StoryGraphView
+                            data={graphData}
+                            onClickNode={onClickNode}
+                            selectedNode={currentNode}
+                            graphRef={graphRef}
+                        />
+                        <CreateStoryView
+                            storyNode={currentNode}
+                            onChangeStoryText={onChangeStoryText}
+                            onClickAddChoice={onClickAddChoice}
+                            onClickRemoveChoice={onClickRemoveChoice}
+                            onChangeSelectionText={onChangeSelectionText}
+                            onChangeChoiceTitle={onChangeChoiceTitle}
+                            onClickPublish={onClickPublish}
+                        />
+                    </>
+                )}
             </StyledContainer>
         </Layout>
     );
