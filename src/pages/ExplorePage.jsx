@@ -9,50 +9,56 @@ import fetchNode from "../utils/fetchNode";
 
 const StyledContainer = styled.div``;
 
-const ExplorePage = ({ history }) => {
+const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState(storyTestData);
+    const searchParams = location.search
+        ? new URLSearchParams(location.search)
+        : undefined;
+    const currentLocation = searchParams
+        ? searchParams.get("location")
+        : storyNode.location;
+
+    const loadStory = async (storyLocation) => {
+        const node = await fetchNode(storyLocation);
+
+        if (node) {
+            setStoryNode(node);
+        }
+
+        return node;
+    };
 
     const onTakeAction = (nodeId) => {
         const node = getNodeById(storyNode, nodeId);
 
-        setStoryNode({
-            ...storyNode,
-            storyText: node.storyText,
-            choices: node.choices,
-        });
+        if (node) {
+            setStoryNode(node);
+        }
     };
 
-    const onClickLocation = async (location) => {
-        const node = await fetchNode(location);
+    const onClickLocation = async (storyLocation) => {
+        const node = await loadStory(storyLocation);
 
-        setStoryNode(node);
-
-        history.push({
-            search: `?${new URLSearchParams({ location }).toString()}`,
-        });
+        // Only go to the location if there's a valid node there
+        if (node) {
+            history.push({
+                search: `?${new URLSearchParams({
+                    location: storyLocation,
+                }).toString()}`,
+            });
+        }
     };
 
     useEffect(() => {
-        const loadStory = async () => {
-            const node = await fetchNode(storyNode.location);
-            setStoryNode(node);
-        };
-
-        loadStory();
+        loadStory(currentLocation);
     }, []);
 
     return (
         <Layout>
             <StyledContainer>
-                <StoryView
-                    selectionText={storyNode.selectionText}
-                    storyText={storyNode.storyText}
-                    actions={storyNode.choices}
-                    onTakeAction={onTakeAction}
-                    location={storyNode.location}
-                />
+                <StoryView storyNode={storyNode} onTakeAction={onTakeAction} />
                 <StoryNavigationView
-                    location={storyNode.location}
+                    location={currentLocation}
                     onClickLocation={onClickLocation}
                 />
             </StyledContainer>

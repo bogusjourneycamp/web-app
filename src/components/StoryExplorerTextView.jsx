@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 
-const ActionButton = styled(Button)`
+const ChoiceButton = styled(Button)`
     border: 1px solid #e5e5e5;
     border-radius: 4px;
     background: #ffffff;
@@ -14,7 +14,7 @@ const ActionButton = styled(Button)`
     text-align: left;
 `;
 
-const ActionsContainer = styled.div`
+const ChoicesContainer = styled.div`
     background: #ffffff;
     box-sizing: border-box;
     display: flex;
@@ -34,20 +34,20 @@ const StoryText = styled.p`
 
 const StoryTextSection = styled.div``;
 
-const StoryExplorerTextView = ({ storyText, actions, onTakeAction }) => {
+const StoryExplorerTextView = ({ storyText, choices, onTakeAction }) => {
     return (
         <StoryTextSection>
             <StoryText>{storyText}</StoryText>
-            <ActionsContainer>
-                {actions.map((item, index) => (
-                    <ActionButton
+            <ChoicesContainer>
+                {choices.map((item, index) => (
+                    <ChoiceButton
                         key={`action-${index}`}
                         onClick={() => onTakeAction(item.id)}
                     >
                         {item.selectionText}
-                    </ActionButton>
+                    </ChoiceButton>
                 ))}
-            </ActionsContainer>
+            </ChoicesContainer>
         </StoryTextSection>
     );
 };
