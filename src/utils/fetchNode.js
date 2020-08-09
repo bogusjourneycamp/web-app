@@ -5,6 +5,7 @@ import { API_URL } from "./urls";
 
 const fetchNode = async (location) => {
     const url = `${API_URL}/story/${location}`;
+    const errorMessage = `Failed to fetch story at location: ${location}`;
 
     if (!location) {
         throw new Error("Somehow got empty location");
@@ -16,7 +17,7 @@ const fetchNode = async (location) => {
 
         if (typeof result === "string") {
             notification.error({
-                message: `Failed to fetch story at location: ${location}`,
+                message: errorMessage,
             });
             return null;
         }
@@ -29,9 +30,12 @@ const fetchNode = async (location) => {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
-    }
 
-    return getUnclaimedNode(location);
+        notification.error({
+            message: errorMessage,
+        });
+        return null;
+    }
 };
 
 export default fetchNode;

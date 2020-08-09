@@ -24,6 +24,8 @@ const ExplorePage = ({ history, location }) => {
         if (node) {
             setStoryNode(node);
         }
+
+        return node;
     };
 
     const onTakeAction = (nodeId) => {
@@ -35,13 +37,16 @@ const ExplorePage = ({ history, location }) => {
     };
 
     const onClickLocation = async (storyLocation) => {
-        await loadStory(storyLocation);
+        const node = await loadStory(storyLocation);
 
-        history.push({
-            search: `?${new URLSearchParams({
-                location: storyLocation,
-            }).toString()}`,
-        });
+        // Only go to the location if there's a valid node there
+        if (node) {
+            history.push({
+                search: `?${new URLSearchParams({
+                    location: storyLocation,
+                }).toString()}`,
+            });
+        }
     };
 
     useEffect(() => {
