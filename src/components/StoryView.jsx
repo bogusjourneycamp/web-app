@@ -9,20 +9,16 @@ const StyledContainer = styled.div`
     flex-direction: column;
 `;
 
-const StoryView = ({
-    selectionText,
-    location,
-    storyText,
-    onTakeAction,
-    actions,
-}) => {
+const StoryView = ({ storyNode, onTakeAction }) => {
+    const { selectionText, location, storyText, choices } = storyNode;
+
     return (
         <StyledContainer>
             <StoryExplorerHeader title={selectionText} location={location} />
             <StoryExplorerTextView
                 storyText={storyText}
                 onTakeAction={onTakeAction}
-                actions={actions}
+                choices={choices}
             />
         </StyledContainer>
     );

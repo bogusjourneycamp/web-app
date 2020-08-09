@@ -44,13 +44,7 @@ const ExplorePage = ({ history }) => {
     return (
         <Layout>
             <StyledContainer>
-                <StoryView
-                    selectionText={storyNode.selectionText}
-                    storyText={storyNode.storyText}
-                    actions={storyNode.choices}
-                    onTakeAction={onTakeAction}
-                    location={storyNode.location}
-                />
+                <StoryView storyNode={storyNode} onTakeAction={onTakeAction} />
                 <StoryNavigationView
                     location={storyNode.location}
                     onClickLocation={onClickLocation}
