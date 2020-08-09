@@ -5,12 +5,14 @@ import ColorPalette from "../utils/colors";
 
 const StyledLink = styled(Link)`
     border: 1px solid;
+    border-radius: 3px;
     color: ${ColorPalette.cornflowerBlue};
+    font-size: 16px;
+    font-weight: 100;
+    height: fit-content;
+    line-height: normal;
     padding: 6px 16px;
     text-decoration: none;
-    border-radius: 3px;
-    font-weight: 100;
-    font-size: 16px;
 `;
 
 const LinkButton = ({ children, ...props }) => {
