@@ -13,6 +13,7 @@ import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 import emptyStoryData from "../utils/emptyStoryData.json";
 import { API_URL } from "../utils/urls";
+import { FONT_COLOR_MAIN } from "../utils/styleConfig";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -20,7 +21,7 @@ const StyledContainer = styled.div`
 
     #view-create-story {
         flex: 1;
-        border-left: 4px solid #373a3c;
+        border-left: 4px solid ${FONT_COLOR_MAIN};
     }
 
     #view-story-outline {
