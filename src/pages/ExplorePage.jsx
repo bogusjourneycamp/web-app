@@ -1,96 +1,63 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "../components/Layout";
-import { API_URL } from "../utils/urls";
 import storyTestData from "../utils/storyTestData.json";
 import StoryNavigationView from "../components/StoryNavigationView";
-import getUnclaimedNode from "../utils/getUnclaimedNode";
 import getNodeById from "../utils/getNodeById";
 import StoryView from "../components/StoryView";
+import fetchNode from "../utils/fetchNode";
 
 const StyledContainer = styled.div``;
 
-export class ExplorePage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = storyTestData;
-        this.onNewLocation = this.onNewLocation.bind(this);
-        this.onTakeAction = this.onTakeAction.bind(this);
-    }
+const ExplorePage = ({ history }) => {
+    const [storyNode, setStoryNode] = useState(storyTestData);
 
-    componentDidMount() {
-        const url = `${API_URL}/story/${this.state.location}`;
-        let node = {};
-        fetch(url)
-            .then((res) => res.json())
-            .then((res) => {
-                if (JSON.stringify(res) === "{}") {
-                    node = getUnclaimedNode(this.state.location);
-                } else {
-                    node = res;
-                }
-                this.setState({
-                    name: node.selectionText,
-                    location: node.location,
-                    selectionText: node.selectionText,
-                    storyText: node.storyText,
-                    choices: node.choices,
-                });
-            });
-    }
+    const onTakeAction = (nodeId) => {
+        const node = getNodeById(storyNode, nodeId);
 
-    onTakeAction(nodeId) {
-        const node = getNodeById(this.state, nodeId);
-
-        this.setState({
+        setStoryNode({
+            ...storyNode,
             storyText: node.storyText,
             choices: node.choices,
         });
-    }
+    };
 
-    onNewLocation(location) {
-        this.setState({ location });
-        const url = `${API_URL}/story/${location}`;
-        let node = {};
-        fetch(url)
-            .then((res) => res.json())
-            .then((res) => {
-                console.log(res);
-                if (JSON.stringify(res) === "{}") {
-                    node = getUnclaimedNode(location);
-                } else {
-                    node = res;
-                }
-                this.setState({
-                    name: node.selectionText,
-                    location: node.location,
-                    selectionText: node.selectionText,
-                    storyText: node.storyText,
-                    choices: node.choices,
-                });
-            });
-        this.props.history.push({
+    const onClickLocation = async (location) => {
+        const node = await fetchNode(location);
+
+        setStoryNode(node);
+
+        history.push({
             search: `?${new URLSearchParams({ location }).toString()}`,
         });
-    }
+    };
 
-    render() {
-        return (
-            <Layout>
-                <StyledContainer>
-                    <StoryView
-                        selectionText={this.state.selectionText}
-                        storyText={this.state.storyText}
-                        actions={this.state.choices}
-                        onTakeAction={this.onTakeAction}
-                        location={this.state.location}
-                    />
-                    <StoryNavigationView
-                        location={this.state.location}
-                        onClickLocation={this.onNewLocation}
-                    />
-                </StyledContainer>
-            </Layout>
-        );
-    }
-}
+    useEffect(() => {
+        const loadStory = async () => {
+            const node = await fetchNode(storyNode.location);
+            setStoryNode(node);
+        };
+
+        loadStory();
+    }, []);
+
+    return (
+        <Layout>
+            <StyledContainer>
+                <StoryView
+                    selectionText={storyNode.selectionText}
+                    storyText={storyNode.storyText}
+                    actions={storyNode.choices}
+                    onTakeAction={onTakeAction}
+                    location={storyNode.location}
+                />
+                <StoryNavigationView
+                    location={storyNode.location}
+                    onClickLocation={onClickLocation}
+                />
+            </StyledContainer>
+        </Layout>
+    );
+};
+
+export default ExplorePage;
