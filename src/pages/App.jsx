@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { CreateStoryPage } from "./CreateStoryPage";
 import ExplorePage from "./ExplorePage";
+import "antd/dist/antd.css";
 
 export const App = () => {
     return (
