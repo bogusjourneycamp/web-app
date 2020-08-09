@@ -9,36 +9,39 @@ import fetchNode from "../utils/fetchNode";
 
 const StyledContainer = styled.div``;
 
-const ExplorePage = ({ history }) => {
+const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState(storyTestData);
+    const searchParams = location.search
+        ? new URLSearchParams(location.search)
+        : undefined;
+    const currentLocation = searchParams
+        ? searchParams.get("location")
+        : storyNode.location;
+
+    const loadStory = async (storyLocation) => {
+        const node = await fetchNode(storyLocation);
+
+        setStoryNode(node);
+    };
 
     const onTakeAction = (nodeId) => {
         const node = getNodeById(storyNode, nodeId);
 
-        setStoryNode({
-            ...storyNode,
-            storyText: node.storyText,
-            choices: node.choices,
-        });
+        setStoryNode(node);
     };
 
-    const onClickLocation = async (location) => {
-        const node = await fetchNode(location);
-
-        setStoryNode(node);
+    const onClickLocation = async (storyLocation) => {
+        await loadStory(storyLocation);
 
         history.push({
-            search: `?${new URLSearchParams({ location }).toString()}`,
+            search: `?${new URLSearchParams({
+                location: storyLocation,
+            }).toString()}`,
         });
     };
 
     useEffect(() => {
-        const loadStory = async () => {
-            const node = await fetchNode(storyNode.location);
-            setStoryNode(node);
-        };
-
-        loadStory();
+        loadStory(currentLocation);
     }, []);
 
     return (
@@ -46,7 +49,7 @@ const ExplorePage = ({ history }) => {
             <StyledContainer>
                 <StoryView storyNode={storyNode} onTakeAction={onTakeAction} />
                 <StoryNavigationView
-                    location={storyNode.location}
+                    location={currentLocation}
                     onClickLocation={onClickLocation}
                 />
             </StyledContainer>
