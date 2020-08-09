@@ -21,13 +21,17 @@ const ExplorePage = ({ history, location }) => {
     const loadStory = async (storyLocation) => {
         const node = await fetchNode(storyLocation);
 
-        setStoryNode(node);
+        if (node) {
+            setStoryNode(node);
+        }
     };
 
     const onTakeAction = (nodeId) => {
         const node = getNodeById(storyNode, nodeId);
 
-        setStoryNode(node);
+        if (node) {
+            setStoryNode(node);
+        }
     };
 
     const onClickLocation = async (storyLocation) => {

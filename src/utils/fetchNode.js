@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import getUnclaimedNode from "./getUnclaimedNode";
 import isEmptyObject from "./isEmptyObject";
 import { API_URL } from "./urls";
@@ -12,6 +13,13 @@ const fetchNode = async (location) => {
     try {
         const response = await fetch(url);
         const result = await response.json();
+
+        if (typeof result === "string") {
+            notification.error({
+                message: `Failed to fetch story at location: ${location}`,
+            });
+            return null;
+        }
 
         if (isEmptyObject(result)) {
             return getUnclaimedNode(location);
