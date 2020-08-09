@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { notification } from "antd";
 import { Layout } from "../components/Layout";
 import { CreateStoryView } from "../components/CreateStoryView";
 import getNodeById from "../utils/getNodeById";
@@ -12,8 +13,8 @@ import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 import emptyStoryData from "../utils/emptyStoryData.json";
-import { API_URL } from "../utils/urls";
 import { FONT_COLOR_MAIN } from "../utils/styleConfig";
+import fetchNode from "../utils/fetchNode";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -161,13 +162,9 @@ export const CreateStoryPage = ({ location }) => {
                 setIsLoading(true);
 
                 try {
-                    const response = await fetch(
-                        `${API_URL}/story/${storyLocation}`
-                    );
-                    const result = await response.json();
+                    const node = await fetchNode(storyLocation);
 
-                    // Result may come in as successful, but not as a storyNode
-                    if (typeof result === "object") {
+                    if (node) {
                         const resultWithDefaults = {
                             id: "A",
                             selectionText: "",
@@ -175,24 +172,18 @@ export const CreateStoryPage = ({ location }) => {
                             storyText: "",
                             name: "root",
                             choices: [],
-                            ...result,
+                            ...node,
                         };
 
                         setStoryNode(resultWithDefaults);
                         setCurrentNodeId(resultWithDefaults.id);
                         fetchedStoryNode = resultWithDefaults;
-                    } else {
-                        // eslint-disable-next-line no-alert
-                        alert(
-                            `There was an error fetching story from location: ${storyLocation}`
-                        );
                     }
                 } catch (error) {
                     // eslint-disable-next-line no-console
                     console.error("Error", error);
-                    // eslint-disable-next-line no-alert
-                    alert(
-                        `There was an error fetching story from location: ${storyLocation}`
+                    notification.error(
+                        `Error fetching node at location: ${location}`
                     );
                 }
                 setIsLoading(false);
