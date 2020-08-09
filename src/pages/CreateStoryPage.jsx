@@ -214,6 +214,7 @@ export const CreateStoryPage = ({ location }) => {
                             data={graphData}
                             onClickNode={onClickNode}
                             selectedNode={currentNode}
+                            rootNode={storyNode}
                             graphRef={graphRef}
                         />
                         <CreateStoryView
