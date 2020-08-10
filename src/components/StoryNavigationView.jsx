@@ -44,6 +44,13 @@ const StyledContainer = styled.div`
         justify-content: center;
         align-items: center;
     }
+
+    #img {
+        width: 200px;
+        height: 400px;
+        object-fit: cover;
+        display:block;
+      }
 `;
 
 const Grid = styled.div`
@@ -55,12 +62,18 @@ const Grid = styled.div`
     grid-auto-rows: 50px;
 `;
 
+const images = require.context('../../public/man_svgs', true);
+
 const StoryNavigationView = ({ location, onClickLocation }) => {
     // <img id="man-pic" src="https://o7fe62guj6g73vlj30xpogpm-wpengine.netdna-ssl.com/wp-content/uploads/2020/01/BMJ_2020ManBase-665x375.png" alt="The Man" />
+    const  svgFile = "man_svgs/" + location.replace(":", "__") + ".svg"
     return (
         <StyledContainer>
+            <div><img id="img" src={svgFile}/></div>
             <Grid>
-                <div id="nav-center">{formatLocation(location)}</div>
+                <div id="nav-center">
+                    {formatLocation(location)}
+                </div>
                 <Button
                     id="nav-away"
                     onClick={() => {
