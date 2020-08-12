@@ -1,0 +1,339 @@
+{
+    "id": "1",
+    "selectionText": "Chasing lights",
+    "location": "B_4:00",
+    "storyText": "It's afternoon Friday and after some morning classes and an afternoon nap you’ve eaten some dinner and you're getting ready for the night. You look over at your partner as you survey outfits laid out in your yurt - \"I can\'t decide!\" you exclaim, \"Do we match? Are we going onesies or sexy?\". They laugh and join you in your survey - \"hmm...I like the matching idea. It's supposed to be pretty warm tonight so maybe sexy?\"\n\nWhat do you decide to wear?", 
+    "name": "root",
+    "choices": [
+        {
+            "selectionText": "Onesies are my kind of sexy! You pick up the kangaroo onesie and hand over the duck.",
+            "id": "2",
+            "name": "Onesie",
+            "storyText": "Dressed and ready to go you hop on your bikes and head out as the city begins to twinkle with lights and pulse with sound. You can feel the palpable energy in the air and can't wait to join in.\n\nWhere do you go first?",
+            "choices": [
+                {
+                    "selectionText": "Find the highest piece of art you can see - you want a view!",
+                    "id": "3",
+                    "name": "Climb",
+                    "storyText": "As you climb the lights twinkly out into the distance and you feel a bit like one little star in a vast solar system of light and color. You find a place to sit with your feet dangling below you and your arms wrapped around each other. You take a minute to take it all in.\n\nWhat do you do next?",
+                    "choices": [
+                        {
+                            "id": "4",
+                            "selectionText": "Sit up here and watch for a while",
+                            "name": "Sit",
+                            "storyText": "You stay for a while letting yourself get lost in the random patterns of movement below you. Eventually you decide to climb down and join in.\n\nWhere do you go?",
+                            "choices": [
+                                {
+                                    "id": "5",
+                                    "selectionText": "Deeper into playa",
+                                    "name": "Deeper",
+                                    "storyText": "Awash in a sea of lights you\'re not sure what's city and what's open playa anymore. Color and sound pulse around you and you feel all at once grounded and swept away. Your partner puts their arms around you and you lean back.\n\nWhere do you go?",
+                                    "choices": [
+                                        {
+                                            "id": "6",
+                                            "selectionText": "The brightest light you can see",
+                                            "name": "Light",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "7",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "8",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "9",
+                                            "selectionText": "The loudest music you can see",
+                                            "name": "Music",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "10",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "11",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "12",
+                                            "selectionText": "The biggest crowd you can see",
+                                            "name": "Crowd",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "13",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "14",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "15",
+                                    "selectionText": "Back towards the city",
+                                    "name": "City",
+                                    "storyText": "Awash in a sea of lights you\'re not sure what's city and what's open playa anymore. Color and sound pulse around you and you feel all at once grounded and swept away. Your partner puts their arms around you and you lean back.\n\nWhere do you go?",
+                                    "choices": [
+                                        {
+                                            "id": "16",
+                                            "selectionText": "The brightest light you can see",
+                                            "name": "Light",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "17",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "18",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "19",
+                                            "selectionText": "The loudest music you can see",
+                                            "name": "Music",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "20",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "21",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "22",
+                                            "selectionText": "The biggest crowd you can see",
+                                            "name": "Crowd",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "23",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "24",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "25", #Here
+                            "selectionText": "Head down to check out that thing on fire you saw earlier",
+                            "name": "Sit",
+                            "storyText": "It's a burning gas station! You remember exploring this piece earlier in the week and marvel at it as pieces of it fall burning to the ground.\n\nWhat do you do?",
+                            "choices": [
+                                {
+                                    "id": "5",
+                                    "selectionText": "Deeper into playa",
+                                    "name": "Deeper",
+                                    "storyText": "Awash in a sea of lights you\'re not sure what's city and what's open playa anymore. Color and sound pulse around you and you feel all at once grounded and swept away. Your partner puts their arms around you and you lean back.\n\nWhere do you go?",
+                                    "choices": [
+                                        {
+                                            "id": "6",
+                                            "selectionText": "The brightest light you can see",
+                                            "name": "Light",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "7",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "8",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "9",
+                                            "selectionText": "The loudest music you can see",
+                                            "name": "Music",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "10",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "11",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "12",
+                                            "selectionText": "The biggest crowd you can see",
+                                            "name": "Crowd",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "13",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "14",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "15",
+                                    "selectionText": "Back towards the city",
+                                    "name": "City",
+                                    "storyText": "Awash in a sea of lights you\'re not sure what's city and what's open playa anymore. Color and sound pulse around you and you feel all at once grounded and swept away. Your partner puts their arms around you and you lean back.\n\nWhere do you go?",
+                                    "choices": [
+                                        {
+                                            "id": "16",
+                                            "selectionText": "The brightest light you can see",
+                                            "name": "Light",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "17",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "18",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "19",
+                                            "selectionText": "The loudest music you can see",
+                                            "name": "Music",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "20",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "21",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "22",
+                                            "selectionText": "The biggest crowd you can see",
+                                            "name": "Crowd",
+                                            "storyText": "Time blurs as you dive into your experience. You can see dawn beginning to creep in at the edges of the sky and the tide of late night revelers begin to gradually head towards a morning sleep. You're not ready for this night to end and you're determined to see the sunrise.\n\nWhere do you go to watch it?",
+                                            "choices": [
+                                                {
+                                                    "id": "23",
+                                                    "selectionText": "You head towards the trash fence",
+                                                    "name": "Fence",
+                                                    "storyText": "You park your bikes and settle into the dust as the warm glow of dawn further lights the sky. Others have migrated to the trash fence as well and laughter and stories of the night create a hum around you as you greet the new day.",
+                                                    "choices": []
+                                                },
+                                                {
+                                                    "id": "24",
+                                                    "selectionText": "You make your way to the temple",
+                                                    "name": "Temple",
+                                                    "storyText": "The temple welcomes you with a quiet understanding and acceptance. As the sun begins to warm your faces you sit in contented silence as you let the calming energy guide your reflections on all that you have experienced. ", 
+                                                    "choices": []
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                        }
+                    ]
+                },
+            ]
+        }
+    ]
+}
