@@ -19,7 +19,7 @@ const ExplorePage = ({ history, location }) => {
         : storyNode.location;
 
     const loadStory = async (storyLocation) => {
-        const node = await fetchNode(storyLocation);
+        const node = await fetchNode(storyLocation, false);
 
         if (node) {
             setStoryNode(node);

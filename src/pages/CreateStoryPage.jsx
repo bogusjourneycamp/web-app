@@ -162,7 +162,7 @@ export const CreateStoryPage = ({ location }) => {
                 setIsLoading(true);
 
                 try {
-                    const node = await fetchNode(storyLocation);
+                    const node = await fetchNode(storyLocation, true);
 
                     if (node) {
                         const resultWithDefaults = {
