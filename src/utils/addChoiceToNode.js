@@ -9,13 +9,15 @@ import fiveLetterWords from "./fiveLetterWords";
  * @returns The updated node, otherwise null
  */
 const addChoiceToNode = (rootNode, nodeId, level = 0) => {
-    const choiceName = fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)];
+    const choiceName =
+        fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)];
 
     if (rootNode.id === nodeId) {
         const choiceNodeAdded = {
             id: v4(),
             name: choiceName,
-            text: "",
+            storyText: "",
+            selectionText: "",
             choices: [],
         };
 
