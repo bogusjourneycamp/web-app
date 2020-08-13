@@ -5,7 +5,6 @@ import Button from "./Button";
 import getNextLocation from "../utils/getNextLocation";
 
 const StyledContainer = styled.div`
-    margin: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
