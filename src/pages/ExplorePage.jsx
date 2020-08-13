@@ -16,7 +16,7 @@ const ExplorePage = ({ history, location }) => {
         : undefined;
     const currentLocation = searchParams
         ? searchParams.get("location")
-        : storyNode.location;
+        : "Man";
 
     const loadStory = async (storyLocation) => {
         const node = await fetchNode(storyLocation, false);
