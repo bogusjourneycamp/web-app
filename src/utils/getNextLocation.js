@@ -1,6 +1,10 @@
 const getNextLocation = (location, dir) => {
-    const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G"];
+    const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
     const clock = [
+        "12:00",
+        "12:15",
+        "12:30",
+        "12:45",
         "1:00",
         "1:15",
         "1:30",
@@ -45,43 +49,58 @@ const getNextLocation = (location, dir) => {
         "11:15",
         "11:30",
         "11:45",
-        "12:00",
-        "12:15",
-        "12:30",
-        "12:45",
     ];
     const split = location.split("_");
     const letter = split[0];
-    const time = split[1];
-    const letterInd = alphabet.indexOf(letter);
-    const clockInd = clock.indexOf(time);
+    if (split.length === 2) {
+        const time = split[1];
+        const letterInd = alphabet.indexOf(letter);
+        const clockInd = clock.indexOf(time);
 
-    if (dir === "towards") {
-        if (letterInd === 0) {
-            return location;
+        if (dir === "towards") {
+            if (letterInd === 1) {
+                return `${alphabet[letterInd - 1]}` // Inner-most circle "Man" is just a point with no associated time
+            }
+            if (letterInd === 0) {
+                return location;
+            }
+            return `${alphabet[letterInd - 1]}_${time}`;
         }
-        return `${alphabet[letterInd - 1]}_${time}`;
+        if (dir === "away") {
+            if (letterInd === alphabet.length - 1) {
+                return location;
+            }
+            return `${alphabet[letterInd + 1]}_${time}`;
+        }
+        if (dir === "clockwise") {
+            if (clockInd === clock.length - 1) {
+                return `${letter}_${clock[0]}`;
+            }
+            return `${letter}_${clock[clockInd + 1]}`;
+        }
+        if (dir === "counter_clockwise") {
+            if (clockInd === 0) {
+                return `${letter}_${clock[clock.length - 1]}`;
+            }
+            return `${letter}_${clock[clockInd - 1]}`;
+        }
     }
-    if (dir === "away") {
-        if (letterInd === alphabet.length - 1) {
-            return location;
+    else {
+        if (dir === "towards") {
+            return `Esplanade_12:00`;
         }
-        return `${alphabet[letterInd + 1]}_${time}`;
-    }
-    if (dir === "clockwise") {
-        if (clockInd === clock.length - 1) {
-            return `${letter}_${clock[0]}`;
+        if (dir === "away") {
+            return `Esplanade_6:00`;
         }
-        return `${letter}_${clock[clockInd + 1]}`;
-    }
-    if (dir === "counter_clockwise") {
-        if (clockInd === 0) {
-            return `${letter}_${clock[clock.length - 1]}`;
+        if (dir === "clockwise") {
+            return `Esplanade_9:00`;
         }
-        return `${letter}_${clock[clockInd - 1]}`;
+        if (dir === "counter_clockwise") {
+            return `Esplanade_3:00`;
+        }
     }
 
-    return null;
+    return location;
 };
 
 export default getNextLocation;

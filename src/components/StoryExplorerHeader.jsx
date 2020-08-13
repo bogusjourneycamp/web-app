@@ -23,7 +23,7 @@ const ButtonsContainer = styled.div`
     display: flex;
     margin-right: 20px;
 
-    #btn-share {
+    #btn-report {
         margin-left: 20px;
     }
 `;
@@ -43,8 +43,8 @@ const StoryExplorerHeader = ({ title, location }) => (
             >
                 Edit
             </LinkButton>
-            {/* TODO: Link to share */}
-            <LinkButton id="btn-share">Share</LinkButton>
+            {/* TODO: Link to report */}
+            <LinkButton id="btn-report">Report</LinkButton>
         </ButtonsContainer>
     </Header>
 );
