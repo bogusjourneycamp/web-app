@@ -65,8 +65,15 @@ const Grid = styled.div`
 const images = require.context('../../public/man_svgs', true);
 
 const StoryNavigationView = ({ location, onClickLocation }) => {
-    // <img id="man-pic" src="https://o7fe62guj6g73vlj30xpogpm-wpengine.netdna-ssl.com/wp-content/uploads/2020/01/BMJ_2020ManBase-665x375.png" alt="The Man" />
-    const  svgFile = "man_svgs/" + location.replace(":", "__") + ".svg"
+    const atMan = location === "Man";
+
+    const svgFile = atMan ? "man_svgs/Esplanade_12__00.svg" : "man_svgs/" + location.replace(":", "__") + ".svg";
+
+    const downArrowText = atMan ? "Toward 6:00" : "Away Form Man";
+    const leftArrowText = atMan ? "Toward 9:00" : "Clockwise";
+    const upArrowText = atMan ? "Toward 12:00" : "Toward Man";
+    const rightArrowText = atMan ? "Toward 3:00" : "Counter-clockwise";
+
     return (
         <StyledContainer>
             <div><img id="img" src={svgFile}/></div>
@@ -80,7 +87,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                         onClickLocation(getNextLocation(location, "away"));
                     }}
                 >
-                    Away From Man
+                    {downArrowText}
                     <br />
                     &#8595;
                 </Button>
@@ -90,7 +97,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                         onClickLocation(getNextLocation(location, "clockwise"));
                     }}
                 >
-                    &#8598; Clockwise
+                    &#8598; {leftArrowText}
                 </Button>
                 <Button
                     id="nav-towards"
@@ -100,7 +107,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                 >
                     &#8593;
                     <br />
-                    Toward Man
+                    {upArrowText}
                 </Button>
                 <Button
                     id="nav-rewind"
@@ -110,7 +117,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                         );
                     }}
                 >
-                    Counter-clockwise &#8599;
+                    {rightArrowText} &#8599;
                 </Button>
             </Grid>
         </StyledContainer>
