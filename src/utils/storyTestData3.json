@@ -1,0 +1,92 @@
+{
+    "id": "A",
+    "selectionText": "Art Cars",
+    "location": "B_4:30",
+    "storyText": "It's Tuesday afternoon and your friend comes barreling back to camp exclaiming - \"I have a crush on an art car! It's so beautiful! Will you come find it with me tonight?\". Thinking sure, why not spend the night chasing cars you agree. When the evening comes you head out chattering about which cars you're hoping to spot as you go. As you leave the city you think you see Mayan Warrior off in the distance but are also drawn in by bursts of flame off to your right.\n\nWhich do you follow?",
+    "name": "root",
+    "choices": [
+        {
+            "selectionText": "Fire!",
+            "id": "B",
+            "name": "Fire",
+            "storyText": "It's El Pulpo! You've seen pictures of this car but in person it's something else. It trundles across the playa, it's arms moving animatedly and spitting fire. You notice a stream of bikes following and you wonder where they’re headed to.\n\nWhat do you do?",
+            "choices": [
+                {
+                    "selectionText": "Yell out, \"Where are you going?\"",
+                    "id": "C",
+                    "name": "Yell",
+                    "storyText": "Someone yells back - \"You'll have to come to find out!\" so you do.",
+                    "choices": [
+                        {
+                            "selectionText": "Let's go!",
+                            "id": "D",
+                            "name": "Go",
+                            "storyText": "You end up surrounded by a circle of cars dancing your heart out. Your friend squeals as one more pulls into the crowd - “It's my crush!”. They run towards it, arms spread wide and begin to dance ecstatically in front of it. You laugh and pull out your polaroid camera to snap a picture as you join them.",
+                            "choices": []
+                        }
+                    ]
+                },
+                {
+                    "selectionText": "Join in - who knows where you'll end up!",
+                    "id": "E",
+                    "name": "Join",
+                    "storyText": "More bikes and cars join in as you bike behind and music starts to play. Eventually El Pulpo parks and you notice the crowd growing.\n\nWhat do you do?", 
+                    "choices": [
+                        {
+                            "selectionText": "Go to take a closer look at El Pulpo",
+                            "id": "F",
+                            "name": "Closer",
+                            "storyText": "You end up surrounded by a circle of cars dancing your heart out. Your friend squeals as one more pulls into the crowd - “It's my crush!”. They run towards it, arms spread wide and begin to dance ecstatically in front of it. You laugh and pull out your polaroid camera to snap a picture as you join them.",
+                            "choices": []
+                        },
+                        {
+                            "selectionText": "Start to dance",
+                            "id": "G",
+                            "name": "Dance",
+                            "storyText": "You end up surrounded by a circle of cars dancing your heart out. Your friend squeals as one more pulls into the crowd - “It's my crush!”. They run towards it, arms spread wide and begin to dance ecstatically in front of it. You laugh and pull out your polaroid camera to snap a picture as you join them.",
+                            "choices": []
+                        }
+                    ]
+                },
+                {
+                    "selectionText": "Watch them pass enjoying the retreating flames",
+                    "id": "H",
+                    "name": "Watch",
+                    "storyText": "You notice additional art cars beginning to follow and decide to head towards them - maybe your friend's car is there! ",
+                    "choices": [
+                        {
+                            "selectionText": "Let’s find out!",
+                            "id": "I",
+                            "name": "Find",
+                            "storyText": "You end up surrounded by a circle of cars dancing your heart out. Your friend squeals as one more pulls into the crowd - “It's my crush!”. They run towards it, arms spread wide and begin to dance ecstatically in front of it. You laugh and pull out your polaroid camera to snap a picture as you join them.",
+                            "choices": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "selectionText": "Mayan Warrior - you're ready for some music",
+            "id": "J",
+            "name": "Mayan",
+            "storyText": "You catch up just as Mayan Warrior is parking and a crowd begins to form. You park your bikes and wait for the music to start.",
+            "choices": [
+                {
+                    "selectionText": "Start dancing!",
+                    "id": "K",
+                    "name": "Dancing",
+                    "storyText": "As you dance the crowd grows and additional cars arrive. You think about moving on but your friend seems certain their \"crush\" will arrive soon.",
+                    "choices": [
+                        {
+                            "selectionText": "Keep on dancing!",
+                            "id": "L",
+                            "name": "MoDance",
+                            "storyText": "You end up surrounded by a circle of cars dancing your heart out. Your friend squeals as one more pulls into the crowd - “It's my crush!”. They run towards it, arms spread wide and begin to dance ecstatically in front of it. You laugh and pull out your polaroid camera to snap a picture as you join them.",
+                            "choices": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

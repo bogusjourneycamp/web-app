@@ -1,4 +1,5 @@
 import { v4 } from "uuid";
+import fiveLetterWords from "./fiveLetterWords";
 
 /**
  * Adds a choice to a specified node
@@ -8,10 +9,12 @@ import { v4 } from "uuid";
  * @returns The updated node, otherwise null
  */
 const addChoiceToNode = (rootNode, nodeId, level = 0) => {
+    const choiceName = fiveLetterWords[Math.floor(Math.random() * fiveLetterWords.length)];
+
     if (rootNode.id === nodeId) {
         const choiceNodeAdded = {
             id: v4(),
-            name: "",
+            name: choiceName,
             text: "",
             choices: [],
         };

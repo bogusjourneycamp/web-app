@@ -32,7 +32,6 @@ const StyledChoiceName = styled.div`
         font-size: 12px;
         font-family: Helvetica, sans-serif;
         margin-left: 2px;
-        border: none;
         width: 80px;
         :focus {
             outline: none;
