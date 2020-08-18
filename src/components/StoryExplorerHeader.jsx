@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LinkButton from "./LinkButton";
-import isOpenPlaya from "../utils/fetchNode.js"
+
 const Header = styled.header`
     display: flex;
     flex-direction: row;
