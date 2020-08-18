@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LinkButton from "./LinkButton";
-
+import isOpenPlaya from "../utils/fetchNode.js"
 const Header = styled.header`
     display: flex;
     flex-direction: row;
@@ -28,8 +28,8 @@ const ButtonsContainer = styled.div`
     }
 `;
 
-const StoryExplorerHeader = ({ title, location }) => (
-    <Header>
+const StoryExplorerHeader = ({ title, location, message }) => (
+	<Header>
         <Title>{title}</Title>
         <ButtonsContainer>
             <LinkButton
@@ -41,12 +41,12 @@ const StoryExplorerHeader = ({ title, location }) => (
                         : undefined,
                 }}
             >
-                Edit
+                {message}
             </LinkButton>
             {/* TODO: Link to report */}
             <LinkButton id="btn-report">Report</LinkButton>
         </ButtonsContainer>
-    </Header>
+	</Header>
 );
 
 export default StoryExplorerHeader;
