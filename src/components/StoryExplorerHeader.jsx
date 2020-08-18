@@ -28,8 +28,8 @@ const ButtonsContainer = styled.div`
     }
 `;
 
-const StoryExplorerHeader = ({ title, location, message }) => (
-	<Header>
+const StoryExplorerHeader = ({ title, location, editButtonTitle }) => (
+    <Header>
         <Title>{title}</Title>
         <ButtonsContainer>
             <LinkButton
@@ -41,12 +41,12 @@ const StoryExplorerHeader = ({ title, location, message }) => (
                         : undefined,
                 }}
             >
-                {message}
+                {editButtonTitle}
             </LinkButton>
             {/* TODO: Link to report */}
             <LinkButton id="btn-report">Report</LinkButton>
         </ButtonsContainer>
-	</Header>
+    </Header>
 );
 
 export default StoryExplorerHeader;
