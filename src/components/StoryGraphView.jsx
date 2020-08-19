@@ -114,7 +114,13 @@ const StoryGraphView = ({
                     }
 
                     drawNodeBody(node, ctx, nodeColor);
-                    drawText(node, ctx, node.name, fontSize);
+                    drawText(
+                        node,
+                        ctx,
+                        node.name,
+                        fontSize,
+                        isSelectedNode ? "white" : undefined
+                    );
                 }}
             />
         </StyledContainer>
