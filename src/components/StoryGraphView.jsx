@@ -7,6 +7,7 @@ import drawText from "../utils/drawText";
 import { NODE_FONT_SIZE, NODE_SIZE } from "../utils/nodeConfig";
 import getNodePath from "../utils/getNodePath";
 import getNodeById from "../utils/getNodeById";
+import ColorPalette from "../utils/colors";
 
 const StyledContainer = styled.div`
     width: 500px;
@@ -24,7 +25,9 @@ const StoryGraphView = ({
     const [highlightedNodes, setHighlightedNodes] = useState(new Set());
 
     const getLinkColor = (link) =>
-        highlightedLinks.has(link) ? "#5CB85C" : "#C4C4C4";
+        highlightedLinks.has(link)
+            ? ColorPalette.NodeGreen
+            : ColorPalette.NodeGray;
 
     const updateHightlights = (hoveredGraphNode) => {
         if (hoveredGraphNode) {
@@ -97,13 +100,27 @@ const StoryGraphView = ({
                             node,
                             ctx,
                             isHighlighted || isSelectedNode
-                                ? "#5CB85C"
+                                ? ColorPalette.NodeGreen
                                 : undefined
                         );
                     }
 
-                    drawNodeBody(node, ctx, selectedNode.id);
-                    drawText(node, ctx, node.name, fontSize);
+                    let nodeColor;
+
+                    if (!node.metaData.hasStoryText) {
+                        nodeColor = ColorPalette.NodeRed;
+                    } else if (isSelectedNode) {
+                        nodeColor = ColorPalette.NodeGreen;
+                    }
+
+                    drawNodeBody(node, ctx, nodeColor);
+                    drawText(
+                        node,
+                        ctx,
+                        node.name,
+                        fontSize,
+                        isSelectedNode ? "white" : undefined
+                    );
                 }}
             />
         </StyledContainer>
