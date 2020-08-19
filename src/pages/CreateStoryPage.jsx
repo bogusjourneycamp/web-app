@@ -15,6 +15,7 @@ import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNod
 import emptyStoryData from "../utils/emptyStoryData.json";
 import { FONT_COLOR_MAIN } from "../utils/styleConfig";
 import fetchNode from "../utils/fetchNode";
+import getMutatedGraphData from "../utils/getMutatedGraphData";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -54,13 +55,26 @@ export const CreateStoryPage = ({ location }) => {
     const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
 
+    const updateGraphData = (newStoryNode) => {
+        const newGraphData = storyNodeToGraphData(newStoryNode, currentNodeId);
+
+        setGraphData(getMutatedGraphData(graphData, newGraphData));
+    };
+
     const onChangeStoryText = (newText) => {
-        const updatedNode = updateNodeValue(storyNode, currentNodeId, {
-            storyText: newText,
+        const storyText = newText ? newText.trim() : "";
+        const newStoryNode = updateNodeValue(storyNode, currentNodeId, {
+            storyText,
         });
 
-        if (updatedNode) {
-            setStoryNode(updatedNode);
+        if (newStoryNode) {
+            setStoryNode(newStoryNode);
+
+            // Update only if storyText changes from empty to something or something to nothing.
+            // So it wouldn't update graphData everytime something is typed.
+            if (Boolean(storyText) !== Boolean(currentNode.storyText)) {
+                updateGraphData(newStoryNode);
+            }
         }
     };
 
@@ -94,30 +108,7 @@ export const CreateStoryPage = ({ location }) => {
         );
 
         if (newStoryNode) {
-            // This is a graph data representation of the new story node
-            const newGraphData = storyNodeToGraphData(newStoryNode);
-
-            // With the new story node graph representation, we're going to retrieve the existing
-            // node/links to preserve its instance, so that the ForceGraph won't render the node
-            // entering animations for all the nodes at once.
-            const newNodes = newGraphData.nodes
-                .map((newNode) =>
-                    graphData.nodes.find((node) => node.id === newNode.id)
-                )
-                .filter((value) => value);
-
-            const newLinks = newGraphData.links.map((newLink) =>
-                graphData.links.find(
-                    (link) =>
-                        link.source.id === newLink.source &&
-                        link.target.id === newLink.target
-                )
-            );
-
-            setGraphData({
-                nodes: newNodes,
-                links: newLinks,
-            });
+            updateGraphData(newStoryNode);
             setStoryNode(newStoryNode);
         }
     };
@@ -194,6 +185,7 @@ export const CreateStoryPage = ({ location }) => {
                 fetchedStoryNode || storyNode,
                 currentNodeId
             );
+
             setGraphData(nextGraphData);
 
             // Set link distance between nodes
