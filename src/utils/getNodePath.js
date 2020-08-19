@@ -2,7 +2,6 @@ const getNodePath = (startNode, endNode, nodePath = []) => {
     if (!startNode || !endNode) {
         return null;
     }
-
     if (startNode.id === endNode.id) {
         return [...nodePath, endNode];
     }

@@ -28,10 +28,15 @@ const ButtonsContainer = styled.div`
     }
 `;
 
-const StoryExplorerHeader = ({ title, location, editButtonTitle }) => (
+const StoryExplorerHeader = ({ title, location, editButtonTitle, previousLocation }) => (
     <Header>
         <Title>{title}</Title>
         <ButtonsContainer>
+            {previousLocation && <LinkButton
+                id="btn-back"
+            >
+                Back
+            </LinkButton>}
             <LinkButton
                 id="btn-edit"
                 to={{
