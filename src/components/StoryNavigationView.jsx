@@ -68,7 +68,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
 
     const svgFile = atMan ? "man_svgs/Esplanade_12__00.svg" : "man_svgs/" + location.replace(":", "__") + ".svg";
 
-    const downArrowText = atMan ? "Toward 6:00" : "Away Form Man";
+    const downArrowText = atMan ? "Toward 6:00" : "Away From Man";
     const leftArrowText = atMan ? "Toward 9:00" : "Clockwise";
     const upArrowText = atMan ? "Toward 12:00" : "Toward Man";
     const rightArrowText = atMan ? "Toward 3:00" : "Counter-clockwise";
