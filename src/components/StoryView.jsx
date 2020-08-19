@@ -11,10 +11,14 @@ const StyledContainer = styled.div`
 
 const StoryView = ({ storyNode, onTakeAction }) => {
     const { selectionText, location, storyText, choices } = storyNode;
+    let editButtonTitle = "Edit";
 
+    if (selectionText === "Open Playa") {
+        editButtonTitle = "Create";
+    }
     return (
         <StyledContainer>
-            <StoryExplorerHeader title={selectionText} location={location} />
+            <StoryExplorerHeader title={selectionText} location={location} editButtonTitle={editButtonTitle} />
             <StoryExplorerTextView
                 storyText={storyText}
                 onTakeAction={onTakeAction}
