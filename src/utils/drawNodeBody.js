@@ -1,9 +1,10 @@
 import { NODE_RADIUS } from "./nodeConfig";
+import ColorPalette from "./colors";
 
-const drawNodeBody = (node, ctx, selectedNodeId) => {
+const drawNodeBody = (node, ctx, color = ColorPalette.NodeGray) => {
     ctx.beginPath();
     ctx.arc(node.x, node.y, NODE_RADIUS, 0, 2 * Math.PI, false);
-    ctx.fillStyle = node.id === selectedNodeId ? "#5CB85C" : "#C4C4C4";
+    ctx.fillStyle = color;
     ctx.fill();
 };
 

@@ -105,7 +105,15 @@ const StoryGraphView = ({
                         );
                     }
 
-                    drawNodeBody(node, ctx, selectedNode.id);
+                    let nodeColor;
+
+                    if (!node.metaData.hasStoryText) {
+                        nodeColor = ColorPalette.NodeRed;
+                    } else if (isSelectedNode) {
+                        nodeColor = ColorPalette.NodeGreen;
+                    }
+
+                    drawNodeBody(node, ctx, nodeColor);
                     drawText(node, ctx, node.name, fontSize);
                 }}
             />
