@@ -6,7 +6,7 @@ import ColorPalette from "../utils/colors";
 const StyledLink = styled(Link)`
     border: 1px solid;
     border-radius: 3px;
-    color: ${ColorPalette.cornflowerBlue};
+    color: ${ColorPalette.CornflowerBlue};
     font-size: 16px;
     font-weight: 100;
     height: fit-content;
