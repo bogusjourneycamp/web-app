@@ -3,18 +3,14 @@ import styled from "styled-components";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
 import getNodePath from "../utils/getNodePath";
-import getNodeById from "../utils/getNodeById";
-import fetchNode from "../utils/fetchNode";
+import {previousLocation} from '../utils/getNextLocation';
 
 const StyledContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
 `;
-const GetPreviousLocation = ({storyNode, location}) => {
-    const currentNode = fetchNode(location, false)
-    // eslint-disable-next-line no-console
-    console.log(storyNode);
+const GetPreviousLocation = ({storyNode}) => {
     // const nodePath = getNodePath(storyNode);
 
     // if (!nodePath) {
@@ -33,7 +29,7 @@ const StoryView = ({ storyNode, onTakeAction }) => {
     if (selectionText === "Open Playa") {
         editButtonTitle = "Create";
     }
-    const previousLocation = GetPreviousLocation(storyNode, location);
+	console.log(previousLocation)
     
     return (
         <StyledContainer>
