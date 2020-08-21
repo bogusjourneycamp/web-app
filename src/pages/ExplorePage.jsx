@@ -8,7 +8,6 @@ import StoryView from "../components/StoryView";
 import fetchNode from "../utils/fetchNode";
 
 const StyledContainer = styled.div``;
-
 const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState(storyTestData);
     const searchParams = location.search
@@ -46,7 +45,7 @@ const ExplorePage = ({ history, location }) => {
                     location: storyLocation,
                 }).toString()}`,
             });
-        }
+		}
     };
 
     useEffect(() => {

@@ -25,18 +25,24 @@ const ButtonsContainer = styled.div`
 
     #btn-report {
         margin-left: 20px;
-    }
+	}
+	
+	#btn-edit {
+		margin-left: 20px;
+	}
 `;
 
-const StoryExplorerHeader = ({ title, location, editButtonTitle, previousLocation }) => (
+
+const StoryExplorerHeader = ({ title, location, editButtonTitle, storyNode }) => (
     <Header>
         <Title>{title}</Title>
         <ButtonsContainer>
-            {previousLocation && <LinkButton
-                id="btn-back"
+		<LinkButton
+				id="btn-back"
+				
             >
                 Back
-            </LinkButton>}
+            </LinkButton>
             <LinkButton
                 id="btn-edit"
                 to={{
