@@ -18,7 +18,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${FONT_FAMILY_MAIN} !important;
     margin: 0;
     padding: 0;
+
   }
+
+  html, body {
+    height: 100%;
+  }
+
 
   a, button {
     font-family: ${FONT_FAMILY_MAIN} !important;
@@ -27,6 +33,10 @@ const GlobalStyle = createGlobalStyle`
   /* Override text color */
   a, body, button, h1, h2, h3, h4, h5, h6 {
     color: ${FONT_COLOR_MAIN} !important;
+  }
+
+  #root {
+    height: 100%;
   }
 `;
 
@@ -41,11 +51,15 @@ const StyledContainer = styled.div`
     }
 `;
 
+const Content = styled.main`
+    flex: 1;
+`;
+
 export const Layout = ({ children }) => {
     return (
         <StyledContainer>
             <Header />
-            <main>{children}</main>
+            <Content>{children}</Content>
             <Footer />
             <GlobalStyle />
         </StyledContainer>

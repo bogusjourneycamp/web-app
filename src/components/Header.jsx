@@ -3,15 +3,13 @@ import styled from "styled-components";
 import { Nav } from "./Nav";
 
 const StyledHeader = styled.header`
-    border-bottom: 1px solid black;
     display: flex;
 `;
 
 const StyledTitle = styled.div`
-    flex-grow: 7;
-
-    display: flex;
     align-items: center;
+    display: flex;
+    flex-grow: 7;
     font-size: 42px;
     font-weight: 600;
     margin: 15px;

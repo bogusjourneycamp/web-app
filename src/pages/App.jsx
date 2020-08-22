@@ -6,13 +6,11 @@ import "antd/dist/antd.css";
 
 export const App = () => {
     return (
-        <div className="App">
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={ExplorePage} />
-                    <Route path="/create-story" component={CreateStoryPage} />
-                </Switch>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={ExplorePage} />
+                <Route path="/create-story" component={CreateStoryPage} />
+            </Switch>
+        </BrowserRouter>
     );
 };
