@@ -12,7 +12,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: #ECEEEF;
     font-family: ${FONT_FAMILY_MAIN} !important;
-    color: ${FONT_COLOR_MAIN};
     margin: 0;
     padding: 0;
   }
@@ -21,8 +20,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${FONT_FAMILY_MAIN} !important;
   }
 
-  button {
-    color: ${FONT_COLOR_MAIN};
+  /* Override text color */
+  a, body, button, h1, h2, h3, h4, h5, h6 {
+    color: ${FONT_COLOR_MAIN} !important;
   }
 `;
 
