@@ -1,10 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 import { Nav } from "./Nav";
 
-const StyledHeader = styled.div`
+const StyledHeader = styled.header`
     border-bottom: 1px solid black;
-
     display: flex;
 `;
 
@@ -13,8 +12,8 @@ const StyledTitle = styled.div`
 
     display: flex;
     align-items: center;
-    font-size: 24px;
-    font-family: HelveticaNeue;
+    font-size: 42px;
+    font-weight: 600;
     margin: 15px;
 `;
 
