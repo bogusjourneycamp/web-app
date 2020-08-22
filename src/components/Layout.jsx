@@ -10,7 +10,11 @@ import {
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background: #ECEEEF;
+    background-image: url("images/burning_man_background_1.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
     font-family: ${FONT_FAMILY_MAIN} !important;
     margin: 0;
     padding: 0;
@@ -28,27 +32,20 @@ const GlobalStyle = createGlobalStyle`
 
 const StyledContainer = styled.div`
     border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 100%;
 
     .monospace {
         font-family: ${FONT_FAMILY_MONOSPACE};
     }
-
-    margin: auto;
-    width: 80%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    background: white;
 `;
 
 export const Layout = ({ children }) => {
     return (
         <StyledContainer>
-            <header>
-                <Header />
-            </header>
+            <Header />
             <main>{children}</main>
             <Footer />
             <GlobalStyle />
