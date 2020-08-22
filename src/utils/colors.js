@@ -4,6 +4,7 @@ const ColorPalette = {
     NodeGreen: "#5cb85c",
     NodeGray: "#c4c4c4",
     NodeRed: "#b85c5c",
+    CoffeeBean: "#351212",
 };
 
 export default ColorPalette;
