@@ -48,8 +48,8 @@ const StyledContainer = styled.div`
         width: 200px;
         height: 400px;
         object-fit: cover;
-        display:block;
-      }
+        display: block;
+    }
 `;
 
 const Grid = styled.div`
@@ -61,12 +61,14 @@ const Grid = styled.div`
     grid-auto-rows: 50px;
 `;
 
-const images = require.context('../../public/man_svgs', true);
+const images = require.context("../../public/man_svgs", true);
 
 const StoryNavigationView = ({ location, onClickLocation }) => {
     const atMan = location === "Man";
 
-    const svgFile = atMan ? "man_svgs/Esplanade_12__00.svg" : "man_svgs/" + location.replace(":", "__") + ".svg";
+    const svgFile = atMan
+        ? "man_svgs/Esplanade_12__00.svg"
+        : "man_svgs/" + location.replace(":", "__") + ".svg";
 
     const downArrowText = atMan ? "Toward 6:00" : "Away From Man";
     const leftArrowText = atMan ? "Toward 9:00" : "Clockwise";
@@ -74,12 +76,12 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
     const rightArrowText = atMan ? "Toward 3:00" : "Counter-clockwise";
 
     return (
-        <StyledContainer>
-            <div><img id="img" src={svgFile}/></div>
+        <StyledContainer id="view-story-navigation">
+            <div>
+                <img id="img" src={svgFile} />
+            </div>
             <Grid>
-                <div id="nav-center">
-                    {formatLocation(location)}
-                </div>
+                <div id="nav-center">{formatLocation(location)}</div>
                 <Button
                     id="nav-away"
                     onClick={() => {
