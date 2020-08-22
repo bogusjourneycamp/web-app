@@ -76,14 +76,13 @@ export const StoryChoice = ({
     return (
         <div className="story-choice">
             <StyledChoiceName>
-                Choice{" "}
+                Reference{" "}
                 <input
                     value={choice.name}
                     maxLength={NODE_TEXT_LENGTH}
                     onChange={(e) => {
                         onChangeChoiceTitle(e.target.value);
                     }}
-                    placeholder="Walk"
                 />
                 <StyledRemoveButton type="button" onClick={onClickRemove}>
                     X
