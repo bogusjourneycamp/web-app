@@ -37,6 +37,7 @@ const ButtonsContainer = styled.div`
 const StoryView = ({
     storyNode,
     onTakeAction,
+    onBack,
     onClickEditPasswordSuccess,
     loading,
 }) => {
@@ -58,6 +59,12 @@ const StoryView = ({
         editButtonTitle = "Create";
     }
 
+    let isRootNode = 0;	
+
+    if (storyNode.name === "root" || selectionText === "Open Playa") {
+        isRootNode = 1;
+    }
+
     return (
         <StyledContainer id="view-story">
             <StoryFrame>
@@ -65,8 +72,11 @@ const StoryView = ({
                     title={selectionText}
                     location={location}
                     editButtonTitle={editButtonTitle}
+                    isRootNode={isRootNode}
+                    onBack={onBack}
                 />
                 <StoryExplorerTextView
+                    storyNode={storyNode}
                     storyText={storyText}
                     onTakeAction={onTakeAction}
                     choices={choices}
