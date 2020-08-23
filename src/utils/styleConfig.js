@@ -2,7 +2,7 @@ import ColorPalette from "./colors";
 
 export const FONT_FAMILY_MONOSPACE = "monospace";
 export const FONT_FAMILY_MAIN = "Helvetica, sans-serif";
-export const FONT_COLOR_MAIN = ColorPalette.SpaceBlack;
+export const FONT_COLOR_MAIN = ColorPalette.CoffeeBean;
 
 const styleConfig = {
     FONT_FAMILY_MONOSPACE,

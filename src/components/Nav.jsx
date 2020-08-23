@@ -1,12 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledNav = styled.nav`
-    text-align: right;
-    padding: 24px;
-
+    align-items: center;
+    display: flex;
     flex-grow: 3;
+    font-size: 20px;
+    font-weight: 600;
+    justify-content: flex-end;
+    padding: 24px;
+    text-align: right;
 
     a:not(:last-child) {
         margin: 0 16px;
@@ -16,8 +20,8 @@ const StyledNav = styled.nav`
 export const Nav = () => {
     return (
         <StyledNav>
-            <Link to="/">Home</Link>
-            <Link to="/create-story">Create Story</Link>
+            <Link to="/playa-info">Playa Info</Link>
+            <Link to="/help">Feeling Lost?</Link>
         </StyledNav>
     );
 };
