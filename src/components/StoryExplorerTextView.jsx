@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
-import ColorPalette from "../utils/colors";
+import StoryButton from "./StoryButton";
 
 const StoryTextSection = styled.div`
     margin: 10px 20px 20px 20px;
@@ -20,39 +19,18 @@ const ChoicesContainer = styled.div`
     flex-direction: column;
 `;
 
-const ChoiceButton = styled(Button)`
-    border: 3px solid ${ColorPalette.CoffeeBean};
-    border-radius: 100px;
-    background-color: rgba(255, 255, 255, 0.5);
-    font-size: 18px;
-    font-weight: 100;
-    line-height: 30px;
-    margin: 10px 0;
-    padding: 10px;
-    text-align: center;
-    transition: background-color 200ms;
-
-    :hover {
-        background-color: rgba(255, 255, 255, 1);
-    }
-
-    :focus {
-        outline: none;
-    }
-`;
-
 const StoryExplorerTextView = ({storyNode, storyText, choices, onTakeAction }) => {
     return (
         <StoryTextSection>
             <StoryText>{storyText}</StoryText>
             <ChoicesContainer>
                 {choices.map((item, index) => (
-                    <ChoiceButton
+                    <StoryButton
                         key={`action-${index}`}
                         onClick={() => onTakeAction(storyNode.id, item.id)}
                     >
                         {item.selectionText}
-                    </ChoiceButton>
+                    </StoryButton>
                 ))}
             </ChoicesContainer>
         </StoryTextSection>

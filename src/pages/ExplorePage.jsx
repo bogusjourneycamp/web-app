@@ -58,7 +58,7 @@ const ExplorePage = ({ history, location }) => {
             setStoryNode(node);
         }
     };
-	
+
     const onBack = () => {
         const storyPath = storyNodeToGraphData(rootNode, rootNode.id);
         let previousNodeId = null;
@@ -71,11 +71,12 @@ const ExplorePage = ({ history, location }) => {
             }
         }
         const previousNode = getNodeById(rootNode, previousNodeId);
+        console.log(previousNode);
         if (previousNode) {
             setStoryNode(previousNode);
         }
     };
-	
+
     const onClickLocation = async (storyLocation) => {
         const node = await loadStory(storyLocation);
 
