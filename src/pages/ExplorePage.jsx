@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { Layout } from "../components/Layout";
@@ -87,6 +88,16 @@ const ExplorePage = ({ history, location }) => {
         }
     };
 
+    const onClickEditPasswordFailure = async () => {
+        notification.error({message: "Invalid passphrase!"});
+
+        history.push({
+            search: `?${new URLSearchParams({
+                location: currentLocation,
+            }).toString()}`,
+        });
+    }
+
     useEffect(() => {
         loadStory(currentLocation);
     }, []);
@@ -106,6 +117,7 @@ const ExplorePage = ({ history, location }) => {
                             )}`
                         );
                     }}
+                    onClickEditPasswordFailure={onClickEditPasswordFailure}
                 />
                 <StoryNavigationView
                     location={currentLocation}

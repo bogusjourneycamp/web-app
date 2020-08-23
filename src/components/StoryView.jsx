@@ -39,6 +39,7 @@ const StoryView = ({
     onTakeAction,
     onBack,
     onClickEditPasswordSuccess,
+    onClickEditPasswordFailure,
     loading,
 }) => {
     const [editPassword, setEditPassword] = useState("");
@@ -102,6 +103,8 @@ const StoryView = ({
 
                         if (validEditPassphrase && onClickEditPasswordSuccess) {
                             onClickEditPasswordSuccess();
+                        } else {
+                            onClickEditPasswordFailure();
                         }
                     }}
                 >
@@ -111,7 +114,7 @@ const StoryView = ({
                     id="input-edit-password"
                     value={editPassword}
                     onChange={(e) => setEditPassword(e.target.value)}
-                    placeholder="Edit password"
+                    placeholder="Edit passphrase"
                 />
             </ButtonsContainer>
         </StyledContainer>
