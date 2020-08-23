@@ -28,6 +28,7 @@ const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState();
     const [loading, setLoading] = useState(false);
     const [rootNode, setRootNode] = useState(0);
+    const [editPassword, setEditPassword] = useState("");
 
     const searchParams = location.search
         ? new URLSearchParams(location.search)
@@ -73,7 +74,7 @@ const ExplorePage = ({ history, location }) => {
         if (previousNode) {
             setStoryNode(previousNode);
         }
-    }
+    };
 	
     const onClickLocation = async (storyLocation) => {
         const node = await loadStory(storyLocation);
@@ -88,6 +89,16 @@ const ExplorePage = ({ history, location }) => {
         }
     };
 
+    const onClickEditPasswordSuccess = async () => {
+        history.push({
+            pathname: "/create-story",
+            search: `?${new URLSearchParams({
+                location: currentLocation,
+            }).toString()}`,
+            state: {"passphrase": editPassword},
+        });
+    };
+
     const onClickEditPasswordFailure = async () => {
         notification.error({message: "Invalid passphrase!"});
 
@@ -96,7 +107,7 @@ const ExplorePage = ({ history, location }) => {
                 location: currentLocation,
             }).toString()}`,
         });
-    }
+    };
 
     useEffect(() => {
         loadStory(currentLocation);
@@ -110,13 +121,9 @@ const ExplorePage = ({ history, location }) => {
                     onTakeAction={onTakeAction}
                     onBack={onBack}
                     loading={loading}
-                    onClickEditPasswordSuccess={() => {
-                        history.push(
-                            `/create-story?location=${encodeURI(
-                                currentLocation
-                            )}`
-                        );
-                    }}
+                    editPassword={editPassword}
+                    setEditPassword={setEditPassword}
+                    onClickEditPasswordSuccess={onClickEditPasswordSuccess}
                     onClickEditPasswordFailure={onClickEditPasswordFailure}
                 />
                 <StoryNavigationView

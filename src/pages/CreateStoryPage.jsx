@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { notification } from "antd";
 import { Layout } from "../components/Layout";
@@ -55,6 +56,14 @@ export const CreateStoryPage = ({ location }) => {
     const graphRef = useRef();
     const currentNode = getNodeById(storyNode, currentNodeId);
 
+    const searchParams = new URLSearchParams(location.search || "");
+    const storyLocation = searchParams.get("location");
+
+    // Should be empty string if Creating, or filled string if Editing. Should only be null on refresh.
+    const passphrase = location.state.passphrase || null;
+
+    console.log(passphrase);
+
     const updateGraphData = (newStoryNode) => {
         const newGraphData = storyNodeToGraphData(newStoryNode, currentNodeId);
 
@@ -62,7 +71,7 @@ export const CreateStoryPage = ({ location }) => {
     };
 
     const onChangeStoryText = (newText) => {
-        const storyText = newText ? newText.trim() : "";
+        const storyText = newText;
         const newStoryNode = updateNodeValue(storyNode, currentNodeId, {
             storyText,
         });
@@ -144,9 +153,6 @@ export const CreateStoryPage = ({ location }) => {
 
     useEffect(() => {
         const fetchStory = async () => {
-            const searchParams = new URLSearchParams(location.search || "");
-            const storyLocation = searchParams.get("location");
-
             let fetchedStoryNode;
 
             if (storyLocation) {
@@ -162,6 +168,7 @@ export const CreateStoryPage = ({ location }) => {
                             location: storyLocation,
                             storyText: "",
                             name: "root",
+                            passphrase: passphrase,
                             choices: [],
                             ...node,
                         };
@@ -189,12 +196,20 @@ export const CreateStoryPage = ({ location }) => {
             setGraphData(nextGraphData);
 
             // Set link distance between nodes
-            graphRef.current.d3Force("link").distance(LINK_LENGTH);
+            if (graphRef.current != null) {
+                graphRef.current.d3Force("link").distance(LINK_LENGTH);
+            }
         };
 
         fetchStory();
     }, []);
 
+    // Redirect if no passphrase passed (normally due to refresh)
+    if (passphrase == null) {
+        notification.warning({message: "Could not find passphrase...\nRedirecting to Explore"})
+
+        return <Redirect to={`/?location=${storyLocation}`} />
+    }
     return (
         <Layout>
             <StyledContainer>
