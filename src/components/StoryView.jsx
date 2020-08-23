@@ -54,10 +54,14 @@ const StoryView = ({
 
     const { selectionText, location, storyText, choices } = storyNode;
 
-    let editButtonTitle = "Edit";
+    let isCreatePage = selectionText === "Open Playa";
 
-    if (selectionText === "Open Playa") {
+    let editButtonTitle = "Edit";
+    let editPasswordInputType = "text";
+
+    if (isCreatePage) {
         editButtonTitle = "Create";
+        editPasswordInputType = "hidden";
     }
 
     let isRootNode = 0;	
@@ -115,6 +119,7 @@ const StoryView = ({
                     value={editPassword}
                     onChange={(e) => setEditPassword(e.target.value)}
                     placeholder="Edit passphrase"
+                    type={editPasswordInputType}
                 />
             </ButtonsContainer>
         </StyledContainer>
