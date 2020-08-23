@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import LinkButton from "./LinkButton";
+import StoryButton from "./StoryButton";
 
 const Header = styled.header`
     display: flex;
@@ -29,12 +29,12 @@ const StoryExplorerHeader = ({ title, isRootNode, onBack}) => (
         <Title>{title}</Title>
         <ButtonsContainer>
             {!isRootNode && (
-                <LinkButton
+                <StoryButton
                     id="btn-back"
-                    onClick={() =>{onBack()}}
+                    onClick={() => onBack()}
                 >
                     Back
-                </LinkButton>
+                </StoryButton>
             )}
         </ButtonsContainer>
     </Header>
