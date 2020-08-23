@@ -75,6 +75,13 @@ const ExplorePage = ({ history, location }) => {
                     storyNode={storyNode}
                     onTakeAction={onTakeAction}
                     loading={loading}
+                    onClickEditPasswordSuccess={() => {
+                        history.push(
+                            `/create-story?location=${encodeURI(
+                                currentLocation
+                            )}`
+                        );
+                    }}
                 />
                 <StoryNavigationView
                     location={currentLocation}
