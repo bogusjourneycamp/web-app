@@ -38,12 +38,12 @@ const StoryView = ({
     storyNode,
     onTakeAction,
     onBack,
+    editPassword,
+    setEditPassword,
     onClickEditPasswordSuccess,
     onClickEditPasswordFailure,
     loading,
 }) => {
-    const [editPassword, setEditPassword] = useState("");
-
     if (loading || !storyNode) {
         return (
             <StyledContainer id="view-story">
