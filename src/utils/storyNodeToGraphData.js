@@ -26,7 +26,7 @@ const storyNodeToGraphData = (
             );
         });
     }
-	
+
     return { nodes, links };
 };
 

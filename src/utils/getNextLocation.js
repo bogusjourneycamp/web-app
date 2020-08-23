@@ -1,4 +1,3 @@
-
 const getNextLocation = (location, dir) => {
     const alphabet = ["Man", "Esplanade", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
     const clock = [
@@ -57,7 +56,7 @@ const getNextLocation = (location, dir) => {
         const time = split[1];
         const letterInd = alphabet.indexOf(letter);
         const clockInd = clock.indexOf(time);
-		
+
         if (dir === "towards") {
             if (letterInd === 1) {
                 return `${alphabet[letterInd - 1]}` // Inner-most circle "Man" is just a point with no associated time
@@ -100,7 +99,7 @@ const getNextLocation = (location, dir) => {
             return `Esplanade_3:00`;
         }
     }
-	
+
     return location;
 };
 
