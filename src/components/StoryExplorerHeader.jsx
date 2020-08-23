@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import LinkButton from "./LinkButton";
-import getNodeById from "../utils/getNodeById";
 
 const Header = styled.header`
     display: flex;
@@ -34,16 +33,18 @@ const ButtonsContainer = styled.div`
 `;
 
 
-const StoryExplorerHeader = ({ title, location, editButtonTitle, storyNode, onBack}) => (
+const StoryExplorerHeader = ({ title, location, editButtonTitle, isRootNode, onBack}) => (
     <Header>
         <Title>{title}</Title>
         <ButtonsContainer>
-		<LinkButton
-				id="btn-back"
-				onClick={() =>{onBack()}}
-            >
-                Back
-            </LinkButton>
+            {!isRootNode && (
+                <LinkButton
+                    id="btn-back"
+                    onClick={() =>{onBack()}}
+                >
+                    Back
+                </LinkButton>
+            )}
             <LinkButton
                 id="btn-edit"
                 to={{
