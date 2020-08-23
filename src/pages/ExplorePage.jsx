@@ -9,6 +9,7 @@ import fetchNode from "../utils/fetchNode";
 import storyNodeToGraphData from "../utils/storyNodeToGraphData"
 
 const StyledContainer = styled.div``;
+
 const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState(storyTestData);
     const [rootNode, setRootNode] = useState(0);
@@ -42,7 +43,7 @@ const ExplorePage = ({ history, location }) => {
     };
 	
     const onBack = () => {
-        const storyPath = storyNodeToGraphData(rootNode, rootNode.id)
+        const storyPath = storyNodeToGraphData(rootNode, rootNode.id);
         let previousNodeId = null;
         if (storyPath) {
             for (let i = 0; i < storyPath.nodes.length; i++) {
