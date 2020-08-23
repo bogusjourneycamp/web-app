@@ -118,7 +118,7 @@ const StoryView = ({
                     id="input-edit-password"
                     value={editPassword}
                     onChange={(e) => setEditPassword(e.target.value)}
-                    placeholder="Edit passphrase"
+                    placeholder="Passphrase for Edit"
                     type={editPasswordInputType}
                 />
             </ButtonsContainer>
