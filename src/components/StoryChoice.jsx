@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { NODE_TEXT_LENGTH } from "../utils/nodeConfig";
 import AutoResizingTextArea from "./AutoResizingTextArea";
+import ColorPalette from "../utils/colors";
 
 const StyledChoiceText = styled.p`
-    border: 1px solid #e5e5e5;
     border-radius: 4px;
     font-weight: 300;
-    margin: 0 0 20px 0;
-    padding: 12px;
+    border: 3px solid ${ColorPalette.CoffeeBean};
+    margin: 0 0 0 0;
+
+    background: white;
 
     textarea {
         font-family: Helvetica, sans-serif;
@@ -40,8 +42,7 @@ const StyledChoiceName = styled.div`
 `;
 
 const StyledRemoveButton = styled.button`
-    background-color: transparent;
-    border: 1px solid #d9534f;
+    border: 3px solid #d9534f;
     border-radius: 4px;
     color: #d9534f;
     cursor: pointer;
