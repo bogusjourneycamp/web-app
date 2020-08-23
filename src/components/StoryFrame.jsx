@@ -4,7 +4,6 @@ import ColorPalette from "../utils/colors";
 
 const OuterBorder = styled.div`
     border: 3px solid ${ColorPalette.CoffeeBean};
-    min-height: 418px;
     display: flex;
     flex-direction: column;
 `;
@@ -29,6 +28,8 @@ const Content = styled.div`
     background: rgba(255, 255, 255, 0.5);
     border: 3px solid ${ColorPalette.CoffeeBean};
     flex: 1;
+    overflow: auto;
+    height: 600px;
 `;
 
 const StoryFrame = ({ children }) => {
