@@ -62,8 +62,6 @@ export const CreateStoryPage = ({ location }) => {
     // Should be empty string if Creating, or filled string if Editing. Should only be null on refresh.
     const passphrase = location.state.passphrase || null;
 
-    console.log(passphrase);
-
     const updateGraphData = (newStoryNode) => {
         const newGraphData = storyNodeToGraphData(newStoryNode, currentNodeId);
 
