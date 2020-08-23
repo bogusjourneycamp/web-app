@@ -4,6 +4,9 @@ import ColorPalette from "../utils/colors";
 
 const OuterBorder = styled.div`
     border: 3px solid ${ColorPalette.CoffeeBean};
+    min-height: 418px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const EndFrame = styled.div`

@@ -28,13 +28,22 @@ const ButtonsContainer = styled.div`
     }
 `;
 
-const StoryView = ({ storyNode, onTakeAction }) => {
+const StoryView = ({ storyNode, onTakeAction, loading }) => {
+    if (loading || !storyNode) {
+        return (
+            <StyledContainer id="view-story">
+                <StoryFrame>Loading...</StoryFrame>
+            </StyledContainer>
+        );
+    }
+
     const { selectionText, location, storyText, choices } = storyNode;
     let editButtonTitle = "Edit";
 
     if (selectionText === "Open Playa") {
         editButtonTitle = "Create";
     }
+
     return (
         <StyledContainer id="view-story">
             <StoryFrame>

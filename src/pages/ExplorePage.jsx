@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { Layout } from "../components/Layout";
-import storyTestData from "../utils/storyTestData.json";
 import StoryNavigationView from "../components/StoryNavigationView";
 import getNodeById from "../utils/getNodeById";
 import StoryView from "../components/StoryView";
@@ -24,19 +23,23 @@ const StyledContainer = styled.div`
 `;
 
 const ExplorePage = ({ history, location }) => {
-    const [storyNode, setStoryNode] = useState(storyTestData);
+    const [storyNode, setStoryNode] = useState();
+    const [loading, setLoading] = useState(false);
     const searchParams = location.search
         ? new URLSearchParams(location.search)
         : undefined;
     const currentLocation = searchParams ? searchParams.get("location") : "Man";
 
     const loadStory = async (storyLocation) => {
+        setLoading(true);
+
         const node = await fetchNode(storyLocation, false);
 
         if (node) {
             setStoryNode(node);
         }
 
+        setLoading(false);
         return node;
     };
 
@@ -68,7 +71,11 @@ const ExplorePage = ({ history, location }) => {
     return (
         <Layout>
             <StyledContainer>
-                <StoryView storyNode={storyNode} onTakeAction={onTakeAction} />
+                <StoryView
+                    storyNode={storyNode}
+                    onTakeAction={onTakeAction}
+                    loading={loading}
+                />
                 <StoryNavigationView
                     location={currentLocation}
                     onClickLocation={onClickLocation}
