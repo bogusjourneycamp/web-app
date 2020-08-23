@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
 import LinkButton from "./LinkButton";
 import StoryFrame from "./StoryFrame";
+import { API_URL } from "../utils/urls";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -19,6 +20,11 @@ const ButtonsContainer = styled.div`
         margin-left: 20px;
     }
 
+    #input-edit-password {
+        margin-left: 10px;
+        padding: 0 10px;
+    }
+
     a {
         min-width: 120px;
     }
@@ -28,7 +34,14 @@ const ButtonsContainer = styled.div`
     }
 `;
 
-const StoryView = ({ storyNode, onTakeAction, loading }) => {
+const StoryView = ({
+    storyNode,
+    onTakeAction,
+    onClickEditPasswordSuccess,
+    loading,
+}) => {
+    const [editPassword, setEditPassword] = useState("");
+
     if (loading || !storyNode) {
         return (
             <StyledContainer id="view-story">
@@ -38,6 +51,7 @@ const StoryView = ({ storyNode, onTakeAction, loading }) => {
     }
 
     const { selectionText, location, storyText, choices } = storyNode;
+
     let editButtonTitle = "Edit";
 
     if (selectionText === "Open Playa") {
@@ -64,15 +78,24 @@ const StoryView = ({ storyNode, onTakeAction, loading }) => {
                 <LinkButton id="btn-report">Report</LinkButton>
                 <LinkButton
                     id="btn-edit"
-                    to={{
-                        pathname: "/create-story",
-                        search: location
-                            ? new URLSearchParams({ location }).toString()
-                            : undefined,
+                    onClick={async () => {
+                        const response = await fetch(
+                            `${API_URL}/story/${editPassword}/${location}`
+                        );
+
+                        if (response && onClickEditPasswordSuccess) {
+                            onClickEditPasswordSuccess();
+                        }
                     }}
                 >
                     {editButtonTitle}
                 </LinkButton>
+                <input
+                    id="input-edit-password"
+                    value={editPassword}
+                    onChange={(e) => setEditPassword(e.target.value)}
+                    placeholder="Edit password"
+                />
             </ButtonsContainer>
         </StyledContainer>
     );
