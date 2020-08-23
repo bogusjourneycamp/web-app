@@ -92,9 +92,9 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
     let locationDisplay = location;
     const atMan = location === "Man";
 
-    const svgFile = atMan
-        ? "man_svgs/Esplanade_12__00.svg"
-        : `man_svgs/${location.replace(":", "__")}.svg`;
+    const pngFile = atMan
+        ? "man_pngs/Esplanade_12__00.png"
+        : `man_pngs/${location.replace(":", "__")}.png`;
 
     const locationData = location.split("_");
 
@@ -114,7 +114,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
             <div>
                 <Location>{locationDisplay}</Location>
                 <div>
-                    <TheMan src={svgFile} alt="The Man" />
+                    <TheMan src={pngFile} alt="The Man" />
                 </div>
             </div>
             <Grid>
