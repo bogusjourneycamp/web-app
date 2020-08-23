@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { StoryChoice } from "./StoryChoice";
 import AutoResizingTextArea from "./AutoResizingTextArea";
+import ColorPalette from "../utils/colors";
 
 const StyledContainer = styled.div`
     padding: 32px 24px;
@@ -17,6 +18,7 @@ const StyledContainer = styled.div`
     #txt-story-text {
         display: block;
         border: none;
+        border: 3px solid ${ColorPalette.CoffeeBean};
 
         ::placeholder {
             color: #ccc;
@@ -52,8 +54,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-    background-color: transparent;
-    border: 1px solid #5cb85c;
+    border: 3px solid #5cb85c;
     border-radius: 4px;
     color: #5cb85c;
     cursor: pointer;
