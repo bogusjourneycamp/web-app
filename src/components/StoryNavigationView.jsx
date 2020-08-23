@@ -104,6 +104,11 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
         locationDisplay = `${time} & ${letter}`;
     }
 
+    const upText = atMan ? "Toward 12:00" : "Toward Man";
+    const downText = atMan ? "Toward 6:00" : "Away From Man";
+    const leftText = atMan ? "Toward 9:00" : "Clockwise";
+    const rightText = atMan ? "Toward 3:00" : "Counter Clockwise";
+
     return (
         <StyledContainer id="view-story-navigation">
             <div>
@@ -120,7 +125,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                     }}
                 >
                     <Direction>&#8593;</Direction>
-                    <Text>Toward Man</Text>
+                    <Text>{upText}</Text>
                 </Button>
                 <Button
                     id="nav-away"
@@ -128,7 +133,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                         onClickLocation(getNextLocation(location, "away"));
                     }}
                 >
-                    <Text>Away From Man</Text>
+                    <Text>{downText}</Text>
                     <Direction>&#8595;</Direction>
                 </Button>
                 <Button
@@ -138,7 +143,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                     }}
                 >
                     <Direction>&#8598;</Direction>
-                    <Text>Clockwise</Text>
+                    <Text>{leftText}</Text>
                 </Button>
 
                 <Button
@@ -150,7 +155,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                     }}
                 >
                     <Direction>&#8599;</Direction>
-                    <Text>Counter Clockwise</Text>
+                    <Text>{rightText}</Text>
                 </Button>
 
                 <Button id="nav-wander" onClick={() => {}}>
