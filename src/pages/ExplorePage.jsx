@@ -28,7 +28,7 @@ const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState();
     const [loading, setLoading] = useState(false);
     const [rootNode, setRootNode] = useState(0);
-    const [editPassword, setEditPassword] = useState(" ");
+    const [editPassword, setEditPassword] = useState("");
 
     const searchParams = location.search
         ? new URLSearchParams(location.search)
@@ -95,7 +95,7 @@ const ExplorePage = ({ history, location }) => {
             search: `?${new URLSearchParams({
                 location: currentLocation,
             }).toString()}`,
-            state: {"passphrase": editPassword},
+            state: {"passphrase": editPassword, "passphraseSet": true},
         });
     };
 

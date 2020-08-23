@@ -59,8 +59,9 @@ export const CreateStoryPage = ({ location }) => {
     const searchParams = new URLSearchParams(location.search || "");
     const storyLocation = searchParams.get("location");
 
-    // Should be empty string if Creating, or filled string if Editing. Should only be null on refresh.
-    const passphrase = location.state.passphrase || null;
+    // Should be empty string if Creating, or filled string if Editing. Should only be -1 on refresh.
+    const passphraseSet = location.state.passphraseSet || false;
+    const passphrase = location.state.passphrase || "";
 
     const updateGraphData = (newStoryNode) => {
         const newGraphData = storyNodeToGraphData(newStoryNode, currentNodeId);
@@ -203,7 +204,7 @@ export const CreateStoryPage = ({ location }) => {
     }, []);
 
     // Redirect if no passphrase passed (normally due to refresh)
-    if (passphrase == null) {
+    if (!passphraseSet) {
         notification.warning({message: "Could not find passphrase...\nRedirecting to Explore"})
 
         return <Redirect to={`/?location=${storyLocation}`} />
