@@ -11,9 +11,9 @@ import storyNodeToGraphData from "../utils/storyNodeToGraphData"
 const StyledContainer = styled.div``;
 const ExplorePage = ({ history, location }) => {
     const [storyNode, setStoryNode] = useState(storyTestData);
-	const [rootNode, setRootNode] = useState(0);
+    const [rootNode, setRootNode] = useState(0);
 
-	const searchParams = location.search
+    const searchParams = location.search
         ? new URLSearchParams(location.search)
         : undefined;
     const currentLocation = searchParams
@@ -31,33 +31,33 @@ const ExplorePage = ({ history, location }) => {
     };
 
     const onTakeAction = (previousId, nodeId) => {
-		const previousNode = getNodeById(storyNode, previousId);
-		const node = getNodeById(storyNode, nodeId);
-		if (previousNode && previousNode.name == "root") {
-			setRootNode(previousNode);
-		}
+        const previousNode = getNodeById(storyNode, previousId);
+        const node = getNodeById(storyNode, nodeId);
+        if (previousNode && previousNode.name === "root") {
+            setRootNode(previousNode);
+        }
         if (node) {
             setStoryNode(node);
-		}
-	};
+        }
+    };
 	
-	const onBack = () => {
-		const storyPath = storyNodeToGraphData(rootNode, rootNode.id)
-		let previousNodeId = null;
-		if (storyPath) {
-			for (let i = 0; i < storyPath.nodes.length; i++) {
-				if (storyPath.nodes[i].id == storyNode.id) {
-					previousNodeId = storyPath.nodes[i].parentNodeId;
-					break;
-				}
-			}
-		}
-		const previousNode = getNodeById(rootNode, previousNodeId);
-		console.log(previousNode)
-		if (previousNode) {
+    const onBack = () => {
+        const storyPath = storyNodeToGraphData(rootNode, rootNode.id)
+        let previousNodeId = null;
+        if (storyPath) {
+            for (let i = 0; i < storyPath.nodes.length; i++) {
+                if (storyPath.nodes[i].id === storyNode.id) {
+                    previousNodeId = storyPath.nodes[i].parentNodeId;
+                    break;
+                }
+            }
+        }
+        const previousNode = getNodeById(rootNode, previousNodeId);
+        if (previousNode) {
             setStoryNode(previousNode);
-		}
-	}
+        }
+    }
+	
     const onClickLocation = async (storyLocation) => {
         const node = await loadStory(storyLocation);
 
@@ -68,7 +68,7 @@ const ExplorePage = ({ history, location }) => {
                     location: storyLocation,
                 }).toString()}`,
             });
-		}
+        }
     };
 
     useEffect(() => {
