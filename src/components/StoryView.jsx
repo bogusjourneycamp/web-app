@@ -80,10 +80,17 @@ const StoryView = ({
                     id="btn-edit"
                     onClick={async () => {
                         const response = await fetch(
-                            `${API_URL}/story/${editPassword}/${location}`
+                            `${API_URL}/story/check_passphrase/${location}`,
+                            {
+                                method: "POST",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({"passphrase": editPassword})
+                            }
                         );
 
-                        if (response && onClickEditPasswordSuccess) {
+                        let validEditPassphrase = await response.json()
+
+                        if (validEditPassphrase && onClickEditPasswordSuccess) {
                             onClickEditPasswordSuccess();
                         }
                     }}
