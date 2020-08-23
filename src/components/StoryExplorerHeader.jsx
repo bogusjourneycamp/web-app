@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import LinkButton from "./LinkButton";
 
 const Header = styled.header`
     display: flex;
@@ -17,9 +18,25 @@ const Title = styled.h2`
     margin: 20px 20px 0 20px;
 `;
 
-const StoryExplorerHeader = ({ title }) => (
+const ButtonsContainer = styled.div`
+    display: flex;
+    margin-right: 20px;
+    margin-top: 10px;
+`;
+
+const StoryExplorerHeader = ({ title, isRootNode, onBack}) => (
     <Header>
         <Title>{title}</Title>
+        <ButtonsContainer>
+            {!isRootNode && (
+                <LinkButton
+                    id="btn-back"
+                    onClick={() =>{onBack()}}
+                >
+                    Back
+                </LinkButton>
+            )}
+        </ButtonsContainer>
     </Header>
 );
 

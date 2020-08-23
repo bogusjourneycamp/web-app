@@ -41,7 +41,7 @@ const ChoiceButton = styled(Button)`
     }
 `;
 
-const StoryExplorerTextView = ({ storyText, choices, onTakeAction }) => {
+const StoryExplorerTextView = ({storyNode, storyText, choices, onTakeAction }) => {
     return (
         <StoryTextSection>
             <StoryText>{storyText}</StoryText>
@@ -49,7 +49,7 @@ const StoryExplorerTextView = ({ storyText, choices, onTakeAction }) => {
                 {choices.map((item, index) => (
                     <ChoiceButton
                         key={`action-${index}`}
-                        onClick={() => onTakeAction(item.id)}
+                        onClick={() => onTakeAction(storyNode.id, item.id)}
                     >
                         {item.selectionText}
                     </ChoiceButton>
