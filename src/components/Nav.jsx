@@ -20,7 +20,6 @@ const StyledNav = styled.nav`
 export const Nav = () => {
     return (
         <StyledNav>
-            <Link to="/playa-info">Playa Info</Link>
             <Link to="/help">Feeling Lost?</Link>
         </StyledNav>
     );

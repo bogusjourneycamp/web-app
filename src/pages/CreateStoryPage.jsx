@@ -147,7 +147,22 @@ export const CreateStoryPage = ({ location }) => {
     };
 
     const onClickPublish = async () => {
-        publishStory(storyNode);
+        const response = await publishStory(storyNode);
+
+
+        if (response.status === 200) {
+            const passphrase = await response.json();
+
+            notification.info({
+                message: `Your passphrase is:\n ${passphrase}\n Write it down - you'll need it for editing!`,
+                duration: 0
+            });
+        } else {
+            notification.error({
+                message: "We're so sorry, we're experiencing technical difficulties! Email charliegsummers@gmail.com right away and we'll help you publish your story. Thanks!",
+                duration: 0
+            });
+        }
     };
 
     useEffect(() => {
