@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
+import GiftAStoryButton from "./GiftAStoryButton"
 import LinkButton from "./LinkButton";
 import StoryFrame from "./StoryFrame";
 import { API_URL } from "../utils/urls";
@@ -86,6 +87,28 @@ const StoryView = ({
                     onTakeAction={onTakeAction}
                     choices={choices}
                 />
+                <GiftAStoryButton 
+                    id="btn-gift-a-story"
+                    isCreatePage={isCreatePage}
+                    onClick={async () => {
+                        const response = await fetch(
+                            `${API_URL}/story/check_passphrase/${location}`,
+                            {
+                                method: "POST",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({"passphrase": editPassword})
+                            }
+                        );
+                        let validEditPassphrase = await response.json()
+
+                        if (validEditPassphrase && onClickEditPasswordSuccess) {
+                            onClickEditPasswordSuccess();
+                        } else {
+                            onClickEditPasswordFailure();
+                        }
+                    }}
+                >Gift a Story
+                </GiftAStoryButton>
             </StoryFrame>
 
             <ButtonsContainer>
