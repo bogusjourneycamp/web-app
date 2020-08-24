@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { notification } from "antd";
 import styled from "styled-components";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
 import GiftAStoryButton from "./GiftAStoryButton"
-import LinkButton from "./LinkButton";
+import {LinkButton, LinkLikeButton} from "./LinkButton";
 import StoryFrame from "./StoryFrame";
 import { API_URL } from "../utils/urls";
 
@@ -18,7 +19,9 @@ const ButtonsContainer = styled.div`
     margin-top: 10px;
 
     #btn-report {
-        margin-left: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 120px;
     }
 
     #input-edit-password {
@@ -107,24 +110,26 @@ const StoryView = ({
                             onClickEditPasswordFailure();
                         }
                     }}
-                >Gift a Story
+                >Gift a Story :)
                 </GiftAStoryButton>
             </StoryFrame>
 
             <ButtonsContainer>
-                {/* TODO: Link to report */}
-                <LinkButton id="btn-report"
-                onClick={async () => {
-                    const response = await fetch(
-                        `${API_URL}/story/${location}/report`,
-                        {
-                            method: "POST",
-                            headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({"storyNode": storyNode})
-                        }
-                    )
-                }}
-                >Report</LinkButton>
+                <LinkLikeButton
+                    id="btn-report"
+                    onClick={async () => {
+                        await fetch(
+                            `${API_URL}/story/${location}/report`,
+                            {
+                                method: "POST",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({"storyNode": storyNode})
+                            }
+                        )
+
+                        notification.info({message: "Successfully reported page"});
+                    }}
+                >Report</LinkLikeButton>
                 <LinkButton
                     id="btn-edit"
                     onClick={async () => {
