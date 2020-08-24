@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import getNextLocation from "../utils/getNextLocation";
+import getWanderLocation from "../utils/getWanderLocation";
 import ColorPalette from "../utils/colors";
 
 const StyledContainer = styled.div`
@@ -158,7 +159,14 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                     <Text>{rightText}</Text>
                 </Button>
 
-                <Button id="nav-wander" onClick={() => {}}>
+                <Button
+                    id="nav-wander"
+                    onClick={async () => {
+                        onClickLocation(
+                            await getWanderLocation()
+                        );
+                    }}
+                >
                     <Direction>?</Direction>
                     <Text>Wander</Text>
                 </Button>
