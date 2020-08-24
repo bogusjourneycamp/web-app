@@ -113,7 +113,18 @@ const StoryView = ({
 
             <ButtonsContainer>
                 {/* TODO: Link to report */}
-                <LinkButton id="btn-report">Report</LinkButton>
+                <LinkButton id="btn-report"
+                onClick={async () => {
+                    const response = await fetch(
+                        `${API_URL}/story/${location}/report`,
+                        {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({"storyNode": storyNode})
+                        }
+                    )
+                }}
+                >Report</LinkButton>
                 <LinkButton
                     id="btn-edit"
                     onClick={async () => {
