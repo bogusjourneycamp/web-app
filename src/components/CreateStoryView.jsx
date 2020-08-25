@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import {Link} from "react-router";
 import { StoryChoice } from "./StoryChoice";
 import AutoResizingTextArea from "./AutoResizingTextArea";
 import ColorPalette from "../utils/colors";
+import GetPasswordPage from "../pages/GetPasswordPage";
+
 
 const StyledContainer = styled.div`
     padding: 32px 24px;

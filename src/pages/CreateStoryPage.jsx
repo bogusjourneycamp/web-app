@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Redirect } from "react-router-dom";
+import {BrowserRouter, Redirect, Route } from "react-router-dom";
 import styled from "styled-components";
-import { notification } from "antd";
+import { notification, Switch } from "antd";
 import { Layout } from "../components/Layout";
 import { CreateStoryView } from "../components/CreateStoryView";
 import getNodeById from "../utils/getNodeById";
@@ -48,7 +48,7 @@ const updateNodeName = (graphData, nodeId, text) => {
     }
 };
 
-export const CreateStoryPage = ({ location }) => {
+export const CreateStoryPage = ({ history, location }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [storyNode, setStoryNode] = useState(emptyStoryData);
     const [currentNodeId, setCurrentNodeId] = useState(emptyStoryData.id);
@@ -149,20 +149,20 @@ export const CreateStoryPage = ({ location }) => {
     const onClickPublish = async () => {
         const response = await publishStory(storyNode);
 
-
         if (response.status === 200) {
             const passphrase = await response.json();
-
-            notification.info({
-                message: `Your passphrase is:\n ${passphrase}\n Write it down - you'll need it for editing!`,
-                duration: 0
+            history.push({
+                pathname: "/get-pw",
+                state: {"password": passphrase, "mapLocation": storyLocation},
             });
-        } else {
+        }
+        else { 
             notification.error({
                 message: "We're so sorry, we're experiencing technical difficulties! Email charliegsummers@gmail.com right away and we'll help you publish your story. Thanks!",
                 duration: 0
             });
         }
+        
     };
 
     useEffect(() => {
@@ -182,7 +182,7 @@ export const CreateStoryPage = ({ location }) => {
                             location: storyLocation,
                             storyText: "",
                             name: "root",
-                            passphrase: passphrase,
+                            passphrase,
                             choices: [],
                             ...node,
                         };
