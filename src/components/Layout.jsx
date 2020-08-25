@@ -45,7 +45,7 @@ const StyledContainer = styled.div`
     flex-direction: column;
     margin: auto;
     height: 100%;
-    max-width: 1200px;
+    max-width: 1500px;
 
     .monospace {
         font-family: ${FONT_FAMILY_MONOSPACE};
