@@ -20,7 +20,7 @@ const GetPasswordPage = ({history}) => {
 		
         <Layout>
             Your passphrase is:  {loc.state.password}. Write it down, you will need it for editing!
-            <StoryButton id="btn_return" onClick={onClickReturn}>Return to story</StoryButton>
+            <StoryButton id="btn_return" onClick={onClickReturn}>To your story</StoryButton>
         </Layout>
 		
     );

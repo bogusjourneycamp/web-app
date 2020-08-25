@@ -182,7 +182,7 @@ export const CreateStoryPage = ({ history, location }) => {
                             location: storyLocation,
                             storyText: "",
                             name: "root",
-                            passphrase,
+                            passphrase: passphrase,
                             choices: [],
                             ...node,
                         };
