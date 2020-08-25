@@ -13,7 +13,9 @@ const GetPasswordPage = ({history}) => {
                 location: loc.state.mapLocation,
             }).toString()}`,
         });
+        console.log("History has been pushed");
     }
+	
     return (
 		
         <Layout>
