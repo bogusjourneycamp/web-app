@@ -1,26 +1,24 @@
-import styled from "styled-components";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
+import StoryButton from "../components/StoryButton";
 
 const GetPasswordPage = ({history}) => {
     const loc = useLocation();
-    // console.log(location.state.mapLocation)
+
     const onClickReturn = () => {
-        // Only go to the location if there's a valid node there
         history.push({
-			pathname: "/",
+            pathname: "/",
             search: `?${new URLSearchParams({
                 location: loc.state.mapLocation,
             }).toString()}`,
         });
     }
-
     return (
 		
         <Layout>
-            {loc.state.password}
-            <button id="btn_return" onClick={onClickReturn} />
+            Your passphrase is:  {loc.state.password}. Write it down, you will need it for editing!
+            <StoryButton id="btn_return" onClick={onClickReturn}>Return to story</StoryButton>
         </Layout>
 		
     );
