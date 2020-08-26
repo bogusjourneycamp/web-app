@@ -158,7 +158,7 @@ export const CreateStoryPage = ({ history, location }) => {
         }
         else { 
             notification.error({
-                message: "We're so sorry, we're experiencing technical difficulties! Email charliegsummers@gmail.com right away and we'll help you publish your story. Thanks!",
+                message: "Your story is safe, don't worry!!! We're so sorry, we've run into a problem bringing it to the playa. Please shoot charliegsummers@gmail.com an email right away and we'll help you publish your story in just a jiffy. Thank you so much!",
                 duration: 0
             });
         }
