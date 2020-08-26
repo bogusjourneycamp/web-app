@@ -121,14 +121,18 @@ const StoryView = ({
                     id="btn-report"
                     onClick={async () => {
                         setReported(true);
-                        await fetch(
+                        const response = await fetch(
                             `${API_URL}/story/${location}/report`,
                             {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
                                 body: JSON.stringify({"storyNode": storyNode})
                             }
-                        )
+                        );
+
+                        if (!response.ok) {
+                            setReported(false);
+                        }
 
                         notification.info({message: "Successfully reported page"});
                     }}
