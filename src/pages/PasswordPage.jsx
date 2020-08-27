@@ -25,7 +25,7 @@ const ExtraCopyContainer = styled.div`
     font-size: 16px;
 `;
 
-const GetPasswordPage = ({history}) => {
+const PasswordPage = ({history}) => {
     const loc = useLocation();
 
     const onClickReturn = () => {
@@ -35,7 +35,6 @@ const GetPasswordPage = ({history}) => {
                 location: loc.state.mapLocation,
             }).toString()}`,
         });
-        console.log("History has been pushed");
     }
 
     return (
@@ -51,4 +50,4 @@ const GetPasswordPage = ({history}) => {
         </Layout>
     );
 }
-export default GetPasswordPage;
+export default PasswordPage;

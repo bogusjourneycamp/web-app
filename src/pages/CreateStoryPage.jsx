@@ -152,7 +152,7 @@ export const CreateStoryPage = ({ history, location }) => {
         if (response.status === 200) {
             const passphrase = await response.json();
             history.push({
-                pathname: "/get-pw",
+                pathname: "/password",
                 state: {"password": passphrase, "mapLocation": storyLocation},
             });
         }

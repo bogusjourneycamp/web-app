@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { CreateStoryPage } from "./CreateStoryPage";
 import ExplorePage from "./ExplorePage";
-import GetPasswordPage from "./GetPasswordPage";
+import PasswordPage from "./PasswordPage";
 
 import "antd/dist/antd.css";
 
@@ -12,7 +12,7 @@ export const App = () => {
             <Switch>
                 <Route exact path="/" component={ExplorePage} />
                 <Route path="/create-story" component={CreateStoryPage} />
-                <Route path="/get-pw" component={GetPasswordPage} />
+                <Route path="/password" component={PasswordPage} />
                 <Route
                     path="/help"
                     component={() => {
