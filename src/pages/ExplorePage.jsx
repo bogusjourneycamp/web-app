@@ -71,7 +71,6 @@ const ExplorePage = ({ history, location }) => {
             }
         }
         const previousNode = getNodeById(rootNode, previousNodeId);
-        console.log(previousNode);
         if (previousNode) {
             setStoryNode(previousNode);
         }

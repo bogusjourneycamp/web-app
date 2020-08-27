@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { notification } from "antd";
+import { notification, Switch } from "antd";
 import { Layout } from "../components/Layout";
 import { CreateStoryView } from "../components/CreateStoryView";
 import getNodeById from "../utils/getNodeById";
@@ -48,7 +48,7 @@ const updateNodeName = (graphData, nodeId, text) => {
     }
 };
 
-export const CreateStoryPage = ({ location }) => {
+export const CreateStoryPage = ({ history, location }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [storyNode, setStoryNode] = useState(emptyStoryData);
     const [currentNodeId, setCurrentNodeId] = useState(emptyStoryData.id);
@@ -149,20 +149,20 @@ export const CreateStoryPage = ({ location }) => {
     const onClickPublish = async () => {
         const response = await publishStory(storyNode);
 
-
         if (response.status === 200) {
             const passphrase = await response.json();
-
-            notification.info({
-                message: `Your passphrase is:\n ${passphrase}\n - Write it down, you'll need it for editing!`,
-                duration: 0
+            history.push({
+                pathname: "/password",
+                state: {"password": passphrase, "mapLocation": storyLocation},
             });
-        } else {
+        }
+        else { 
             notification.error({
                 message: "Your story is safe, don't worry!!! We're so sorry, we've run into a problem bringing it to the playa. Please shoot charliegsummers@gmail.com an email right away and we'll help you publish your story in just a jiffy. Thank you so much!",
                 duration: 0
             });
         }
+        
     };
 
     useEffect(() => {
