@@ -1,5 +1,7 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
+import { notification, Switch } from "antd";
 import { useLocation } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import StoryButton from "../components/StoryButton";
@@ -35,6 +37,12 @@ const PasswordPage = ({history}) => {
                 location: loc.state.mapLocation,
             }).toString()}`,
         });
+    }
+
+    if (!loc.state || !loc.state.password) {
+        notification.warning({message: "No recently returned passphrase found...\nRedirecting to Explore"})
+
+        return <Redirect to={`/`} />
     }
 
     return (
