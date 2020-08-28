@@ -18,7 +18,7 @@ const StyledTitle = styled.div`
 export const Header = () => {
     return (
         <StyledHeader>
-            <StyledTitle as="a" href="/">Lost Art of Story Telling</StyledTitle>
+            <StyledTitle as="a" href="/">Lost Art of Storytelling</StyledTitle>
             <Nav />
         </StyledHeader>
     );
