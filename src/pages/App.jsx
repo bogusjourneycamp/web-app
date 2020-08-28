@@ -20,6 +20,13 @@ export const App = () => {
                         return null;
                     }}
                 />
+                <Route
+                    path="/info"
+                    component={() => {
+                        window.location.href = 'https://docs.google.com/document/d/1HsFzTqAh52tlOpB6yNXbaOzQFkGF-nPcjHBMbH3iBt0/edit?usp=sharing';
+                        return null;
+                    }}
+                />
             </Switch>
         </BrowserRouter>
     );
