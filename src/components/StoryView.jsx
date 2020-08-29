@@ -48,6 +48,8 @@ const StoryView = ({
     onClickEditPasswordFailure,
     loading,
 }) => {
+    const [reported, setReported] = useState(false);
+
     if (loading || !storyNode) {
         return (
             <StyledContainer id="view-story">
@@ -118,17 +120,23 @@ const StoryView = ({
                 <LinkLikeButton
                     id="btn-report"
                     onClick={async () => {
-                        await fetch(
+                        setReported(true);
+                        const response = await fetch(
                             `${API_URL}/story/${location}/report`,
                             {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
                                 body: JSON.stringify({"storyNode": storyNode})
                             }
-                        )
+                        );
+
+                        if (!response.ok) {
+                            setReported(false);
+                        }
 
                         notification.info({message: "Successfully reported page"});
                     }}
+                    disabled={reported}
                 >Report</LinkLikeButton>
                 <LinkButton
                     id="btn-edit"

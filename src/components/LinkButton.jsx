@@ -22,7 +22,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledButton = styled(Button)`
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: ${props => props.disabled ? "rgb(219,112,147,0.5)" : "rgba(255, 255, 255, 0.85)"};
     border: 3px solid;
     border-radius: 100px;
     font-size: 16px;
@@ -35,7 +35,7 @@ const StyledButton = styled(Button)`
     transition: background-color 200ms;
 
     :hover {
-        background-color: rgba(255, 255, 255, 1);
+        background-color: ${props => props.disabled ? "rgb(219,112,147,0.5)" : "rgba(255, 255, 255, 1)"};
     }
 `;
 
