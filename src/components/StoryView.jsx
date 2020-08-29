@@ -170,7 +170,8 @@ const StoryView = ({
                     <>
                         <LinkButton
                             id="btn-edit"
-                            onClick={async () => {
+                            onClick={async (e) => {
+                                e.preventDefault();
                                 checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
                             }}
                         >
