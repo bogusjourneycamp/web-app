@@ -23,7 +23,12 @@ const PassphraseContainer = styled.div`
     font-size: 20px;
 `;
 
-const ExtraCopyContainer = styled.div`
+const ExtraCopyContainer1 = styled.div`
+    font-size: 16px;
+`;
+
+const ExtraCopyContainer2 = styled.div`
+    margin-top: 20px;
     font-size: 16px;
 `;
 
@@ -51,7 +56,8 @@ const PasswordPage = ({history}) => {
                 <StyledContainer>
                     <TitleContainer>Your passphrase is:</TitleContainer>
                     <PassphraseContainer>{loc.state.password}</PassphraseContainer>
-                    <ExtraCopyContainer>Write it down. You'll need to put it in the "Passphrase for Edit" box in order to edit your story later.</ExtraCopyContainer>
+                    <ExtraCopyContainer1>Write it down or send it to yourself in an email. You'll need to put it in the "Passphrase for Edit" box in order to edit your story later.</ExtraCopyContainer1>
+                    <ExtraCopyContainer2>Every story at every cross-street is easily sharable by copy and pasting the url and sending it to a friend.</ExtraCopyContainer2>
                     <StoryButton onClick={onClickReturn}>To your story!</StoryButton>
                 </StyledContainer>
             </StoryFrame>
