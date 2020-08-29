@@ -3,8 +3,8 @@ import { notification } from "antd";
 import styled from "styled-components";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
-import GiftAStoryButton from "./GiftAStoryButton"
-import {LinkButton, LinkLikeButton} from "./LinkButton";
+import GiftAStoryButton from "./GiftAStoryButton";
+import { LinkButton, LinkLikeButton } from "./LinkButton";
 import StoryFrame from "./StoryFrame";
 import { API_URL } from "../utils/urls";
 
@@ -39,13 +39,16 @@ const ButtonsContainer = styled.div`
 `;
 
 const StoryView = ({
+    rootNode,
     storyNode,
     onTakeAction,
     onBack,
     editPassword,
     setEditPassword,
-    onClickEditPasswordSuccess,
-    onClickEditPasswordFailure,
+    onEditPasswordSuccess,
+    onEditPasswordError,
+    onGiftingSuccess,
+    onGiftingError,
     loading,
 }) => {
     const [reported, setReported] = useState(false);
@@ -58,23 +61,46 @@ const StoryView = ({
         );
     }
 
-    const { selectionText, location, storyText, choices } = storyNode;
+    const { selectionText, storyText, choices } = storyNode;
+    const { location } = rootNode;
 
-    let isCreatePage = selectionText === "Open Playa";
+    const isCreatePage = selectionText === "Open Playa";
+    const isRootNode =
+        storyNode.name === "root" || selectionText === "Open Playa";
+    const editButtonTitle = isCreatePage ? "Create" : "Edit";
+    const editPasswordInputType = isCreatePage ? "hidden" : "text";
 
-    let editButtonTitle = "Edit";
-    let editPasswordInputType = "text";
+    const checkPassphrase = async (successCallback, errorCallback) => {
+        if (!editPassword || !editPassword.trim()) {
+            notification.error({
+                message: "Please enter a passphrase to edit this story",
+            });
+            return;
+        }
 
-    if (isCreatePage) {
-        editButtonTitle = "Create";
-        editPasswordInputType = "hidden";
-    }
+        const response = await fetch(
+            `${API_URL}/story/check_passphrase/${location}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    passphrase: editPassword,
+                }),
+            }
+        );
+        const result = await response.json();
+        const isValid = result && typeof result === "boolean";
 
-    let isRootNode = 0;	
-
-    if (storyNode.name === "root" || selectionText === "Open Playa") {
-        isRootNode = 1;
-    }
+        if (isValid && successCallback) {
+            successCallback();
+        } else if (!isValid && errorCallback) {
+            errorCallback();
+        } else {
+            notification.error(
+                "Something went wrong. Please shoot an email to charliegsummers@gmail.com"
+            );
+        }
+    };
 
     return (
         <StyledContainer id="view-story">
@@ -92,27 +118,14 @@ const StoryView = ({
                     onTakeAction={onTakeAction}
                     choices={choices}
                 />
-                <GiftAStoryButton 
+                <GiftAStoryButton
                     id="btn-gift-a-story"
                     isCreatePage={isCreatePage}
                     onClick={async () => {
-                        const response = await fetch(
-                            `${API_URL}/story/check_passphrase/${location}`,
-                            {
-                                method: "POST",
-                                headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({"passphrase": editPassword})
-                            }
-                        );
-                        let validEditPassphrase = await response.json()
-
-                        if (validEditPassphrase && onClickEditPasswordSuccess) {
-                            onClickEditPasswordSuccess();
-                        } else {
-                            onClickEditPasswordFailure();
-                        }
+                        checkPassphrase(onGiftingSuccess, onGiftingError);
                     }}
-                >Gift a Story :)
+                >
+                    Gift a Story :)
                 </GiftAStoryButton>
             </StoryFrame>
 
@@ -125,8 +138,8 @@ const StoryView = ({
                             `${API_URL}/story/${location}/report`,
                             {
                                 method: "POST",
-                                headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({"storyNode": storyNode})
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ storyNode }),
                             }
                         );
 
@@ -134,29 +147,21 @@ const StoryView = ({
                             setReported(false);
                         }
 
-                        notification.info({message: "Successfully reported page"});
+                        notification.info({
+                            message: "Successfully reported page",
+                        });
                     }}
                     disabled={reported}
-                >Report</LinkLikeButton>
+                >
+                    Report
+                </LinkLikeButton>
                 <LinkButton
                     id="btn-edit"
                     onClick={async () => {
-                        const response = await fetch(
-                            `${API_URL}/story/check_passphrase/${location}`,
-                            {
-                                method: "POST",
-                                headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({"passphrase": editPassword})
-                            }
+                        checkPassphrase(
+                            onEditPasswordSuccess,
+                            onEditPasswordError
                         );
-
-                        let validEditPassphrase = await response.json()
-
-                        if (validEditPassphrase && onClickEditPasswordSuccess) {
-                            onClickEditPasswordSuccess();
-                        } else {
-                            onClickEditPasswordFailure();
-                        }
                     }}
                 >
                     {editButtonTitle}
