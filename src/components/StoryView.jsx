@@ -56,6 +56,7 @@ const StoryView = ({
 }) => {
     const [reported, setReported] = useState(false);
     const location = useLocation();
+    const searchParam = new URLSearchParams(location.search ? location.search.slice(1) : "");
 
     if (loading || !storyNode) {
         return (
@@ -66,7 +67,7 @@ const StoryView = ({
     }
 
     const { selectionText, storyText, choices } = storyNode;
-    const { storyLocation } = rootNode;
+    const { storyLocation = searchParam.get("location") } = rootNode;
 
     const isCreatePage = selectionText === "Open Playa";
     const isRootNode = storyNode.name === "root" || selectionText === "Open Playa";
@@ -169,7 +170,8 @@ const StoryView = ({
                     <>
                         <LinkButton
                             id="btn-edit"
-                            onClick={async () => {
+                            onClick={async (e) => {
+                                e.preventDefault();
                                 checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
                             }}
                         >
