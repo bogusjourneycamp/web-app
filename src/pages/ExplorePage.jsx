@@ -30,9 +30,7 @@ const ExplorePage = ({ history, location }) => {
     const [loading, setLoading] = useState(false);
     const [editPassword, setEditPassword] = useState("");
 
-    const searchParams = location.search
-        ? new URLSearchParams(location.search)
-        : undefined;
+    const searchParams = location.search ? new URLSearchParams(location.search) : undefined;
     const currentLocation = searchParams ? searchParams.get("location") : "Man";
 
     const loadStory = async (storyLocation) => {
@@ -104,20 +102,6 @@ const ExplorePage = ({ history, location }) => {
         notification.error({ message: "Invalid passphrase!" });
     };
 
-    const onGiftingSuccess = async () => {
-        history.push({
-            pathname: "/create-story",
-            search: `?${new URLSearchParams({
-                location: currentLocation,
-            }).toString()}`,
-            state: { passphrase: editPassword, passphraseSet: true },
-        });
-    };
-
-    const onGiftingError = async () => {
-        notification.error({ message: "Invalid passphrase!" });
-    };
-
     useEffect(() => {
         loadStory(currentLocation);
     }, []);
@@ -135,13 +119,8 @@ const ExplorePage = ({ history, location }) => {
                     setEditPassword={setEditPassword}
                     onEditPasswordSuccess={onEditPasswordSuccess}
                     onEditPasswordError={onEditPasswordError}
-                    onGiftingSuccess={onGiftingSuccess}
-                    onGiftingError={onGiftingError}
                 />
-                <StoryNavigationView
-                    location={currentLocation}
-                    onClickLocation={onClickLocation}
-                />
+                <StoryNavigationView location={currentLocation} onClickLocation={onClickLocation} />
             </StyledContainer>
         </Layout>
     );

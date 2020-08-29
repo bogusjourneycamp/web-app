@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { notification, Switch } from "antd";
+import { notification } from "antd";
 import { Layout } from "../components/Layout";
 import { CreateStoryView } from "../components/CreateStoryView";
 import getNodeById from "../utils/getNodeById";
@@ -60,8 +60,8 @@ export const CreateStoryPage = ({ history, location }) => {
     const storyLocation = searchParams.get("location");
 
     // Should be empty string if Creating, or filled string if Editing. Should only be -1 on refresh.
-    const passphraseSet = location.state.passphraseSet || false;
-    const passphrase = location.state.passphrase || "";
+    const passphraseSet = location.state ? location.state.passphraseSet || false : false;
+    const passphrase = location.state ? location.state.passphrase || "" : "";
 
     const updateGraphData = (newStoryNode) => {
         const newGraphData = storyNodeToGraphData(newStoryNode, currentNodeId);
@@ -109,11 +109,7 @@ export const CreateStoryPage = ({ history, location }) => {
     };
 
     const onClickRemoveChoice = (choice) => {
-        const newStoryNode = removeChoiceFromNode(
-            storyNode,
-            currentNodeId,
-            choice.id
-        );
+        const newStoryNode = removeChoiceFromNode(storyNode, currentNodeId, choice.id);
 
         if (newStoryNode) {
             updateGraphData(newStoryNode);
@@ -150,19 +146,18 @@ export const CreateStoryPage = ({ history, location }) => {
         const response = await publishStory(storyNode);
 
         if (response.status === 200) {
-            const passphrase = await response.json();
+            const password = await response.json();
             history.push({
                 pathname: "/password",
-                state: {"password": passphrase, "mapLocation": storyLocation},
+                state: { password, mapLocation: storyLocation },
             });
-        }
-        else { 
+        } else {
             notification.error({
-                message: "Your story is safe, don't worry!!! We're so sorry, we've run into a problem bringing it to the playa. Please shoot charliegsummers@gmail.com an email right away and we'll help you publish your story in just a jiffy. Thank you so much!",
-                duration: 0
+                message:
+                    "Your story is safe, don't worry!!! We're so sorry, we've run into a problem bringing it to the playa. Please shoot charliegsummers@gmail.com an email right away and we'll help you publish your story in just a jiffy. Thank you so much!",
+                duration: 0,
             });
         }
-        
     };
 
     useEffect(() => {
@@ -182,7 +177,7 @@ export const CreateStoryPage = ({ history, location }) => {
                             location: storyLocation,
                             storyText: "",
                             name: "root",
-                            passphrase: passphrase,
+                            passphrase,
                             choices: [],
                             ...node,
                         };
@@ -194,9 +189,7 @@ export const CreateStoryPage = ({ history, location }) => {
                 } catch (error) {
                     // eslint-disable-next-line no-console
                     console.error("Error", error);
-                    notification.error(
-                        `Error fetching node at location: ${location}`
-                    );
+                    notification.error(`Error fetching node at location: ${location}`);
                 }
                 setIsLoading(false);
             }
@@ -216,13 +209,26 @@ export const CreateStoryPage = ({ history, location }) => {
         };
 
         fetchStory();
+
+        // For clearing location state when refreshing so that we can redirect to the explore page
+        const clearLocationState = () => {
+            history.replace();
+        };
+
+        window.addEventListener("beforeunload", clearLocationState);
+
+        return () => {
+            window.removeEventListener("beforeunload", clearLocationState);
+        };
     }, []);
 
     // Redirect if no passphrase passed (normally due to refresh)
     if (!passphraseSet) {
-        notification.warning({message: "Could not find passphrase...\nRedirecting to Explore"})
+        notification.warning({
+            message: "Could not find passphrase...\nRedirecting to Explore",
+        });
 
-        return <Redirect to={`/?location=${storyLocation}`} />
+        return <Redirect to={`/?location=${storyLocation}`} />;
     }
     return (
         <Layout>
