@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { notification } from "antd";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
-import GiftAStoryButton from "./GiftAStoryButton";
 import { LinkButton, LinkLikeButton } from "./LinkButton";
 import StoryFrame from "./StoryFrame";
 import { API_URL } from "../utils/urls";
+import ColorPalette from "../utils/colors";
 
 const StyledContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    #link-gift-a-story {
+        margin-left: 20px;
+    }
 `;
 
 const ButtonsContainer = styled.div`
@@ -47,11 +52,10 @@ const StoryView = ({
     setEditPassword,
     onEditPasswordSuccess,
     onEditPasswordError,
-    onGiftingSuccess,
-    onGiftingError,
     loading,
 }) => {
     const [reported, setReported] = useState(false);
+    const location = useLocation();
 
     if (loading || !storyNode) {
         return (
@@ -62,13 +66,10 @@ const StoryView = ({
     }
 
     const { selectionText, storyText, choices } = storyNode;
-    const { location } = rootNode;
+    const { storyLocation } = rootNode;
 
     const isCreatePage = selectionText === "Open Playa";
-    const isRootNode =
-        storyNode.name === "root" || selectionText === "Open Playa";
-    const editButtonTitle = isCreatePage ? "Create" : "Edit";
-    const editPasswordInputType = isCreatePage ? "hidden" : "text";
+    const isRootNode = storyNode.name === "root" || selectionText === "Open Playa";
 
     const checkPassphrase = async (successCallback, errorCallback) => {
         if (!editPassword || !editPassword.trim()) {
@@ -78,16 +79,13 @@ const StoryView = ({
             return;
         }
 
-        const response = await fetch(
-            `${API_URL}/story/check_passphrase/${location}`,
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    passphrase: editPassword,
-                }),
-            }
-        );
+        const response = await fetch(`${API_URL}/story/check_passphrase/${storyLocation}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                passphrase: editPassword,
+            }),
+        });
         const result = await response.json();
         const isValid = result && typeof result === "boolean";
 
@@ -107,8 +105,7 @@ const StoryView = ({
             <StoryFrame>
                 <StoryExplorerHeader
                     title={selectionText}
-                    location={location}
-                    editButtonTitle={editButtonTitle}
+                    location={storyLocation}
                     isRootNode={isRootNode}
                     onBack={onBack}
                 />
@@ -118,15 +115,19 @@ const StoryView = ({
                     onTakeAction={onTakeAction}
                     choices={choices}
                 />
-                <GiftAStoryButton
-                    id="btn-gift-a-story"
-                    isCreatePage={isCreatePage}
-                    onClick={async () => {
-                        checkPassphrase(onGiftingSuccess, onGiftingError);
-                    }}
-                >
-                    Gift a Story :)
-                </GiftAStoryButton>
+                {isCreatePage && (
+                    <LinkButton
+                        id="link-gift-a-story"
+                        backgroundColor={ColorPalette.NodeGreen}
+                        to={{
+                            pathname: "/create-story",
+                            search: location.search,
+                            state: { passphrase: editPassword, passphraseSet: true },
+                        }}
+                    >
+                        Gift a Story :)
+                    </LinkButton>
+                )}
             </StoryFrame>
 
             <ButtonsContainer>
@@ -134,14 +135,11 @@ const StoryView = ({
                     id="btn-report"
                     onClick={async () => {
                         setReported(true);
-                        const response = await fetch(
-                            `${API_URL}/story/${location}/report`,
-                            {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ storyNode }),
-                            }
-                        );
+                        const response = await fetch(`${API_URL}/story/${storyLocation}/report`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ storyNode }),
+                        });
 
                         if (!response.ok) {
                             setReported(false);
@@ -155,24 +153,37 @@ const StoryView = ({
                 >
                     Report
                 </LinkLikeButton>
-                <LinkButton
-                    id="btn-edit"
-                    onClick={async () => {
-                        checkPassphrase(
-                            onEditPasswordSuccess,
-                            onEditPasswordError
-                        );
-                    }}
-                >
-                    {editButtonTitle}
-                </LinkButton>
-                <input
-                    id="input-edit-password"
-                    value={editPassword}
-                    onChange={(e) => setEditPassword(e.target.value)}
-                    placeholder="Passphrase for Edit"
-                    type={editPasswordInputType}
-                />
+
+                {isCreatePage ? (
+                    <LinkButton
+                        id="link-create"
+                        to={{
+                            pathname: "/create-story",
+                            search: location.search,
+                            state: { passphrase: editPassword, passphraseSet: true },
+                        }}
+                    >
+                        Create
+                    </LinkButton>
+                ) : (
+                    <>
+                        <LinkButton
+                            id="btn-edit"
+                            onClick={async () => {
+                                checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
+                            }}
+                        >
+                            Edit
+                        </LinkButton>
+                        <input
+                            id="input-edit-password"
+                            value={editPassword}
+                            onChange={(e) => setEditPassword(e.target.value)}
+                            placeholder="Passphrase for Edit"
+                            type="text"
+                        />
+                    </>
+                )}
             </ButtonsContainer>
         </StyledContainer>
     );
