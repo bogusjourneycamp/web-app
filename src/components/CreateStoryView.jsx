@@ -79,6 +79,11 @@ const StyledButton = styled.button`
     }
 `;
 
+const InstructionsContainer = styled.div`
+    margin: 20px;
+    font-weight: bold;
+`;
+
 export const CreateStoryView = ({
     onClickAddChoice,
     onClickRemoveChoice,
@@ -143,6 +148,7 @@ export const CreateStoryView = ({
             >
                 Publish
             </StyledButton>
+            <InstructionsContainer>The visualizer on the right is interactive! You can click on the circles to add the text to that choice. You only need to hit publish once you're ready to share your story with the world.</InstructionsContainer>
         </StyledContainer>
     );
 };
