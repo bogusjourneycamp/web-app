@@ -1,10 +1,11 @@
 import React from "react";
-import Button from "./Button";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Button from "./Button";
+import ColorPalette from "../utils/colors";
 
 const StyledLink = styled(Link)`
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: ${({ backgroundColor = "rgba(255, 255, 255, 0.85)" }) => backgroundColor};
     border: 3px solid;
     border-radius: 100px;
     font-size: 16px;
@@ -22,7 +23,8 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledButton = styled(Button)`
-    background-color: ${props => props.disabled ? "rgb(219,112,147,0.5)" : "rgba(255, 255, 255, 0.85)"};
+    background-color: ${({ disabled }) =>
+        disabled ? ColorPalette.NodeRed : "rgba(255, 255, 255, 0.85)"};
     border: 3px solid;
     border-radius: 100px;
     font-size: 16px;
@@ -35,7 +37,7 @@ const StyledButton = styled(Button)`
     transition: background-color 200ms;
 
     :hover {
-        background-color: ${props => props.disabled ? "rgb(219,112,147,0.5)" : "rgba(255, 255, 255, 1)"};
+        background-color: ${({ disabled }) => (disabled ? "rgba(219,112,147,0.5)" : "white")};
     }
 `;
 
@@ -47,7 +49,4 @@ const LinkLikeButton = ({ children, ...props }) => {
     return <StyledButton {...props}>{children}</StyledButton>;
 };
 
-export {
-    LinkButton,
-    LinkLikeButton
-};
+export { LinkButton, LinkLikeButton };
