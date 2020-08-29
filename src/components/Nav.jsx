@@ -24,8 +24,12 @@ const StyledNav = styled.nav`
 export const Nav = () => {
     return (
         <StyledNav>
-            <Link id="info" to="/info">Playa Info</Link>
-            <Link to="/help">Feeling Lost?</Link>
+            <Link id="info" target="_blank" to="/info">
+                Playa Info
+            </Link>
+            <Link target="_blank" to="/help">
+                Feeling Lost?
+            </Link>
         </StyledNav>
     );
 };
