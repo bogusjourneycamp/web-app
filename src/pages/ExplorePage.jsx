@@ -6,7 +6,7 @@ import StoryNavigationView from "../components/StoryNavigationView";
 import getNodeById from "../utils/getNodeById";
 import StoryView from "../components/StoryView";
 import fetchNode from "../utils/fetchNode";
-import storyNodeToGraphData from "../utils/storyNodeToGraphData"
+import storyNodeToGraphData from "../utils/storyNodeToGraphData";
 
 const StyledContainer = styled.div`
     padding: 12px;
@@ -25,9 +25,9 @@ const StyledContainer = styled.div`
 `;
 
 const ExplorePage = ({ history, location }) => {
-    const [storyNode, setStoryNode] = useState();
+    const [rootNode, setStoryNode] = useState();
+    const [currentNode, setCurrentNode] = useState(rootNode);
     const [loading, setLoading] = useState(false);
-    const [rootNode, setRootNode] = useState(0);
     const [editPassword, setEditPassword] = useState("");
 
     const searchParams = location.search
@@ -42,37 +42,38 @@ const ExplorePage = ({ history, location }) => {
 
         if (node) {
             setStoryNode(node);
+            setCurrentNode(node);
         }
 
         setLoading(false);
         return node;
     };
 
-    const onTakeAction = (previousId, nodeId) => {
-        const previousNode = getNodeById(storyNode, previousId);
-        const node = getNodeById(storyNode, nodeId);
-        if (previousNode && previousNode.name === "root") {
-            setRootNode(previousNode);
-        }
+    const onTakeAction = (nodeId) => {
+        const node = getNodeById(rootNode, nodeId);
+
         if (node) {
-            setStoryNode(node);
+            setCurrentNode(node);
         }
     };
 
     const onBack = () => {
-        const storyPath = storyNodeToGraphData(rootNode, rootNode.id);
+        const storyPath = storyNodeToGraphData(rootNode, currentNode.id);
         let previousNodeId = null;
+
         if (storyPath) {
-            for (let i = 0; i < storyPath.nodes.length; i++) {
-                if (storyPath.nodes[i].id === storyNode.id) {
+            for (let i = 0; i < storyPath.nodes.length; i += 1) {
+                if (storyPath.nodes[i].id === currentNode.id) {
                     previousNodeId = storyPath.nodes[i].parentNodeId;
                     break;
                 }
             }
         }
+
         const previousNode = getNodeById(rootNode, previousNodeId);
+
         if (previousNode) {
-            setStoryNode(previousNode);
+            setCurrentNode(previousNode);
         }
     };
 
@@ -89,24 +90,32 @@ const ExplorePage = ({ history, location }) => {
         }
     };
 
-    const onClickEditPasswordSuccess = async () => {
+    const onEditPasswordSuccess = async () => {
         history.push({
             pathname: "/create-story",
             search: `?${new URLSearchParams({
                 location: currentLocation,
             }).toString()}`,
-            state: {"passphrase": editPassword, "passphraseSet": true},
+            state: { passphrase: editPassword, passphraseSet: true },
         });
     };
 
-    const onClickEditPasswordFailure = async () => {
-        notification.error({message: "Invalid passphrase!"});
+    const onEditPasswordError = async () => {
+        notification.error({ message: "Invalid passphrase!" });
+    };
 
+    const onGiftingSuccess = async () => {
         history.push({
+            pathname: "/create-story",
             search: `?${new URLSearchParams({
                 location: currentLocation,
             }).toString()}`,
+            state: { passphrase: editPassword, passphraseSet: true },
         });
+    };
+
+    const onGiftingError = async () => {
+        notification.error({ message: "Invalid passphrase!" });
     };
 
     useEffect(() => {
@@ -117,14 +126,17 @@ const ExplorePage = ({ history, location }) => {
         <Layout>
             <StyledContainer>
                 <StoryView
-                    storyNode={storyNode}
+                    rootNode={rootNode}
+                    storyNode={currentNode}
                     onTakeAction={onTakeAction}
                     onBack={onBack}
                     loading={loading}
                     editPassword={editPassword}
                     setEditPassword={setEditPassword}
-                    onClickEditPasswordSuccess={onClickEditPasswordSuccess}
-                    onClickEditPasswordFailure={onClickEditPasswordFailure}
+                    onEditPasswordSuccess={onEditPasswordSuccess}
+                    onEditPasswordError={onEditPasswordError}
+                    onGiftingSuccess={onGiftingSuccess}
+                    onGiftingError={onGiftingError}
                 />
                 <StoryNavigationView
                     location={currentLocation}

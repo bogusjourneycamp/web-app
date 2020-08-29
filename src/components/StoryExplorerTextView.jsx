@@ -19,17 +19,17 @@ const ChoicesContainer = styled.div`
     flex-direction: column;
 `;
 
-const StoryExplorerTextView = ({storyNode, storyText, choices, onTakeAction }) => {
+const StoryExplorerTextView = ({ storyText, choices, onTakeAction }) => {
     return (
         <StoryTextSection>
             <StoryText>{storyText}</StoryText>
             <ChoicesContainer>
-                {choices.map((item, index) => (
+                {choices.map((choiceNode, index) => (
                     <StoryButton
                         key={`action-${index}`}
-                        onClick={() => onTakeAction(storyNode.id, item.id)}
+                        onClick={() => onTakeAction(choiceNode.id)}
                     >
-                        {item.selectionText}
+                        {choiceNode.selectionText}
                     </StoryButton>
                 ))}
             </ChoicesContainer>
