@@ -1,5 +1,5 @@
-import Button from "./Button";
 import styled from "styled-components";
+import Button from "./Button";
 import ColorPalette from "../utils/colors";
 
 const StoryButton = styled(Button)`
@@ -8,10 +8,10 @@ const StoryButton = styled(Button)`
     background-color: rgba(255, 255, 255, 0.5);
     font-size: 18px;
     font-weight: 100;
+    height: auto;
     line-height: 30px;
     margin: 10px 0;
-    padding: 10px;
-    text-align: center;
+    padding: 10px 20px;
     transition: background-color 200ms;
 
     min-width: 100px;

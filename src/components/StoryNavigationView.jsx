@@ -11,10 +11,14 @@ const StyledContainer = styled.div`
     align-items: center;
 
     button {
-        font-size: 18px;
-        display: flex;
         align-items: center;
+        display: flex;
+        font-size: 18px;
+        height: 100%;
         justify-content: center;
+        width: 100%;
+        grid-column: span 1;
+        white-space: pre-wrap;
     }
 
     #nav-rewind {
@@ -47,8 +51,8 @@ const Grid = styled.div`
     order: 1;
     flex-grow: 2;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 2px;
     grid-auto-rows: 100px;
 
     button {
@@ -150,9 +154,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                 <Button
                     id="nav-fast-foward"
                     onClick={() => {
-                        onClickLocation(
-                            getNextLocation(location, "counter_clockwise")
-                        );
+                        onClickLocation(getNextLocation(location, "counter_clockwise"));
                     }}
                 >
                     <Direction>&#8599;</Direction>
@@ -162,9 +164,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                 <Button
                     id="nav-wander"
                     onClick={async () => {
-                        onClickLocation(
-                            await getWanderLocation()
-                        );
+                        onClickLocation(await getWanderLocation());
                     }}
                 >
                     <Direction>?</Direction>
