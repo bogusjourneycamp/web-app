@@ -106,6 +106,7 @@ export const StoryChoice = ({
                 onChangeText={onChangeSelectionText}
                 name="text"
                 placeholder="Go for a walk"
+                minHeight={0}
             />
         </Container>
     );

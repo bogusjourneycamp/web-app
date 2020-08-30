@@ -1,32 +1,47 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 
-const MIN_STORY_HEIGHT = 400;
+const TextArea = styled.textarea`
+    line-height: normal;
+`;
 
-const AutoResizingTextArea = ({ onChangeText, id, ...otherProps }) => {
+const DEFAULT_MIN_HEIGHT = 400;
+
+const AutoResizingTextArea = ({
+    minHeight = DEFAULT_MIN_HEIGHT,
+    onChangeText,
+    id,
+    ...otherProps
+}) => {
+    const resizeTextArea = (textInput) => {
+        textInput.setAttribute("style", "height: auto;");
+
+        const height = textInput.scrollHeight + 3;
+
+        if (minHeight > 0) {
+            const newHeight = height > DEFAULT_MIN_HEIGHT ? height : DEFAULT_MIN_HEIGHT;
+
+            textInput.setAttribute("style", `height: ${newHeight}px;`);
+        } else {
+            textInput.setAttribute("style", `height: ${height}px;`);
+        }
+    };
     // Initial auto sizing
     useEffect(() => {
-        const textInput = document.getElementById("txt-story-text");
+        const textInput = document.getElementById(id);
 
-        const height = textInput.scrollHeight + 6;
-        const newHeight = height > MIN_STORY_HEIGHT ? height : MIN_STORY_HEIGHT;
-
-        textInput.setAttribute("style", `height: ${newHeight}px;`);
+        resizeTextArea(textInput);
     }, []);
 
     return (
-        <textarea
+        <TextArea
             {...otherProps}
             id={id}
             rows={1}
             onChange={(e) => {
                 onChangeText(e.target.value);
 
-                const height = e.target.scrollHeight + 6;
-                const newHeight = height > MIN_STORY_HEIGHT ? height : MIN_STORY_HEIGHT;
-
-                // Resize height of text
-                e.target.setAttribute("style", "height: auto;");
-                e.target.setAttribute("style", `height: ${newHeight}px;`);
+                resizeTextArea(e.target);
             }}
         />
     );
