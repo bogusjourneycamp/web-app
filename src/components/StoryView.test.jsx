@@ -30,24 +30,24 @@ afterEach(cleanup);
 describe("Successfully renders", () => {
     test("Should render loading when no story node is set", () => {
         const history = createMemoryHistory();
-        const { getByText } = render(
+        const { getByTestId } = render(
             <Router history={history}>
                 <StoryView loading />
             </Router>
         );
 
-        getByText("Loading...");
+        getByTestId("loading-story");
     });
 
     test("Should render loading when loading is set", () => {
         const history = createMemoryHistory();
-        const { getByText } = render(
+        const { getByTestId } = render(
             <Router history={history}>
                 <StoryView loading storyNode={{}} />
             </Router>
         );
 
-        getByText("Loading...");
+        getByTestId("loading-story");
     });
 
     test("Should render open playa view", () => {
@@ -105,14 +105,16 @@ describe("All buttons works", () => {
 
         // Report button works correctly
         fireEvent.click(getByTestId("btn-report"));
+        await waitFor(() => getByText("Successfully reported page"), {
+            timeout: 1,
+        });
+
         expect(fetch.mock.calls.length).toEqual(1);
         expect(fetch.mock.calls[0][0]).toEqual(
             `${API_URL}/story/${encodeURI(openPlayaNode.location)}/report`
         );
-
-        await waitFor(() => getByText("Successfully reported page"), {
-            timeout: 1,
-        });
+        expect(getByTestId("btn-report")).toHaveProperty("disabled", true);
+        expect(getByTestId("btn-report").textContent).toBe("Reported");
 
         // Create button works correctly
         fireEvent.click(getByTestId("link-create"));
@@ -156,6 +158,7 @@ describe("All buttons works", () => {
             `${API_URL}/story/${encodeURI(testStoryNode.location)}/report`
         );
         expect(getByTestId("btn-report")).toHaveProperty("disabled", true);
+        expect(getByTestId("btn-report").textContent).toBe("Reported");
 
         // Create button works correctly
         // Error notification pops up when no passphrase entered
