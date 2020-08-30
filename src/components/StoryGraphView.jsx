@@ -14,20 +14,12 @@ const StyledContainer = styled.div`
     height: 500px;
 `;
 
-const StoryGraphView = ({
-    data,
-    onClickNode,
-    selectedNode,
-    graphRef,
-    rootNode,
-}) => {
+const StoryGraphView = ({ data, onClickNode, selectedNode, graphRef, rootNode }) => {
     const [highlightedLinks, setHighlightedLinks] = useState(new Set());
     const [highlightedNodes, setHighlightedNodes] = useState(new Set());
 
     const getLinkColor = (link) =>
-        highlightedLinks.has(link)
-            ? ColorPalette.NodeGreen
-            : ColorPalette.NodeGray;
+        highlightedLinks.has(link) ? ColorPalette.NodeGreen : ColorPalette.NodeGray;
 
     const updateHightlights = (hoveredGraphNode) => {
         if (hoveredGraphNode) {
@@ -53,10 +45,7 @@ const StoryGraphView = ({
                             }
                         });
                         data.nodes.forEach((node) => {
-                            if (
-                                node.id === nodeSource.id ||
-                                node.id === nodeTarget.id
-                            ) {
+                            if (node.id === nodeSource.id || node.id === nodeTarget.id) {
                                 highlightedNodes.add(node);
                             }
                         });
@@ -74,7 +63,7 @@ const StoryGraphView = ({
             <ForceGraph
                 ref={graphRef}
                 width={500}
-                height={500}
+                height={800}
                 graphData={data}
                 linkDirectionalArrowLength={(link) => {
                     return highlightedLinks.has(link) ? 1 : 4;
@@ -99,9 +88,7 @@ const StoryGraphView = ({
                         drawNodeBorder(
                             node,
                             ctx,
-                            isHighlighted || isSelectedNode
-                                ? ColorPalette.NodeGreen
-                                : undefined
+                            isHighlighted || isSelectedNode ? ColorPalette.NodeGreen : undefined
                         );
                     }
 
@@ -114,13 +101,7 @@ const StoryGraphView = ({
                     }
 
                     drawNodeBody(node, ctx, nodeColor);
-                    drawText(
-                        node,
-                        ctx,
-                        node.name,
-                        fontSize,
-                        isSelectedNode ? "white" : undefined
-                    );
+                    drawText(node, ctx, node.name, fontSize, isSelectedNode ? "white" : undefined);
                 }}
             />
         </StyledContainer>
