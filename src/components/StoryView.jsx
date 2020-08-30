@@ -56,6 +56,7 @@ const StoryView = ({
     const [editPassword, setEditPassword] = useState("");
     const [reported, setReported] = useState(false);
     const [reporting, setReporting] = useState(false);
+    const [checkingPassword, setCheckingPassword] = useState(false);
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search ? location.search.slice(1) : "");
 
@@ -79,13 +80,15 @@ const StoryView = ({
         reportButtonText = "Reporting";
     }
 
-    const checkPassphrase = async (successCallback, errorCallback) => {
+    const onClickEditButton = async () => {
         if (!editPassword || !editPassword.trim()) {
             notification.error({
                 message: "Please enter a passphrase to edit this story",
             });
             return;
         }
+
+        setCheckingPassword(true);
 
         const response = await fetch(`${API_URL}/story/check_passphrase/${storyLocation}`, {
             method: "POST",
@@ -97,15 +100,17 @@ const StoryView = ({
         const result = await response.json();
         const isValid = result && typeof result === "boolean";
 
-        if (isValid && successCallback) {
-            successCallback(editPassword);
-        } else if (!isValid && errorCallback) {
-            errorCallback();
+        if (isValid && onEditPasswordSuccess) {
+            onEditPasswordSuccess(editPassword);
+        } else if (!isValid && onEditPasswordError) {
+            onEditPasswordError();
         } else {
             notification.error(
                 "Something went wrong. Please shoot an email to charliegsummers@gmail.com"
             );
         }
+
+        setCheckingPassword(false);
     };
 
     return (
@@ -185,11 +190,10 @@ const StoryView = ({
                     <>
                         <ButtonLink
                             id="btn-edit"
-                            onClick={async () => {
-                                checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
-                            }}
+                            onClick={onClickEditButton}
+                            loading={checkingPassword}
                         >
-                            Edit
+                            {checkingPassword ? "Verifying" : "Edit"}
                         </ButtonLink>
                         <input
                             id="input-edit-password"
