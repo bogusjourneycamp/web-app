@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { notification } from "antd";
 import { StoryChoice } from "./StoryChoice";
 import AutoResizingTextArea from "./AutoResizingTextArea";
 import ColorPalette from "../utils/colors";
@@ -76,6 +77,8 @@ export const CreateStoryView = ({
     storyNode,
     onClickPublish,
 }) => {
+    const [publishing, setPublishing] = useState(false);
+
     return (
         <StyledContainer id="view-create-story">
             <SelectionText
@@ -98,8 +101,24 @@ export const CreateStoryView = ({
             <ButtonLink id="btn-add-choice" type="button" onClick={onClickAddChoice}>
                 Add a choice
             </ButtonLink>
-            <ButtonLink id="btn-publish" type="button" onClick={onClickPublish}>
-                Publish
+            <ButtonLink
+                id="btn-publish"
+                type="button"
+                onClick={async () => {
+                    setPublishing(true);
+                    try {
+                        await onClickPublish();
+                    } catch (error) {
+                        notification.error({
+                            message:
+                                "Something went wrong. Please contant charliegsummers@gmail.com",
+                        });
+                    }
+                    setPublishing(true);
+                }}
+                loading={publishing}
+            >
+                {publishing ? "Publishing" : "Publish"}
             </ButtonLink>
 
             <div className="story-choices">
