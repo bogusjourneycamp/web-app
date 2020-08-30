@@ -2,11 +2,7 @@ import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import {
-    FONT_FAMILY_MONOSPACE,
-    FONT_FAMILY_MAIN,
-    FONT_COLOR_MAIN,
-} from "../utils/styleConfig";
+import { FONT_FAMILY_MONOSPACE, FONT_FAMILY_MAIN, FONT_COLOR_MAIN } from "../utils/styleConfig";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
 
   a, button {
     font-family: ${FONT_FAMILY_MAIN} !important;
+
+    :focus {
+      outline: none;
+    }
   }
 
   /* Override text color */
