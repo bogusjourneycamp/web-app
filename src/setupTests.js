@@ -11,3 +11,20 @@ fetchMock.enableMocks();
 
 // Use id attribute as the testId that @testing-library looks for
 configureRTL({ testIdAttribute: "id" });
+
+jest.mock("antd", () => {
+    const antd = require.requireActual("antd");
+
+    return {
+        ...antd,
+        notification: {
+            ...antd.notification,
+            error: (props) => {
+                antd.notification.error({ ...props, duration: 0.1 });
+            },
+            success: (props) => {
+                antd.notification.success({ ...props, duration: 0.1 });
+            },
+        },
+    };
+});
