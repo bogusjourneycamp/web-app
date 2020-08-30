@@ -24,9 +24,9 @@ const StoryExplorerTextView = ({ storyText, choices, onTakeAction }) => {
         <StoryTextSection>
             <StoryText>{storyText}</StoryText>
             <ChoicesContainer>
-                {choices.map((choiceNode, index) => (
+                {choices.map((choiceNode) => (
                     <StoryButton
-                        key={`action-${index}`}
+                        key={`action-${choiceNode.id}`}
                         onClick={() => onTakeAction(choiceNode.id)}
                     >
                         {choiceNode.selectionText}

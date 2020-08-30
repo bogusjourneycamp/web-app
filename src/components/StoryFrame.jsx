@@ -38,7 +38,7 @@ const StoryFrame = ({ children }) => {
             <EndFrame />
             <Middle>
                 <SideFrame />
-                <Content>{children}</Content>
+                <Content className="frame-content">{children}</Content>
                 <SideFrame />
             </Middle>
             <EndFrame />

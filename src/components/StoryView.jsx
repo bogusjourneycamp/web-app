@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { notification } from "antd";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
 import LinkButton from "./LinkButton";
@@ -18,6 +19,16 @@ const StyledContainer = styled.div`
     #link-gift-a-story {
         margin-left: 20px;
     }
+
+    #loading-story {
+        font-size: 100px;
+    }
+
+    &.loading .frame-content {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
 `;
 
 const ButtonsContainer = styled.div`
@@ -27,7 +38,6 @@ const ButtonsContainer = styled.div`
     #btn-report {
         margin-left: 10px;
         margin-right: 10px;
-        width: 120px;
     }
 
     #input-edit-password {
@@ -56,13 +66,17 @@ const StoryView = ({
 }) => {
     const [editPassword, setEditPassword] = useState("");
     const [reported, setReported] = useState(false);
+    const [reporting, setReporting] = useState(false);
+    const [checkingPassword, setCheckingPassword] = useState(false);
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search ? location.search.slice(1) : "");
 
     if (loading || !storyNode) {
         return (
-            <StyledContainer id="view-story">
-                <StoryFrame>Loading...</StoryFrame>
+            <StyledContainer id="view-story" className="loading">
+                <StoryFrame>
+                    <LoadingOutlined id="loading-story" />
+                </StoryFrame>
             </StyledContainer>
         );
     }
@@ -73,14 +87,21 @@ const StoryView = ({
     const searchParams = location.search || `?location=${storyLocation}`;
     const isCreatePage = selectionText === "Open Playa";
     const isRootNode = storyNode.name === "root" || selectionText === "Open Playa";
+    let reportButtonText = reported ? "Reported" : "Report";
 
-    const checkPassphrase = async (successCallback, errorCallback) => {
+    if (reporting) {
+        reportButtonText = "Reporting";
+    }
+
+    const onClickEditButton = async () => {
         if (!editPassword || !editPassword.trim()) {
             notification.error({
                 message: "Please enter a passphrase to edit this story",
             });
             return;
         }
+
+        setCheckingPassword(true);
 
         const response = await fetch(`${API_URL}/story/check_passphrase/${storyLocation}`, {
             method: "POST",
@@ -92,15 +113,17 @@ const StoryView = ({
         const result = await response.json();
         const isValid = result && typeof result === "boolean";
 
-        if (isValid && successCallback) {
-            successCallback(editPassword);
-        } else if (!isValid && errorCallback) {
-            errorCallback();
+        if (isValid && onEditPasswordSuccess) {
+            onEditPasswordSuccess(editPassword);
+        } else if (!isValid && onEditPasswordError) {
+            onEditPasswordError();
         } else {
             notification.error(
                 "Something went wrong. Please shoot an email to charliegsummers@gmail.com"
             );
         }
+
+        setCheckingPassword(false);
     };
 
     return (
@@ -137,24 +160,32 @@ const StoryView = ({
                 <ButtonLink
                     id="btn-report"
                     onClick={async () => {
-                        setReported(true);
+                        setReporting(true);
+
                         const response = await fetch(`${API_URL}/story/${storyLocation}/report`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ storyNode }),
                         });
 
-                        if (!response.ok) {
-                            setReported(false);
-                        }
+                        setReported(response.ok);
+                        setReporting(false);
 
-                        notification.info({
-                            message: "Successfully reported page",
-                        });
+                        if (response.ok) {
+                            notification.info({
+                                message: "Successfully reported page",
+                            });
+                        } else {
+                            notification.info({
+                                message:
+                                    "Failed to report page. Please contact charliegsummers@gmail.com",
+                            });
+                        }
                     }}
                     disabled={reported}
+                    loading={reporting}
                 >
-                    Report
+                    {reportButtonText}
                 </ButtonLink>
 
                 {isCreatePage ? (
@@ -172,11 +203,10 @@ const StoryView = ({
                     <>
                         <ButtonLink
                             id="btn-edit"
-                            onClick={async () => {
-                                checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
-                            }}
+                            onClick={onClickEditButton}
+                            loading={checkingPassword}
                         >
-                            Edit
+                            {checkingPassword ? "Verifying" : "Edit"}
                         </ButtonLink>
                         <input
                             id="input-edit-password"
