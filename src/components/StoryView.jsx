@@ -27,7 +27,6 @@ const ButtonsContainer = styled.div`
     #btn-report {
         margin-left: 10px;
         margin-right: 10px;
-        width: 120px;
     }
 
     #input-edit-password {
@@ -56,6 +55,7 @@ const StoryView = ({
 }) => {
     const [editPassword, setEditPassword] = useState("");
     const [reported, setReported] = useState(false);
+    const [reporting, setReporting] = useState(false);
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search ? location.search.slice(1) : "");
 
@@ -73,6 +73,11 @@ const StoryView = ({
     const searchParams = location.search || `?location=${storyLocation}`;
     const isCreatePage = selectionText === "Open Playa";
     const isRootNode = storyNode.name === "root" || selectionText === "Open Playa";
+    let reportButtonText = reported ? "Reported" : "Report";
+
+    if (reporting) {
+        reportButtonText = "Reporting";
+    }
 
     const checkPassphrase = async (successCallback, errorCallback) => {
         if (!editPassword || !editPassword.trim()) {
@@ -137,24 +142,32 @@ const StoryView = ({
                 <ButtonLink
                     id="btn-report"
                     onClick={async () => {
-                        setReported(true);
+                        setReporting(true);
+
                         const response = await fetch(`${API_URL}/story/${storyLocation}/report`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ storyNode }),
                         });
 
-                        if (!response.ok) {
-                            setReported(false);
-                        }
+                        setReported(response.ok);
+                        setReporting(false);
 
-                        notification.info({
-                            message: "Successfully reported page",
-                        });
+                        if (response.ok) {
+                            notification.info({
+                                message: "Successfully reported page",
+                            });
+                        } else {
+                            notification.info({
+                                message:
+                                    "Failed to report page. Please contact charliegsummers@gmail.com",
+                            });
+                        }
                     }}
                     disabled={reported}
+                    loading={reporting}
                 >
-                    Report
+                    {reportButtonText}
                 </ButtonLink>
 
                 {isCreatePage ? (
