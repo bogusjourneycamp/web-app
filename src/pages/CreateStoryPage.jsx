@@ -208,6 +208,7 @@ export const CreateStoryPage = ({ history, location }) => {
             }
         };
 
+        // This check prevents the extra rendering which causes the double error notifications
         fetchStory();
 
         // For clearing location state when refreshing so that we can redirect to the explore page
@@ -230,6 +231,7 @@ export const CreateStoryPage = ({ history, location }) => {
 
         return <Redirect to={`/?location=${storyLocation}`} />;
     }
+
     return (
         <Layout>
             <StyledContainer>

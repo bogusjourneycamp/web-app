@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
-import { LinkButton, LinkLikeButton } from "./LinkButton";
+import LinkButton from "./LinkButton";
 import StoryFrame from "./StoryFrame";
 import { API_URL } from "../utils/urls";
 import ColorPalette from "../utils/colors";
+import { ButtonLink } from "./ButtonLink";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -34,7 +35,8 @@ const ButtonsContainer = styled.div`
         padding: 0 10px;
     }
 
-    a {
+    a,
+    button {
         min-width: 120px;
     }
 
@@ -48,12 +50,11 @@ const StoryView = ({
     storyNode,
     onTakeAction,
     onBack,
-    editPassword,
-    setEditPassword,
     onEditPasswordSuccess,
     onEditPasswordError,
     loading,
 }) => {
+    const [editPassword, setEditPassword] = useState("");
     const [reported, setReported] = useState(false);
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search ? location.search.slice(1) : "");
@@ -67,8 +68,9 @@ const StoryView = ({
     }
 
     const { selectionText, storyText, choices } = storyNode;
-    const { storyLocation = searchParam.get("location") } = rootNode;
+    const { location: storyLocation = searchParam.get("location") } = rootNode;
 
+    const searchParams = location.search || `?location=${storyLocation}`;
     const isCreatePage = selectionText === "Open Playa";
     const isRootNode = storyNode.name === "root" || selectionText === "Open Playa";
 
@@ -91,7 +93,7 @@ const StoryView = ({
         const isValid = result && typeof result === "boolean";
 
         if (isValid && successCallback) {
-            successCallback();
+            successCallback(editPassword);
         } else if (!isValid && errorCallback) {
             errorCallback();
         } else {
@@ -119,10 +121,10 @@ const StoryView = ({
                 {isCreatePage && (
                     <LinkButton
                         id="link-gift-a-story"
-                        backgroundColor={ColorPalette.NodeGreen}
+                        backgroundcolor={ColorPalette.NodeGreen}
                         to={{
                             pathname: "/create-story",
-                            search: location.search,
+                            search: searchParams,
                             state: { passphrase: editPassword, passphraseSet: true },
                         }}
                     >
@@ -132,7 +134,7 @@ const StoryView = ({
             </StoryFrame>
 
             <ButtonsContainer>
-                <LinkLikeButton
+                <ButtonLink
                     id="btn-report"
                     onClick={async () => {
                         setReported(true);
@@ -153,14 +155,14 @@ const StoryView = ({
                     disabled={reported}
                 >
                     Report
-                </LinkLikeButton>
+                </ButtonLink>
 
                 {isCreatePage ? (
                     <LinkButton
                         id="link-create"
                         to={{
                             pathname: "/create-story",
-                            search: location.search,
+                            search: searchParams,
                             state: { passphrase: editPassword, passphraseSet: true },
                         }}
                     >
@@ -168,17 +170,17 @@ const StoryView = ({
                     </LinkButton>
                 ) : (
                     <>
-                        <LinkButton
+                        <ButtonLink
                             id="btn-edit"
-                            onClick={async (e) => {
-                                e.preventDefault();
+                            onClick={async () => {
                                 checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
                             }}
                         >
                             Edit
-                        </LinkButton>
+                        </ButtonLink>
                         <input
                             id="input-edit-password"
+                            data-testid="input-edit-password"
                             value={editPassword}
                             onChange={(e) => setEditPassword(e.target.value)}
                             placeholder="Passphrase for Edit"
