@@ -23,6 +23,7 @@ const StoryButton = styled(Button)`
 
     :focus {
         outline: none;
+        border-color: initial;
     }
 `;
 
