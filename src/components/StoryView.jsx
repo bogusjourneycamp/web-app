@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
-import { LinkButton, LinkLikeButton } from "./LinkButton";
+import LinkButton from "./LinkButton";
 import StoryFrame from "./StoryFrame";
 import { API_URL } from "../utils/urls";
 import ColorPalette from "../utils/colors";
+import { ButtonLink } from "./ButtonLink";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -34,7 +35,8 @@ const ButtonsContainer = styled.div`
         padding: 0 10px;
     }
 
-    a {
+    a,
+    button {
         min-width: 120px;
     }
 
@@ -132,7 +134,7 @@ const StoryView = ({
             </StoryFrame>
 
             <ButtonsContainer>
-                <LinkLikeButton
+                <ButtonLink
                     id="btn-report"
                     onClick={async () => {
                         setReported(true);
@@ -153,7 +155,7 @@ const StoryView = ({
                     disabled={reported}
                 >
                     Report
-                </LinkLikeButton>
+                </ButtonLink>
 
                 {isCreatePage ? (
                     <LinkButton
@@ -168,7 +170,7 @@ const StoryView = ({
                     </LinkButton>
                 ) : (
                     <>
-                        <LinkButton
+                        <ButtonLink
                             id="btn-edit"
                             onClick={async (e) => {
                                 e.preventDefault();
@@ -176,7 +178,7 @@ const StoryView = ({
                             }}
                         >
                             Edit
-                        </LinkButton>
+                        </ButtonLink>
                         <input
                             id="input-edit-password"
                             value={editPassword}
