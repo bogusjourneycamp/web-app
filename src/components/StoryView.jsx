@@ -68,8 +68,9 @@ const StoryView = ({
     }
 
     const { selectionText, storyText, choices } = storyNode;
-    const { storyLocation = searchParam.get("location") } = rootNode;
+    const { location: storyLocation = searchParam.get("location") } = rootNode;
 
+    const searchParams = location.search || `?location=${storyLocation}`;
     const isCreatePage = selectionText === "Open Playa";
     const isRootNode = storyNode.name === "root" || selectionText === "Open Playa";
 
@@ -123,7 +124,7 @@ const StoryView = ({
                         backgroundcolor={ColorPalette.NodeGreen}
                         to={{
                             pathname: "/create-story",
-                            search: location.search,
+                            search: searchParams,
                             state: { passphrase: editPassword, passphraseSet: true },
                         }}
                     >
@@ -161,7 +162,7 @@ const StoryView = ({
                         id="link-create"
                         to={{
                             pathname: "/create-story",
-                            search: location.search,
+                            search: searchParams,
                             state: { passphrase: editPassword, passphraseSet: true },
                         }}
                     >
@@ -171,8 +172,7 @@ const StoryView = ({
                     <>
                         <ButtonLink
                             id="btn-edit"
-                            onClick={async (e) => {
-                                e.preventDefault();
+                            onClick={async () => {
                                 checkPassphrase(onEditPasswordSuccess, onEditPasswordError);
                             }}
                         >
@@ -180,6 +180,7 @@ const StoryView = ({
                         </ButtonLink>
                         <input
                             id="input-edit-password"
+                            data-testid="input-edit-password"
                             value={editPassword}
                             onChange={(e) => setEditPassword(e.target.value)}
                             placeholder="Passphrase for Edit"
