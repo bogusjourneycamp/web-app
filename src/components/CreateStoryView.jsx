@@ -1,77 +1,36 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { StoryChoice } from "./StoryChoice";
 import AutoResizingTextArea from "./AutoResizingTextArea";
 import ColorPalette from "../utils/colors";
+import { ButtonLink } from "./ButtonLink";
 
 const StyledContainer = styled.div`
     padding: 32px 24px;
-
-    #txt-selection-text,
-    #txt-story-text {
-        :focus {
-            outline: none !important;
-        }
-    }
-
-    #txt-selection-text,
-    #txt-story-text {
-        display: block;
-        border: none;
-        border: 3px solid ${ColorPalette.CoffeeBean};
-
-        ::placeholder {
-            color: #ccc;
-        }
-    }
-
-    #txt-selection-text {
-        font-family: Helvetica, sans-serif;
-        font-size: 54px;
-        font-weight: 300;
-        margin-bottom: 24px;
-        width: 100%;
-    }
-
-    #txt-story-text {
-        box-sizing: border-box;
-        font-family: Helvetica, sans-serif;
-        font-size: 18px;
-        font-weight: 300;
-        line-height: 30px;
-        margin-bottom: 12px;
-        resize: none;
-        width: 100%;
-    }
 
     #btn-add-choice {
         margin-right: 10px;
     }
 
     .story-choices {
-        margin-top: 24px;
+        margin-top: 12px;
     }
 `;
 
-const StyledButton = styled.button`
-    border: 3px solid #5cb85c;
-    border-radius: 4px;
-    color: #5cb85c;
-    cursor: pointer;
+const SelectionText = styled.input`
+    background-color: rgba(255, 255, 255, 0.85);
+    border: none;
+    border: 3px solid ${ColorPalette.CoffeeBean};
+    display: block;
     font-family: Helvetica, sans-serif;
+    font-size: 32px;
     font-weight: 300;
-    margin-top: 12px;
-    padding: 6px 10px;
-    transition: color 200ms, border-color 200ms;
+    margin-bottom: 24px;
+    padding: 10px;
+    width: 100%;
 
-    :hover {
-        color: #458a45;
-        border-color: #458a45;
-    }
-
-    :active {
-        color: #85ca85;
-        border-color: #85ca85;
+    ::placeholder {
+        color: #ccc;
     }
 
     :focus {
@@ -79,9 +38,33 @@ const StyledButton = styled.button`
     }
 `;
 
+const StoryText = styled(AutoResizingTextArea)`
+    background-color: rgba(255, 255, 255, 0.85);
+    border: none;
+    border: 3px solid ${ColorPalette.CoffeeBean};
+    box-sizing: border-box;
+    display: block;
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 30px;
+    margin-bottom: 12px;
+    padding: 10px;
+    resize: none;
+    width: 100%;
+
+    :focus {
+        outline: none !important;
+    }
+    ::placeholder {
+        color: #ccc;
+    }
+`;
+
 const InstructionsContainer = styled.div`
-    margin: 20px;
     font-weight: bold;
+    letter-spacing: 1px;
+    margin: 20px 0;
 `;
 
 export const CreateStoryView = ({
@@ -93,15 +76,9 @@ export const CreateStoryView = ({
     storyNode,
     onClickPublish,
 }) => {
-    useEffect(() => {
-        const textInput = document.getElementById("txt-story-text");
-
-        textInput.setAttribute("style", `height: ${textInput.scrollHeight}px;`);
-    }, []);
-
     return (
         <StyledContainer id="view-create-story">
-            <input
+            <SelectionText
                 id="txt-selection-text"
                 name="selectionText"
                 onChange={(e) => {
@@ -110,13 +87,20 @@ export const CreateStoryView = ({
                 placeholder="Title"
                 value={storyNode.selectionText}
             />
-            <AutoResizingTextArea
+            <StoryText
                 id="txt-story-text"
                 value={storyNode.storyText}
                 onChangeText={onChangeStoryText}
                 name="text"
                 placeholder="Once upon a time, I was looking for blue waffles..."
             />
+
+            <ButtonLink id="btn-add-choice" type="button" onClick={onClickAddChoice}>
+                Add a choice
+            </ButtonLink>
+            <ButtonLink id="btn-publish" type="button" onClick={onClickPublish}>
+                Publish
+            </ButtonLink>
 
             <div className="story-choices">
                 {storyNode.choices.map((choice, index) => (
@@ -134,21 +118,11 @@ export const CreateStoryView = ({
                 ))}
             </div>
 
-            <StyledButton
-                id="btn-add-choice"
-                type="button"
-                onClick={onClickAddChoice}
-            >
-                + Add a choice
-            </StyledButton>
-            <StyledButton
-                id="btn-publish"
-                type="button"
-                onClick={onClickPublish}
-            >
-                Publish
-            </StyledButton>
-            <InstructionsContainer>The visualizer on the right is interactive! You can click on the circles to add the text to that choice. You only need to hit publish once you're ready to share your story with the world.</InstructionsContainer>
+            <InstructionsContainer>
+                The visualizer on the right is interactive! You can click on the circles to add the
+                text to that choice. You only need to hit publish once you&apos;re ready to share
+                your story with the world.
+            </InstructionsContainer>
         </StyledContainer>
     );
 };

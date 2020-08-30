@@ -14,7 +14,6 @@ import { LINK_LENGTH } from "../utils/nodeConfig";
 import publishStory from "../utils/publishStory";
 import getGraphDataNodeFromStoryNode from "../utils/getGraphDataNodeFromStoryNode";
 import emptyStoryData from "../utils/emptyStoryData.json";
-import { FONT_COLOR_MAIN } from "../utils/styleConfig";
 import fetchNode from "../utils/fetchNode";
 import getMutatedGraphData from "../utils/getMutatedGraphData";
 
@@ -24,7 +23,6 @@ const StyledContainer = styled.div`
 
     #view-create-story {
         flex: 1;
-        border-left: 4px solid ${FONT_COLOR_MAIN};
     }
 
     #view-story-outline {
