@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { notification } from "antd";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 import StoryExplorerHeader from "./StoryExplorerHeader";
 import StoryExplorerTextView from "./StoryExplorerTextView";
 import LinkButton from "./LinkButton";
@@ -17,6 +18,16 @@ const StyledContainer = styled.div`
 
     #link-gift-a-story {
         margin-left: 20px;
+    }
+
+    #loading-story {
+        font-size: 100px;
+    }
+
+    &.loading .frame-content {
+        justify-content: center;
+        align-items: center;
+        display: flex;
     }
 `;
 
@@ -62,8 +73,10 @@ const StoryView = ({
 
     if (loading || !storyNode) {
         return (
-            <StyledContainer id="view-story">
-                <StoryFrame>Loading...</StoryFrame>
+            <StyledContainer id="view-story" className="loading">
+                <StoryFrame>
+                    <LoadingOutlined id="loading-story" />
+                </StoryFrame>
             </StyledContainer>
         );
     }
