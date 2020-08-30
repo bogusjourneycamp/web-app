@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
 
+const MIN_STORY_HEIGHT = 400;
+
 const AutoResizingTextArea = ({ onChangeText, id, ...otherProps }) => {
     // Initial auto sizing
     useEffect(() => {
-        const textInput = document.getElementById(id);
+        const textInput = document.getElementById("txt-story-text");
 
-        textInput.setAttribute("style", `height: ${textInput.scrollHeight}px;`);
+        const height = textInput.scrollHeight + 6;
+        const newHeight = height > MIN_STORY_HEIGHT ? height : MIN_STORY_HEIGHT;
+
+        textInput.setAttribute("style", `height: ${newHeight}px;`);
     }, []);
 
     return (
@@ -16,12 +21,12 @@ const AutoResizingTextArea = ({ onChangeText, id, ...otherProps }) => {
             onChange={(e) => {
                 onChangeText(e.target.value);
 
+                const height = e.target.scrollHeight + 6;
+                const newHeight = height > MIN_STORY_HEIGHT ? height : MIN_STORY_HEIGHT;
+
                 // Resize height of text
                 e.target.setAttribute("style", "height: auto;");
-                e.target.setAttribute(
-                    "style",
-                    `height: ${e.target.scrollHeight}px;`
-                );
+                e.target.setAttribute("style", `height: ${newHeight}px;`);
             }}
         />
     );
