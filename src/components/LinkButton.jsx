@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledLink = styled(Link)`
-    background-color: ${({ backgroundColor = "rgba(255, 255, 255, 0.85)" }) => backgroundColor};
+    background-color: ${({ backgroundcolor = "rgba(255, 255, 255, 0.85)" }) => backgroundcolor};
     border: 3px solid;
     border-radius: 100px;
     font-size: 16px;

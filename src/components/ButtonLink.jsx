@@ -6,7 +6,7 @@ import ColorPalette from "../utils/colors";
 const { DisabledRed } = ColorPalette;
 
 const StyledButton = styled(Button)`
-    background-color: ${({ backgroundColor = "rgba(255, 255, 255, 0.85)" }) => backgroundColor};
+    background-color: ${({ backgroundcolor = "rgba(255, 255, 255, 0.85)" }) => backgroundcolor};
     border: 3px solid;
     border-radius: 100px;
     font-size: 16px;

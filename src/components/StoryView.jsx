@@ -121,7 +121,7 @@ const StoryView = ({
                 {isCreatePage && (
                     <LinkButton
                         id="link-gift-a-story"
-                        backgroundColor={ColorPalette.NodeGreen}
+                        backgroundcolor={ColorPalette.NodeGreen}
                         to={{
                             pathname: "/create-story",
                             search: location.search,
