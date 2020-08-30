@@ -24,17 +24,18 @@ const ButtonsContainer = styled.div`
     margin-top: 10px;
 `;
 
-const StoryExplorerHeader = ({ title, isRootNode, onBack}) => (
+const BackButton = styled(StoryButton)`
+    text-align: center;
+`;
+
+const StoryExplorerHeader = ({ title, isRootNode, onBack }) => (
     <Header>
         <Title>{title}</Title>
         <ButtonsContainer>
             {!isRootNode && (
-                <StoryButton
-                    id="btn-back"
-                    onClick={() => onBack()}
-                >
+                <BackButton id="btn-back" onClick={() => onBack()}>
                     Back
-                </StoryButton>
+                </BackButton>
             )}
         </ButtonsContainer>
     </Header>

@@ -12,6 +12,7 @@ const StoryButton = styled(Button)`
     line-height: 30px;
     margin: 10px 0;
     padding: 10px 20px;
+    text-align: left;
     transition: background-color 200ms;
 
     min-width: 100px;
