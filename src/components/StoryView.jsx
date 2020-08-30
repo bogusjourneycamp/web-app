@@ -50,12 +50,11 @@ const StoryView = ({
     storyNode,
     onTakeAction,
     onBack,
-    editPassword,
-    setEditPassword,
     onEditPasswordSuccess,
     onEditPasswordError,
     loading,
 }) => {
+    const [editPassword, setEditPassword] = useState("");
     const [reported, setReported] = useState(false);
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search ? location.search.slice(1) : "");
@@ -93,7 +92,7 @@ const StoryView = ({
         const isValid = result && typeof result === "boolean";
 
         if (isValid && successCallback) {
-            successCallback();
+            successCallback(editPassword);
         } else if (!isValid && errorCallback) {
             errorCallback();
         } else {

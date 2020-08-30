@@ -28,7 +28,6 @@ const ExplorePage = ({ history, location }) => {
     const [rootNode, setStoryNode] = useState();
     const [currentNode, setCurrentNode] = useState(rootNode);
     const [loading, setLoading] = useState(false);
-    const [editPassword, setEditPassword] = useState("");
 
     const searchParams = location.search ? new URLSearchParams(location.search) : undefined;
     const currentLocation = searchParams ? searchParams.get("location") : "Man";
@@ -88,7 +87,7 @@ const ExplorePage = ({ history, location }) => {
         }
     };
 
-    const onEditPasswordSuccess = async () => {
+    const onEditPasswordSuccess = async (editPassword) => {
         history.push({
             pathname: "/create-story",
             search: `?${new URLSearchParams({
@@ -115,8 +114,6 @@ const ExplorePage = ({ history, location }) => {
                     onTakeAction={onTakeAction}
                     onBack={onBack}
                     loading={loading}
-                    editPassword={editPassword}
-                    setEditPassword={setEditPassword}
                     onEditPasswordSuccess={onEditPasswordSuccess}
                     onEditPasswordError={onEditPasswordError}
                 />
