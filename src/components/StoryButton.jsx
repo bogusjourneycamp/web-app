@@ -14,8 +14,8 @@ const StoryButton = styled(Button)`
     padding: 10px 20px;
     text-align: left;
     transition: background-color 200ms;
-
     min-width: 100px;
+    white-space: pre-wrap;
 
     :hover {
         background-color: rgba(255, 255, 255, 1);
