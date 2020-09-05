@@ -98,8 +98,8 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
     const atMan = location === "Man";
 
     const pngFile = atMan
-        ? "man_pngs/Esplanade_12__00.png"
-        : `man_pngs/${location.replace(":", "__")}.png`;
+        ? "burning_man_pngs/Esplanade_6__00.png"
+        : `burning_man_pngs/${location.replace(":", "__")}.png`;
 
     const locationData = location.split("_");
 
