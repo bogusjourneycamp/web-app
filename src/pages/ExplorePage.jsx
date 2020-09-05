@@ -30,7 +30,11 @@ const ExplorePage = ({ history, location }) => {
     const [loading, setLoading] = useState(false);
 
     const searchParams = location.search ? new URLSearchParams(location.search) : undefined;
-    const currentLocation = searchParams ? searchParams.get("location") : "Man";
+    let currentLocation = searchParams ? searchParams.get("location") : "Man";
+
+    if (!currentLocation) {
+        currentLocation = "Man";
+    }
 
     const loadStory = async (storyLocation) => {
         setLoading(true);
