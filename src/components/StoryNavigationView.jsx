@@ -22,7 +22,7 @@ const StyledContainer = styled.div`
     }
 
     #nav-rewind {
-        grid-column: 1;
+        grid-column: 3;
         grid-row: 1;
     }
 
@@ -31,8 +31,8 @@ const StyledContainer = styled.div`
         grid-row: 1;
     }
 
-    #nav-fast-foward {
-        grid-column: 3;
+    #nav-fast-forward {
+        grid-column: 1;
         grid-row: 1;
     }
 
@@ -117,7 +117,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
     return (
         <StyledContainer id="view-story-navigation">
             <div>
-                <Location>{locationDisplay}</Location>
+                <Location id="story-location">{locationDisplay}</Location>
                 <div>
                     <TheMan src={pngFile} alt="The Man" />
                 </div>
@@ -142,7 +142,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                     <Direction>&#8595;</Direction>
                 </Button>
                 <Button
-                    id="nav-rewind"
+                    id="nav-fast-forward"
                     onClick={() => {
                         onClickLocation(getNextLocation(location, "clockwise"));
                     }}
@@ -152,7 +152,7 @@ const StoryNavigationView = ({ location, onClickLocation }) => {
                 </Button>
 
                 <Button
-                    id="nav-fast-foward"
+                    id="nav-rewind"
                     onClick={() => {
                         onClickLocation(getNextLocation(location, "counter_clockwise"));
                     }}
