@@ -107,7 +107,7 @@ const ExplorePage = ({ history, location }) => {
 
     useEffect(() => {
         loadStory(currentLocation);
-    }, []);
+    }, [currentLocation]);
 
     return (
         <Layout>
